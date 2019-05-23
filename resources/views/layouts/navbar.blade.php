@@ -11,6 +11,11 @@
                 <li class="nav-item">
                   <a class="nav-link" href={{ route('posts.index') }}>查詢系統</a>
                 </li>
+                @auth
+                <li class="nav-item">
+                    <a class="nav-link" href={{ route('upload')}}>檔案上傳</a>
+                </li>
+                @endauth
                 <li class="nav-item">
                   <a class="nav-link" href="#">Other</a>
                 </li>

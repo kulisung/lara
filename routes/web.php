@@ -38,7 +38,6 @@ Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail'
 Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
 Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 
-
 /*測試首頁 */
 Route::get('/', function () {
     return view('index');
@@ -62,8 +61,12 @@ Route::get('posts/{id}', 'PostsController@show')->name('posts.show');
 /*出現指定要修改的公告 id=第幾則 */
 Route::get('posts/{id}', 'PostsController@edit')->name('posts.edit');
 
-//實際儲存修改的資料 
+/*實際儲存修改的資料 */
 Route::patch('posts/{id}', 'PostsController@update')->name('posts.update');
 
-//刪除指定改的資料 
+/*刪除指定改的資料 */
 Route::delete('posts/{id}', 'PostsController@destory')->name('posts.destory');
+
+/*上傳檔案  */
+Route::get('upload', 'Auth\VerificationController@upload')->name('upload');
+
