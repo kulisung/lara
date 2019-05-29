@@ -70,3 +70,15 @@ Route::delete('posts/{id}', 'PostsController@destory')->name('posts.destory');
 /*上傳檔案  */
 Route::get('upload', 'Auth\VerificationController@upload')->name('upload');
 
+/*匯出頁面 */
+Route::get('export', 'Auth\VerificationController@export')->name('export');
+
+/*檢查MS SQL連線結果*/
+Route::get('result', 'Auth\VerificationController@result')->name('result');
+
+/*匯出Excel*/
+Route::get('excel', 'Auth\VerificationController@excel')->name('excel');
+
+/*Laravel PHPExcel*/
+Route::get('userexport','ExcelController@userexport');
+Route::get('import','ExcelController@import');

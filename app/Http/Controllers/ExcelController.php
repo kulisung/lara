@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\UsersExport;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class PostsController extends Controller
+class ExcelController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,14 +17,6 @@ class PostsController extends Controller
     public function index()
     {
         //
-        //return 'This is the Index!';
-        //return redirect('welcome');
-        //return redirect(route('index'));
-        $data=[
-            'name'=>'Tom',
-            'sex'=>'Boy'
-        ];
-        return view('posts.index',$data);
     }
 
     /**
@@ -32,7 +27,6 @@ class PostsController extends Controller
     public function create()
     {
         //
-        return view('posts.create');
     }
 
     /**
@@ -90,5 +84,11 @@ class PostsController extends Controller
     {
         //
     }
+
+    public function userexport() 
+    {
+        return Excel::download(new UsersExport, 'users.xlsx');
+    }
+    
 
 }

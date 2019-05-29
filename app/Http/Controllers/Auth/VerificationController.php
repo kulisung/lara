@@ -43,4 +43,22 @@ class VerificationController extends Controller
     {
         return view('auth.upload');
     }
+
+    public function export()
+    {
+        //匯出頁面
+        return view('auth.export');
+    }
+
+    public function result()
+    {
+        //檢視MS SQL連線結果
+        return view('auth.result');
+    }
+
+    public function excel()
+    {
+        //匯出Excel
+        return view('auth.excel');
+    }
 }

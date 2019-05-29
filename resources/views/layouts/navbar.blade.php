@@ -1,40 +1,46 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <a class="navbar-brand" href="#">{{ env('APP_NAME') }}</a>
+    <a class="navbar-brand mb-0 h1" href={{ route('index') }}>Dashboard</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
     </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                  <a class="nav-link" href={{ route('index') }}>Home <span class="sr-only">(current)</span></a>
+                <li class="nav-item">
+                  <a class="nav-link font-weight-bold" href={{ route('index') }}>Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href={{ route('posts.index') }}>查詢系統</a>
+                  <a class="nav-link font-weight-bold" href={{ route('posts.index') }}>公告系統</a>
                 </li>
                 @auth
                 <li class="nav-item">
-                    <a class="nav-link" href={{ route('upload')}}>檔案上傳</a>
+                    <a class="nav-link font-weight-bold" href={{ route('upload')}}>檔案上傳</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link font-weight-bold" href={{ route('export')}}>結帳前檢查</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link font-weight-bold" href={{ route('result')}}>DB連線檢查</a>                    
                 </li>
                 @endauth
                 <li class="nav-item">
-                  <a class="nav-link" href="#">Other</a>
+                  <a class="nav-link font-weight-bold" href="#">Other</a>
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto">
                 @guest
                 <li class="nav-item">
-                    <a class="nav-link" href={{ route('login')}}>Login</a>
+                    <a class="nav-link font-weight-bold" href={{ route('login')}}>Login</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href={{ route('register')}}>Register</a>
+                    <a class="nav-link font-weight-bold" href={{ route('register')}}>Register</a>
                 </li>
                 @endguest
                 @auth
                 <li class="nav-item">
-                    <a class="nav-link" >{{ auth()->user()->name }} 你好!</a>
+                    <a class="nav-link font-weight-bold" >{{ auth()->user()->name }} 你好!</a>
                 </li
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
+                    <a class="nav-link font-weight-bold" href="{{ route('logout') }}" onclick="event.preventDefault();
                       document.getElementById('logout-form').submit();"> Logout
                     </a>
                 </li>
