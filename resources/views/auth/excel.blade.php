@@ -13,7 +13,7 @@ if( $stmt === false) {
 }
 else{
     while( $row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC) ) {
-      echo $row['ID'].", ".$row['SAA']."<br />";  //echo資料欄ID 與 SAA列
+      echo $row['MB001'].", ".$row['MB002'].", ".$row['MB003'].", ".$row['MB017'].", ".$row['MB047']."<br />";  //echo資料欄ID 與 SAA列
     }
 }
 // Close the connection.

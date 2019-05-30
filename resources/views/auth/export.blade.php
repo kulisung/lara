@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-12">
             <h2>結帳前查詢</h2>
-            <a class="btn btn-primary" href={{ route('excel') }} role="button">匯出Excel</a>
+            <a class="btn btn-primary" href={{ route('excel') }} role="button">產出Excel</a>
         </div>
     </div>
 </div>  
