@@ -9,7 +9,7 @@
                   <a class="nav-link font-weight-bold" href={{ route('index') }}>Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link font-weight-bold" href={{ route('posts.index') }}>公告系統</a>
+                  <a class="nav-link font-weight-bold" href={{ route('posts.index') }}>測試系統</a>
                 </li>
                 @auth
                 <li class="nav-item">
