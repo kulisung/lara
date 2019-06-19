@@ -56,6 +56,11 @@ class VerificationController extends Controller
         return view('auth.result');
     }
 
+    public function outputexcel()
+    {
+        //匯出Excel
+        return view('auth.outputexcel');
+    }
     public function excel()
     {
         //匯出Excel

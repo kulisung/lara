@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title','檔案上傳處理')
+@section('title','資料匯入')
 @section('content')
 <div class="container">
     <div class="row">
@@ -9,7 +9,7 @@
             <input type="file" name="excel_path" accept=".csv">
             <p class="help-block">這裡是塊級幫助文字的例項。</p>
             </div>
-            <button type="submit" class="btn btn-default bg-primary">提交</button>
+            <button type="submit" class="btn btn-sm btn-primary">提交</button>
         </form>
     </div>
 </div>  

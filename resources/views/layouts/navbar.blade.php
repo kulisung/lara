@@ -13,10 +13,10 @@
                 </li>
                 @auth
                 <li class="nav-item">
-                    <a class="nav-link font-weight-bold" href={{ route('upload')}}>檔案上傳</a>
+                    <a class="nav-link font-weight-bold" href={{ route('upload')}}>資料匯入</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link font-weight-bold" href={{ route('export')}}>結帳前檢查</a>
+                    <a class="nav-link font-weight-bold" href={{ route('export')}}>資料匯出</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link font-weight-bold" href={{ route('result')}}>DB連線檢查</a>                    

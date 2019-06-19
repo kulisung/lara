@@ -52,20 +52,20 @@ Route::get('posts', 'PostsController@index')->name('posts.index');
 /*出現公告新增的表單 */
 Route::get('posts/create', 'PostsController@create')->name('posts.create');
 
-/*實際post的儲存表單 */
-Route::post('posts/store', 'PostsController@store')->name('posts.store');
+/*出現指定要修改的公告 id=第幾則 */
+Route::get('posts/{id}/edit', 'PostsController@edit')->name('posts.edit');
 
 /*show出指定的公告 id=第幾則 */
 Route::get('posts/{id}', 'PostsController@show')->name('posts.show');
 
-/*出現指定要修改的公告 id=第幾則 */
-Route::get('posts/{id}', 'PostsController@edit')->name('posts.edit');
+/*實際post的儲存表單 */
+Route::post('posts/store', 'PostsController@store')->name('posts.store');
 
 /*實際儲存修改的資料 */
 Route::patch('posts/{id}', 'PostsController@update')->name('posts.update');
 
 /*刪除指定改的資料 */
-Route::delete('posts/{id}', 'PostsController@destory')->name('posts.destory');
+Route::delete('posts/{id}', 'PostsController@destroy')->name('posts.destroy');
 
 /*上傳檔案  */
 Route::get('upload', 'Auth\VerificationController@upload')->name('upload');
@@ -77,6 +77,8 @@ Route::get('export', 'Auth\VerificationController@export')->name('export');
 Route::get('result', 'Auth\VerificationController@result')->name('result');
 
 /*匯出Excel*/
+Route::get('outputexcel', 'Auth\VerificationController@outputexcel')->name('outputexcel');
+
 Route::get('excel', 'Auth\VerificationController@excel')->name('excel');
 
 /*Laravel PHPExcel*/
