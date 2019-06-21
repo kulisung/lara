@@ -75,6 +75,7 @@ Route::get('export', 'Auth\VerificationController@export')->name('export');
 
 /*檢查MS SQL連線結果*/
 Route::get('result', 'Auth\VerificationController@result')->name('result');
+Route::get('sqlsrv', 'Auth\VerificationController@sqlsrv')->name('sqlsrv');
 
 /*匯出Excel*/
 Route::get('outputexcel', 'Auth\VerificationController@outputexcel')->name('outputexcel');
@@ -84,3 +85,6 @@ Route::get('excel', 'Auth\VerificationController@excel')->name('excel');
 /*Laravel PHPExcel*/
 Route::get('userexport','ExcelController@userexport');
 Route::get('import','ExcelController@import');
+
+Route::get('searchs', 'SearchsController@index')->name('searchs.index');
+Route::post('searchs/store', 'SearchsController@store')->name('searchs.store');

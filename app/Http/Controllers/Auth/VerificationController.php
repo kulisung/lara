@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Auth\VerifiesEmails;
 
 class VerificationController extends Controller
@@ -65,5 +66,10 @@ class VerificationController extends Controller
     {
         //匯出Excel
         return view('auth.excel');
+    }
+        public function search()
+    {
+        //匯出Excel
+        return view('auth.search');
     }
 }

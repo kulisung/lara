@@ -8,10 +8,13 @@
                 <li class="nav-item">
                   <a class="nav-link font-weight-bold" href={{ route('index') }}>Home <span class="sr-only">(current)</span></a>
                 </li>
+                @auth
                 <li class="nav-item">
                   <a class="nav-link font-weight-bold" href={{ route('posts.index') }}>測試系統</a>
                 </li>
-                @auth
+                <li class="nav-item">
+                    <a class="nav-link font-weight-bold" href={{ route('searchs.index')}}>資料查詢</a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link font-weight-bold" href={{ route('upload')}}>資料匯入</a>
                 </li>
@@ -21,6 +24,7 @@
                 <li class="nav-item">
                     <a class="nav-link font-weight-bold" href={{ route('result')}}>DB連線檢查</a>                    
                 </li>
+
                 @endauth
                 <li class="nav-item">
                   <a class="nav-link font-weight-bold" href="#">Other</a>

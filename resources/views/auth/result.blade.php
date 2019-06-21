@@ -1,9 +1,9 @@
 @extends('layouts.master')
-@section('title','結帳前查詢')
+@section('title','資料庫連結測試')
 @section('content')
 <?php
 $serverName = "60.250.217.237"; //serverName\instanceName
-$connectionInfo = array( "Database"=>"TENSALL", "UID"=>"sa", "PWD"=>"dsc@16725493", "CharacterSet" => "UTF-8");
+$connectionInfo = array( "Database"=>"ATV0002", "UID"=>"sa", "PWD"=>"dsc@16725493", "CharacterSet" => "UTF-8");
 $conn = sqlsrv_connect( $serverName, $connectionInfo);
 
 if( $conn ) {
