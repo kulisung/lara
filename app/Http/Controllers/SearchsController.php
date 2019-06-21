@@ -36,7 +36,7 @@ class SearchsController extends Controller
     public function store(Request $request)
     {
         $searchid = $request->input('TH002');
-        $purths = DB::connection('sqlsrv')->select('select * from purth where TH002 = ?',[$searchid]);
+        $purths = DB::select('select * from purth where TH002 = ?',[$searchid]);
         $data=[
             'purths'=>$purths
         ];
