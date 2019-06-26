@@ -2,7 +2,7 @@
 @section('title','資料庫連結測試')
 @section('content')
 <?php
-$serverName = "60.250.217.237"; //serverName\instanceName
+$serverName = "192.168.11.103"; //serverName\instanceName
 $connectionInfo = array( "Database"=>"ATV0002", "UID"=>"sa", "PWD"=>"dsc@16725493", "CharacterSet" => "UTF-8");
 $conn = sqlsrv_connect( $serverName, $connectionInfo);
 

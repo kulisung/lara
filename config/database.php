@@ -81,28 +81,16 @@ return [
         'sqlsrv' => [
             'driver' => 'sqlsrv',
             'url' => env('DATABASE_URL'),
-            'host' => env('DB_HOST', '60.250.217.237'),
-            'port' => env('DB_PORT', '1433'),
-            'database' => env('DB_DATABASE', 'ATV0002'),
-            'username' => env('DB_USERNAME', 'sa'),
-            'password' => env('DB_PASSWORD', 'dsc@16725493'),
+            'host' => env('DB_HOST_2', '192.168.11.103'),
+            'port' => env('DB_PORT_2', '1433'),
+            'database' => env('DB_DATABASE_2', 'ATV0002'),
+            'username' => env('DB_USERNAME_2', 'sa'),
+            'password' => env('DB_PASSWORD_2', 'dsc@16725493'),
             'charset' => 'utf8',
             'prefix' => '',
             'prefix_indexes' => true,
         ],
 
-        'sqlsrv_tensall' => [
-            'driver' => 'sqlsrv',
-            'url' => env('DATABASE_URL'),
-            'host' => env('DB_HOST', '60.250.217.237'),
-            'port' => env('DB_PORT', '1433'),
-            'database' => env('DB_DATABASE', 'TENSALL'),
-            'username' => env('DB_USERNAME', 'sa'),
-            'password' => env('DB_PASSWORD', 'dsc@16725493'),
-            'charset' => 'utf8',
-            'prefix' => '',
-            'prefix_indexes' => true,
-        ],
 
     ],
 
