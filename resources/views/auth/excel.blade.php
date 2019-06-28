@@ -6,8 +6,8 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 $spreadsheet = new Spreadsheet();
-$sheet       = $spreadsheet->getActiveSheet();
-$sheet->setCellValue('A1', '這是第一格');
+$sheet = $spreadsheet->getActiveSheet();
+$sheet->setCellValue('A1', 'Hello World !');
 
 $writer = new Xlsx($spreadsheet);
-$writer->save('存放於主機檔名.xlsx');
+$writer->save('hello world.xlsx');

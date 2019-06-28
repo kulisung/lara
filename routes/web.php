@@ -88,3 +88,6 @@ Route::get('import','ExcelController@import');
 
 Route::get('searchs', 'SearchsController@index')->name('searchs.index');
 Route::post('searchs/store', 'SearchsController@store')->name('searchs.store');
+Route::post('searchs/result01', 'SearchsController@result01')->name('searchs.result01');
+Route::post('searchs/purth_result', 'SearchsController@purth_result')->name('searchs.purth_result');
+Route::post('searchs/store', 'SearchsController@store')->name('searchs.store');

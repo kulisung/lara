@@ -19,6 +19,7 @@
                         <th>單號</th>
                         <th>序號</th>
                         <th>品號</th>
+                        <th>品名</th>
                         <th>數量</th>
                     </tr>
                 </thead>
@@ -29,6 +30,7 @@
                         <td>{{ $purth->TH002 }}</td>
                         <td>{{ $purth->TH003 }}</td>
                         <td>{{ $purth->TH004 }}</td>
+                        <td>{{ $purth->TH005 }}</td>
                         <td>{{ $purth->TH007 }}</td>
                     </tr>  
                     @endforeach
