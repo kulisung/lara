@@ -48,46 +48,43 @@ Route::get('foo', 'TestsController@index');
 
 /*取得PostsController後續頁面Route與Controller搭配 --此例為公告列表*/
 Route::get('posts', 'PostsController@index')->name('posts.index');
-
 /*出現公告新增的表單 */
 Route::get('posts/create', 'PostsController@create')->name('posts.create');
-
 /*出現指定要修改的公告 id=第幾則 */
 Route::get('posts/{id}/edit', 'PostsController@edit')->name('posts.edit');
-
 /*show出指定的公告 id=第幾則 */
 Route::get('posts/{id}', 'PostsController@show')->name('posts.show');
-
 /*實際post的儲存表單 */
 Route::post('posts/store', 'PostsController@store')->name('posts.store');
-
 /*實際儲存修改的資料 */
 Route::patch('posts/{id}', 'PostsController@update')->name('posts.update');
-
 /*刪除指定改的資料 */
 Route::delete('posts/{id}', 'PostsController@destroy')->name('posts.destroy');
 
-/*上傳檔案  */
+
+//上傳檔案
 Route::get('upload', 'Auth\VerificationController@upload')->name('upload');
 
-/*匯出頁面 */
+/*
+//匯出頁面
 Route::get('export', 'Auth\VerificationController@export')->name('export');
-
-/*檢查MS SQL連線結果*/
-Route::get('result', 'Auth\VerificationController@result')->name('result');
-Route::get('sqlsrv', 'Auth\VerificationController@sqlsrv')->name('sqlsrv');
-
-/*匯出Excel*/
+//匯出Excel 測試
 Route::get('outputexcel', 'Auth\VerificationController@outputexcel')->name('outputexcel');
-
 Route::get('excel', 'Auth\VerificationController@excel')->name('excel');
-
-/*Laravel PHPExcel*/
+//Laravel PHPExcel 
 Route::get('userexport','ExcelController@userexport');
 Route::get('import','ExcelController@import');
+*/
 
+//檢查MS SQL連線結果
+Route::get('dbresult', 'Auth\VerificationController@dbresult')->name('auth.dbresult');
+Route::post('auth/test', 'Auth\VerificationController@test')->name('auth.test');
+
+// Search Route
 Route::get('searchs', 'SearchsController@index')->name('searchs.index');
 Route::post('searchs/store', 'SearchsController@store')->name('searchs.store');
 Route::post('searchs/result01', 'SearchsController@result01')->name('searchs.result01');
 Route::post('searchs/purth_result', 'SearchsController@purth_result')->name('searchs.purth_result');
-Route::post('searchs/store', 'SearchsController@store')->name('searchs.store');
+Route::post('searchs/pos_inv', 'SearchsController@pos_inv')->name('searchs.pos_inv');
+Route::post('searchs/ship_data', 'SearchsController@ship_data')->name('searchs.ship_data');
+//Route::post('searchs/store', 'SearchsController@store')->name('searchs.store');

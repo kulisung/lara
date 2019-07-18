@@ -1,12 +1,14 @@
 @extends('layouts.master')
-@section('title','測試系統')
+@section('title','簡易公告系統')
 @section('content')
 <div class="container">
     <div class="row">
         <div class="col-12">
             <br>
-            <h2>內容列表</h2>
+            <h3>公告內容列表</h3>
+        @auth
         <a href="{{ route('posts.create')}}" class="btn btn-success btn-sm">新增內容</a>
+        @endauth
         </div>
         <br>
         <div class="col-12">
