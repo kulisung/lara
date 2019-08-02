@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Auth\VerifiesEmails;
 
@@ -51,25 +52,31 @@ class VerificationController extends Controller
         return view('auth.export');
     }
 
-    public function result()
+    public function dbresult()
     {
         //檢視MS SQL連線結果
-        return view('auth.result');
+        return view('auth.dbresult');
     }
-
-    public function outputexcel()
-    {
-        //匯出Excel
-        return view('auth.outputexcel');
-    }
-    public function excel()
-    {
-        //匯出Excel
-        return view('auth.excel');
-    }
+  
         public function search()
     {
         //匯出Excel
         return view('auth.search');
+    }
+
+    //以下資料查詢
+    public function test(Request $request)
+    //public function test()
+    {
+        $searchid1 = $request->input('TH001').'%';
+        $searchid2 = $request->input('TH002').'%';
+        //$searchid1 = $_GET['TH001'].'%';
+        //$searchid2 = $_GET['TH002'].'%';
+        $purths = DB::connection('sqlsrv_tensall')->select('select * from PURTH where TH001 like ? and TH002 like ?',[$searchid1, $searchid2]);
+        //$purths = DB::connection('sqlsrv')->table('PURTH')->where('TH002', 'like', $searchid)->get();
+        $data=[
+            'purths'=>$purths
+        ];
+        return view('auth.test', $data);
     }
 }

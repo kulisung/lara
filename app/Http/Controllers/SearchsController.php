@@ -54,15 +54,6 @@ class SearchsController extends Controller
     {
         $productid = $request->input('TH004').'%';
         $purths = DB::connection('sqlsrv_atv0002')->select('select TH001,TH002,TH003,TH004,TH007,SUM(TJ009) as SUMQTY from PURTH LEFT JOIN PURTJ ON PURTH.TH002=PURTJ.TJ014 and PURTH.TH003=PURTJ.TJ015 and PURTJ.TJ020=? WHERE TH030=? AND TH004 like ? GROUP BY TH001,TH002,TH003,TH004,TH007 ORDER BY TH002 DESC,TH003',['Y', 'Y', $productid]);
-        /*
-        $purths = DB::connection('sqlsrv_atv0002')
-                    ->table('PURTH')
-                    ->select('TH001', 'TH002', 'TH003', 'TH004', 'TH007', 'TJ009')
-                    ->leftJoin('PURTJ', 'PURTH.TH002', '=', 'PURTJ.TJ014', 'PURTH.TH003', '=', 'PURTJ.TJ015', 'PURTJ.TJ020', '=', 'Y')
-                    ->where('TH030', '=', 'Y')
-                    ->where('TH004', '=', $productid)
-                    ->get();
-        */            
         $data=[
             'purths'=>$purths
         ];
@@ -72,38 +63,53 @@ class SearchsController extends Controller
     public function pos_inv(Request $request)
     {
         
-        $date_str = $request->input('TG003');
-        $date_end = $request->input('TG003');
-        /* 原SQL 敘述
-        SELECT TG004 as '客戶代碼',TG007 as '客戶全名',TG003 as '銷貨日期','部門'=CASE WHEN TG005='D200' THEN '管理部' WHEN TG005='D700' THEN '國際市場部' WHEN TG005='D620' THEN '大中華市場部' WHEN TG005='D610' THEN 'ODM/OEM' ELSE '其他' END,
-        '品牌'=CASE WHEN MB008='01' THEN 'TS6' WHEN K.MB008='02' THEN 'ODM' ELSE 'OTHER' END,
-        '四大類'=CASE WHEN MB006='21' THEN '食品' WHEN MB006='22' THEN '化妝品' WHEN MB006='23' THEN '私密保養品'
-        WHEN MB006='26' THEN '商品成品' ELSE 'OTHER' END ,TH004 AS '品號',
-        TH005 as '品名','數量'=TH008+TH024,TG012 as '匯率/單位',TG098 AS '發票起號' , TG014 AS '發票迄號',
-        TH001 as '單別',TH002 as '單號' ,TH003 as '序號' 
-        FROM  COPMA D ,COPTG E,COPTH H,INVMB K 
-        WHERE E.TG001=H.TH001 
-        AND E.TG002=H.TH002 
-        AND H.TH004=K.MB001
-        AND D.MA001=E.TG004
-        AND TG004='ATP0002'
-        AND TG003>='20190606'
-        AND TG003<='20190610'
-        AND TH007='B24'
-        AND TG023<> 'V' 
-        ORDER BY TG098,TG014,TH001,TH002,TH003
-        */
+        $date_str = $request->input('date1');
+        $date_end = $request->input('date2');
+        $invs = DB::connection('sqlsrv_tensall')->select('SELECT TH001,TH002,TH003,TH004,TH005,TG003,TG004,TG005,TG007,TG012,TG014,TG098,MB006,MB008,SUM(TH008+TH024) as QTY FROM COPTH LEFT JOIN COPTG ON (COPTH.TH001=COPTG.TG001 AND COPTH.TH002=COPTG.TG002 AND COPTH.TH007=? AND COPTG.TG004=? AND COPTG.TG023<>?) LEFT JOIN INVMB ON (COPTH.TH004=INVMB.MB001) WHERE COPTG.TG003>=? AND COPTG.TG003<=? GROUP BY TH001,TH002,TH003,TH004,TH005,TG003,TG004,TG005,TG007,TG012,TG014,TG098,MB006,MB008',['B24','ATP0002','V',$date_str,$date_end]);
+
+        /*
         $invs = DB::connection('sqlsrv_tensall')
-                    ->table('COPMA', 'COPTG', 'COPTH', 'INVMB')
-                    ->select('TG003', 'TG004', 'TG005', 'TG00', '', '', '', '', '')
+                    ->table('COPTG', 'COPTH', 'INVMB')
+                    ->select('TH001', 'TH002', 'TH003', 'TH004', 'TG003', 'TG004', 'TG005', 'TG014', 'TG098', 'MB006', 'MB008')
                     ->where('TG003', '>=', $date_str)
                     ->where('TG003', '<=', $date_end)
                     ->get();
+        */
+
         $data=[
             'invs'=>$invs
         ];
-        return view('searchs.show', $data);
+        //return view('searchs.show', $data);
+        return view('searchs.pos_inv', $data);
     }
+
+public function ship_data(Request $request)
+    {
+        
+        $date_str = $request->input('date3');
+        $date_end = $request->input('date4');
+        $ships = DB::connection('sqlsrv_tensall')->select('SELECT TG004,TG007,TG003,TH001,TH002,TH027,TH028,SUM(TH013) as NTD 
+        FROM COPTH A,COPTG B 
+        WHERE A.TH001=B.TG001 
+        AND A.TH002=B.TG002 
+        AND A.TH026=? 
+        AND B.TG003>=? 
+        AND B.TG003<=? 
+        GROUP BY TG004,TG007,TG003,TH001,TH002,TH027,TH028 
+        ORDER BY TG004,TH002',['Y',$date_str,$date_end]);
+
+        $data=[
+            'ships'=>$ships
+        ];
+        //return view('searchs.show', $data);
+        return view('searchs.ship_data', $data);
+    }
+
+    public function export_file(Request $request)
+    {
+        //     
+    }
+
 
     /**
      * Display the specified resource.

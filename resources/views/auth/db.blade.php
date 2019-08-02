@@ -9,4 +9,5 @@ $connectionInfo = array(
 );
 // connection to the database
 $conn = sqlsrv_connect( $serverName, $connectionInfo) or die("Couldn't connect to SQL Server on $dbHost");
+
 ?>

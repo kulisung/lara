@@ -7,7 +7,6 @@
             <br>
             <h3>賢齊進退貨資料查詢結果</h3>
         <a href={{ route('searchs.index') }} class="btn btn-success btn-sm">返回</a>
-        <a href={{ route('searchs.index') }} class="btn btn-success btn-sm">匯出Excel</a>
         </div>
         <br>
         <div class="col-12">
