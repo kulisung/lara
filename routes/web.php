@@ -80,7 +80,7 @@ Route::post('ship_data_export','ExcelController@ship_data_export')->name('ship_d
 
 //檢查MS SQL連線結果
 Route::get('dbresult', 'Auth\VerificationController@dbresult')->name('auth.dbresult');
-Route::post('auth/test', 'Auth\VerificationController@test')->name('auth.test');
+//Route::post('auth/test', 'Auth\VerificationController@test')->name('auth.test');
 
 // Search Route
 Route::get('searchs', 'SearchsController@index')->name('searchs.index');

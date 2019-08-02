@@ -41,29 +41,12 @@ class VerificationController extends Controller
         $this->middleware('throttle:6,1')->only('verify', 'resend');
     }
 
-    public function upload()
-    {
-        //return view('auth.upload');
-    }
-
-    public function export()
-    {
-        //匯出頁面
-        //return view('auth.export');
-    }
-
     public function dbresult()
     {
         //檢視MS SQL連線結果
         return view('auth.dbresult');
     }
   
-        public function search()
-    {
-        //匯出Excel
-        return view('auth.search');
-    }
-
     //以下資料查詢
     public function test(Request $request)
     //public function test()

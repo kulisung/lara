@@ -14,7 +14,6 @@
                     <label>進貨單號</label>
                     <input type="text" name="TH002" id="TH002">                    
                     <button type="submit" class="btn btn-primary btn-sm">查詢</button>
-            <button type="submit" class="btn btn-primary btn-sm" formaction="{{ route('auth.test')}}">查詢2</button>
             </div>
             </form>
             <h5>#賢齊進退貨資料查詢(測試)</h5>
@@ -24,8 +23,7 @@
                     <label>By品號</label>
                     <input type="text" name="TH004" id="TH004">
                     <button type="submit" class="btn btn-primary btn-sm">查詢</button>
-                    <button type="submit" class="btn btn-secondary btn-sm" formaction="exportfiles\exportexcel.php" onclick="return confirm('確認是否匯出Excel?');">匯出Excel</button>
-                    <button type="submit" class="btn btn-secondary btn-sm" formaction={{ route('export_xls') }} onclick="return confirm('確認是否匯出Excel?');">匯出Excel-Test</button>
+                    <button type="submit" class="btn btn-secondary btn-sm" formaction={{ route('export_xls') }} onclick="return confirm('確認是否匯出Excel?');">匯出Excel</button>
             </div>
             </form>
             <h5>#展場銷貨查詢(測試)</h5>

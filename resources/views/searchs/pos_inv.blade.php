@@ -32,7 +32,6 @@
                 <tbody>
                     @foreach ($invs as $inv)
                     <tr>
-<<<<<<< HEAD
                         <td>{{ $inv->TG004 }}</td>
                         <td>{{ $inv->TG007 }}</td>
                         <td>{{ $inv->TG003 }}</td>
@@ -48,23 +47,6 @@
                         <td>{{ $inv->TH001 }}</td>
                         <td>{{ $inv->TH002 }}</td>
                         <td>{{ $inv->TH003 }}</td>
-=======
-                        <td><span style="font-size:16px;">{{ $inv->TG004 }}</td>
-                        <td><span style="font-size:14px;">{{ $inv->TG007 }}</td>
-                        <td><span style="font-size:14px;">{{ $inv->TG003 }}</td>
-                        <td><span style="font-size:14px;">{{ $inv->TG005 }}</td>
-                        <td><span style="font-size:14px;">{{ $inv->MB008 }}</td>
-                        <td><span style="font-size:14px;">{{ $inv->MB006 }}</td>
-                        <td><span style="font-size:14px;">{{ $inv->TH004 }}</td>
-                        <td><span style="font-size:16px;">{{ $inv->TH005 }}</td>
-                        <td><span style="font-size:14px;">{{ $inv->QTY }}</td>
-                        <td><span style="font-size:14px;">{{ $inv->TG012 }}</td>
-                        <td><span style="font-size:14px;">{{ $inv->TG098 }}</td>
-                        <td><span style="font-size:14px;">{{ $inv->TG014 }}</td>
-                        <td><span style="font-size:14px;">{{ $inv->TH001 }}</td>
-                        <td><span style="font-size:14px;">{{ $inv->TH002 }}</td>
-                        <td><span style="font-size:14px;">{{ $inv->TH003 }}</td>
->>>>>>> 21bc83d3b4670e5d41e1351f652dbb1bc0d5c126
                     </tr>  
                     @endforeach
                 </tbody>
