@@ -89,4 +89,3 @@ Route::post('searchs/result01', 'SearchsController@result01')->name('searchs.res
 Route::post('searchs/purth_result', 'SearchsController@purth_result')->name('searchs.purth_result');
 Route::post('searchs/pos_inv', 'SearchsController@pos_inv')->name('searchs.pos_inv');
 Route::post('searchs/ship_data', 'SearchsController@ship_data')->name('searchs.ship_data');
-
