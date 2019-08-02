@@ -61,20 +61,22 @@ Route::patch('posts/{id}', 'PostsController@update')->name('posts.update');
 /*刪除指定改的資料 */
 Route::delete('posts/{id}', 'PostsController@destroy')->name('posts.destroy');
 
-
+/*
 //上傳檔案
 Route::get('upload', 'Auth\VerificationController@upload')->name('upload');
-
-/*
 //匯出頁面
 Route::get('export', 'Auth\VerificationController@export')->name('export');
 //匯出Excel 測試
 Route::get('outputexcel', 'Auth\VerificationController@outputexcel')->name('outputexcel');
 Route::get('excel', 'Auth\VerificationController@excel')->name('excel');
-//Laravel PHPExcel 
-Route::get('userexport','ExcelController@userexport');
-Route::get('import','ExcelController@import');
 */
+
+//Laravel Excel 
+Route::get('userexport','ExcelController@userexport')->name('userexport');
+Route::post('userimport','ExcelController@userimport')->name('userimport');
+Route::get('AllUserExport','ExcelController@AllUserExport')->name('AllUserExport');
+Route::post('export_xls','ExcelController@export_xls')->name('export_xls');
+Route::post('ship_data_export','ExcelController@ship_data_export')->name('ship_data_export');
 
 //檢查MS SQL連線結果
 Route::get('dbresult', 'Auth\VerificationController@dbresult')->name('auth.dbresult');
@@ -87,4 +89,4 @@ Route::post('searchs/result01', 'SearchsController@result01')->name('searchs.res
 Route::post('searchs/purth_result', 'SearchsController@purth_result')->name('searchs.purth_result');
 Route::post('searchs/pos_inv', 'SearchsController@pos_inv')->name('searchs.pos_inv');
 Route::post('searchs/ship_data', 'SearchsController@ship_data')->name('searchs.ship_data');
-//Route::post('searchs/store', 'SearchsController@store')->name('searchs.store');
+

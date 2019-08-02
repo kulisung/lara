@@ -6,12 +6,10 @@
         <div class="col-12">
             <br>
             <h2>查詢結果</h2>
-        <a href={{ route('searchs.index') }} class="btn btn-success btn-sm">返回</a>
+        <p><a href={{ route('searchs.index') }} class="btn btn-success btn-sm">返回</a></p>
         </div>
-        <br>
-        <div class="col-12">
-            <br>
-            <table class="table table-hover">
+        <div class="col-12 table-cont" id="table-cont">
+            <table class="table table-hover table-striped">
                 <thead>
                     <tr>
                         <th>單別</th>

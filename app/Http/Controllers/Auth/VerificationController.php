@@ -43,13 +43,13 @@ class VerificationController extends Controller
 
     public function upload()
     {
-        return view('auth.upload');
+        //return view('auth.upload');
     }
 
     public function export()
     {
         //匯出頁面
-        return view('auth.export');
+        //return view('auth.export');
     }
 
     public function dbresult()

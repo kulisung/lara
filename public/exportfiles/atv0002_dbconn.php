@@ -1,5 +1,5 @@
 <?php 
-define('DBHOST', '192.168.11.103');
+define('DBHOST', '60.250.217.237');
 define('DBNAME', 'ATV0002');
 define('DBUSER', 'sa');
 define('DBPWD', 'dsc@16725493');

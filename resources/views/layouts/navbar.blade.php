@@ -16,7 +16,7 @@
                     <a class="nav-link font-weight-bold" href={{ route('searchs.index')}}>資料查詢</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link font-weight-bold" href={{ route('upload')}}>資料匯入</a>
+                    <a class="nav-link font-weight-bold" href={{ route('AllUserExport')}}>資料匯入</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link font-weight-bold" href={{ route('auth.dbresult')}}>DB連線檢查</a>                    

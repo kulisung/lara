@@ -81,7 +81,7 @@ return [
         'sqlsrv_atv0002' => [
             'driver' => 'sqlsrv',
             'url' => env('DATABASE_URL'),
-            'host' => env('DB_HOST_ATV0002', '192.168.11.103'),
+            'host' => env('DB_HOST_ATV0002', '60.250.217.237'),
             'port' => env('DB_PORT_ATV0002', '1433'),
             'database' => env('DB_DATABASE_ATV0002', 'ATV0002'),
             'username' => env('DB_USERNAME_ATV0002', 'sa'),
