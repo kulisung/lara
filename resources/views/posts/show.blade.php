@@ -8,8 +8,10 @@
         </div>
         <div>
         <a href="{{ route('posts.index') }}" class="btn btn-secondary btn-sm">返回</a>
+        @auth
         <a href="{{ route('posts.edit',$post->id) }}" class="btn btn-primary btn-sm">編輯</a>
         <a href="#" class="btn btn-danger btn-sm" onclick="document.getElementById('delete').submit()">刪除</a>
+        @endauth
         <form method="post" action="{{ route('posts.destroy',$post->id) }}" id='delete'>
             @csrf
             {{ method_field('DELETE') }}

@@ -21,7 +21,6 @@
                 <li class="nav-item">
                     <a class="nav-link font-weight-bold" href={{ route('auth.dbresult')}}>DB連線檢查</a>                    
                 </li>
-
                 @endauth
                 <li class="nav-item">
                   <a class="nav-link font-weight-bold" href="#">Other</a>
@@ -31,9 +30,6 @@
                 @guest
                 <li class="nav-item">
                     <a class="nav-link font-weight-bold" href={{ route('login')}}>Login</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link font-weight-bold" href={{ route('register')}}>Register</a>
                 </li>
                 @endguest
                 @auth
@@ -48,6 +44,11 @@
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                     @csrf
                     </form>
+                @if (Auth::user()->username=='admin')
+                <li class="nav-item">
+                    <a class="nav-link font-weight-bold" href={{ route('register')}}>Register</a>
+                </li>
+                @endif
                 @endauth
             </ul>
         </div>

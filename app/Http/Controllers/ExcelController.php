@@ -132,7 +132,6 @@ class ExcelController extends Controller
         $worksheet->setCellValueByColumnAndRow(5, 1, '進貨數量');
         $worksheet->setCellValueByColumnAndRow(6, 1, '合計已退貨數量');
 
-        //$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $j = 1;
         foreach ($purths as $purth) {
             $j = $j + 1;
@@ -191,7 +190,6 @@ class ExcelController extends Controller
         $worksheet->setCellValueByColumnAndRow(7, 1, '結帳單號');
         $worksheet->setCellValueByColumnAndRow(8, 1, '未稅金額');
 
-        //$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $j = 1;
         foreach ($ship_data as $ship) {
             $j = $j + 1;

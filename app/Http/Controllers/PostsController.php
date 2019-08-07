@@ -43,7 +43,7 @@ class PostsController extends Controller
         //
         $att['title'] = $request->input('title');
         $att['content'] = $request->input('content');
-        $att['user_id'] = auth()->user()->name;
+        $att['user_id'] = auth()->user()->username;
         $att['views'] = 0;
         $att['created_at'] = now();
         $att['updated_at'] = now();
