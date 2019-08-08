@@ -1,11 +1,11 @@
 @extends('layouts.master')
-@section('title',' Import and Export Excel xls xlsx and CSV!')
+@section('title','Import and Export !')
 @section('content')
 @auth
      <div class="container">
          <div class="card-text-center">
              <div class="card-header">
-                <h5>使用者帳號匯出</h5>
+                <h8>使用者帳號匯出</h8>
              </div>
              <div class="card-body">
                  <ul class="nav nav-tabs card-header-tabs">
@@ -18,7 +18,7 @@
          </div>
          <div class="card">
              <div class="card-header">
-                <h5>使用者帳號匯入</h5>
+                <h8>使用者帳號匯入</h8>
              </div>
              <div class="card-body">
                 <form style="border: 1pt solid #a1cbef;margin: 10px;padding: 10px;" action="{{ route('userimport') }}" class="form" method="post" enctype="multipart/form-data">

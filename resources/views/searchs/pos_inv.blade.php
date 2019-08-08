@@ -6,7 +6,7 @@
         <div class="col-12">
             <br>
             <h5>查詢結果</h5>
-        <p><a href={{ route('searchs.index') }} class="btn btn-success btn-sm">返回</a></p>
+        <p><a href={{ route('searchs.search2') }} class="btn btn-success btn-sm">返回</a></p>
         </div>
         <div class="col-12 table-cont" id="table-cont">
             <table class="table table-hover table-striped">

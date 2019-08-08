@@ -2,7 +2,7 @@
 @section('title','資料查詢系統')
 @section('content')
 @auth
-<div class="container">
+<div class="container" style="background-color:#DEFFFF;">
     <div class="row">
         <div class="col-12">
             <h5>#天賜爾進貨單資料查詢(測試)</h5>

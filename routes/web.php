@@ -84,6 +84,9 @@ Route::get('dbresult', 'Auth\VerificationController@dbresult')->name('auth.dbres
 
 // Search Route
 Route::get('searchs', 'SearchsController@index')->name('searchs.index');
+Route::get('searchs/search1', 'SearchsController@search1')->name('searchs.search1');
+Route::get('searchs/search2', 'SearchsController@search2')->name('searchs.search2');
+Route::get('searchs/search3', 'SearchsController@search3')->name('searchs.search3');
 Route::post('searchs/store', 'SearchsController@store')->name('searchs.store');
 Route::post('searchs/result01', 'SearchsController@result01')->name('searchs.result01');
 Route::post('searchs/purth_result', 'SearchsController@purth_result')->name('searchs.purth_result');

@@ -17,6 +17,22 @@ class SearchsController extends Controller
         return view('searchs.index');        
     }
 
+    public function search1()
+    {
+        return view('searchs.search1');        
+    }
+
+    public function search2()
+    {
+        return view('searchs.search2');        
+    }
+    
+    public function search3()
+    {
+        return view('searchs.search3');        
+    }
+
+
     /**
      * Show the form for creating a new resource.
      *
