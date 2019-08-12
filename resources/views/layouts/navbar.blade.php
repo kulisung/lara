@@ -13,7 +13,7 @@
                 </li>
                 @auth
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">資料查詢</a>
+                    <a class="nav-link font-weight-bold dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">資料查詢</a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item font-weight-bold" id='search1' href={{ route('searchs.search1')}}>進貨資訊查詢</a>
                         <a class="dropdown-item font-weight-bold" id='search2' href={{ route('searchs.search2')}}>展場庫存查詢</a>
@@ -50,12 +50,11 @@
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                     @csrf
                     </form>
-                @if (Auth::user()->username=='admin')
+                @endauth
                 <li class="nav-item">
                     <a class="nav-link font-weight-bold" href={{ route('register')}}>Register</a>
                 </li>
-                @endif
-                @endauth
+      
             </ul>
         </div>
 </nav>

@@ -16,11 +16,11 @@ Route::get('/home', function () {
     return view('home');
 });
 
-/*Auth 
+//Auth 
 Auth::routes();
-Route::get('/home', 'HomeController@index')->name('home');
-以上 Auth::routes() 語法就包含了底下 登入、登出、註冊、忘記密碼、等幾個Route
-*/
+//Route::get('/home', 'HomeController@index')->name('home');
+//以上 Auth::routes() 語法就包含了底下 登入、登出、註冊、忘記密碼、等幾個Route
+
 
 #登入
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');

@@ -19,7 +19,6 @@
                         <th>發表時間</th>
                         <th>標題</th>
                         <th>發表人</th>
-                        <th>點閱數</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -28,7 +27,6 @@
                         <td>{{ $post->created_at }}</td>
                         <td><a href="{{ route('posts.show',$post->id) }}">{{ $post->title }}</a></td>
                         <td>{{ $post->user_id }}</td>
-                        <td>{{ $post->views }}</td>
                     </tr>  
                     @endforeach
                 </tbody>
