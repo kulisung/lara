@@ -178,8 +178,10 @@ class ExcelController extends Controller
             //return View('nodata')->with('result', $result);
         
         $spreadsheet = new Spreadsheet();  // 開新excel檔案
-        $worksheet = $spreadsheet->getActiveSheet(); 
-        $worksheet->setTitle('進貨單資料明細');
+        $spreadsheet->setActiveSheetIndex(0);  //指定工作頁索引
+        $worksheet = $spreadsheet->getActiveSheet(0)->setTitle('進貨單資料明細'); //指定工作表明稱
+        //$worksheet = $spreadsheet->setTitle('進貨單資料明細'); 
+        //$worksheet->setTitle('進貨單資料明細');
         //定義欄位
         $worksheet->setCellValueByColumnAndRow(1, 1, '客戶代碼');
         $worksheet->setCellValueByColumnAndRow(2, 1, '客戶全名');
@@ -201,8 +203,15 @@ class ExcelController extends Controller
             $worksheet->setCellValueByColumnAndRow(6, $j, $ship->TH027);
             $worksheet->setCellValueByColumnAndRow(7, $j, $ship->TH028);
             $worksheet->setCellValueByColumnAndRow(8, $j, $ship->NTD);
+
         }
 
+        $spreadsheet->createSheet(); //新增工作頁
+        $spreadsheet->setActiveSheetIndex(1); //指定工作頁索引
+        $worksheet = $spreadsheet->getActiveSheet(1)->setTitle('test'); //指定工作表名稱
+        //$worksheet = $spreadsheet->setTitle('進貨單');
+
+        $spreadsheet->setActiveSheetIndex(0); //最後指定回第一頁MS Excel開啟顯示
         // 下载
         $filename = '銷貨對帳單明細.xlsx';
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
