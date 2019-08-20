@@ -112,9 +112,9 @@ class ExcelController extends Controller
     public function export_xls(Request $request) 
     {
         $productid = $request->input('TH004').'%';
-        $purths = DB::connection('sqlsrv_atv0002')->select('select TH001,TH002,TH003,TH004,TH007,SUM(TJ009) as SUMQTY from PURTH LEFT JOIN PURTJ ON PURTH.TH002=PURTJ.TJ014 and PURTH.TH003=PURTJ.TJ015 and PURTJ.TJ020=? WHERE TH030=? AND TH004 like ? GROUP BY TH001,TH002,TH003,TH004,TH007 ORDER BY TH002 DESC,TH003',['Y', 'Y', $productid]);
+        $worktimes = DB::connection('sqlsrv_atv0002')->select('select TH001,TH002,TH003,TH004,TH007,SUM(TJ009) as SUMQTY from worktime LEFT JOIN PURTJ ON worktime.TH002=PURTJ.TJ014 and worktime.TH003=PURTJ.TJ015 and PURTJ.TJ020=? WHERE TH030=? AND TH004 like ? GROUP BY TH001,TH002,TH003,TH004,TH007 ORDER BY TH002 DESC,TH003',['Y', 'Y', $productid]);
  
-        if (count($purths)<1) {
+        if (count($worktimes)<1) {
             $result = 'No data!';
             return View('nodata')->with('result', $result);
         }else{
@@ -133,18 +133,93 @@ class ExcelController extends Controller
         $worksheet->setCellValueByColumnAndRow(6, 1, '合計已退貨數量');
 
         $j = 1;
-        foreach ($purths as $purth) {
+        foreach ($worktimes as $worktime) {
             $j = $j + 1;
-            $worksheet->setCellValueByColumnAndRow(1, $j, $purth->TH001);
-            $worksheet->setCellValueByColumnAndRow(2, $j, $purth->TH002);
-            $worksheet->setCellValueByColumnAndRow(3, $j, $purth->TH003);
-            $worksheet->setCellValueByColumnAndRow(4, $j, $purth->TH004);
-            $worksheet->setCellValueByColumnAndRow(5, $j, $purth->TH007);
-            $worksheet->setCellValueByColumnAndRow(6, $j, $purth->SUMQTY);
+            $worksheet->setCellValueByColumnAndRow(1, $j, $worktime->TH001);
+            $worksheet->setCellValueByColumnAndRow(2, $j, $worktime->TH002);
+            $worksheet->setCellValueByColumnAndRow(3, $j, $worktime->TH003);
+            $worksheet->setCellValueByColumnAndRow(4, $j, $worktime->TH004);
+            $worksheet->setCellValueByColumnAndRow(5, $j, $worktime->TH007);
+            $worksheet->setCellValueByColumnAndRow(6, $j, $worktime->SUMQTY);
         }
 
         // 下载
         $filename = '進退貨彙總.xlsx';
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="'.$filename.'"');
+        header('Cache-Control: max-age=0');
+
+        $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
+        $writer->save('php://output'); 
+        
+        }
+    }
+
+    //展場銷貨匯出
+    public function pos_inv_export(Request $request) 
+    {
+        $date_str = $request->input('date1');
+        $date_end = $request->input('date2');
+        $invs = DB::connection('sqlsrv_tensall')->select('SELECT TH001,TH002,TH003,TH004,TH005,TG003,TG004,CASE TG005 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END as TG005,TG007,TG012,TG014,TG098,CASE MB006 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END as MB006,CASE MB008 WHEN ? THEN ? WHEN ? THEN ? ELSE ? END as MB008,SUM(TH008+TH024) as QTY FROM COPTH LEFT JOIN COPTG ON (COPTH.TH001=COPTG.TG001 AND COPTH.TH002=COPTG.TG002 AND COPTH.TH007=? AND COPTG.TG004=? AND COPTG.TG023<>?) LEFT JOIN INVMB ON (COPTH.TH004=INVMB.MB001) WHERE COPTG.TG003>=? AND COPTG.TG003<=? GROUP BY TH001,TH002,TH003,TH004,TH005,TG003,TG004,TG005,TG007,TG012,TG014,TG098,MB006,MB008',['D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','21','食品','22','化妝品','23','私密保養品','26','商品成品','Other','01','TS6','02','ODM','Other','B24','ATP0002','V',$date_str,$date_end]);
+
+        if (count($invs)<1) {
+            $result = '查無資料，請檢查條件是否輸入正確!!';
+            return View('nodata')->with('result', $result);
+        }else{
+            //$result = 'Good Job!';
+            //return View('nodata')->with('result', $result);
+        
+        $spreadsheet = new Spreadsheet();  // 開新excel檔案
+        $spreadsheet->setActiveSheetIndex(0);  //指定工作頁索引
+        $worksheet = $spreadsheet->getActiveSheet(0)->setTitle('sales&invoice'); //指定工作表明稱
+        //$worksheet = $spreadsheet->setTitle('進貨單資料明細'); 
+        //$worksheet->setTitle('進貨單資料明細');
+        //定義欄位
+        $worksheet->setCellValueByColumnAndRow(1, 1, '客戶代碼');
+        $worksheet->setCellValueByColumnAndRow(2, 1, '客戶全名');
+        $worksheet->setCellValueByColumnAndRow(3, 1, '銷貨日期');
+        $worksheet->setCellValueByColumnAndRow(4, 1, '部門');
+        $worksheet->setCellValueByColumnAndRow(5, 1, '品牌');
+        $worksheet->setCellValueByColumnAndRow(6, 1, '四大類');
+        $worksheet->setCellValueByColumnAndRow(7, 1, '品號');
+        $worksheet->setCellValueByColumnAndRow(8, 1, '品名');
+        $worksheet->setCellValueByColumnAndRow(9, 1, '數量');
+        $worksheet->setCellValueByColumnAndRow(10, 1, '匯率/單位');
+        $worksheet->setCellValueByColumnAndRow(11, 1, '發票起號');
+        $worksheet->setCellValueByColumnAndRow(12, 1, '發票迄號');
+        $worksheet->setCellValueByColumnAndRow(13, 1, '單別');
+        $worksheet->setCellValueByColumnAndRow(14, 1, '單號');
+        $worksheet->setCellValueByColumnAndRow(15, 1, '序號');
+
+        $j = 1;
+        foreach ($invs as $inv) {
+            $j = $j + 1;
+            $worksheet->setCellValueByColumnAndRow(1, $j, $inv->TG004);
+            $worksheet->setCellValueByColumnAndRow(2, $j, $inv->TG007);
+            $worksheet->setCellValueByColumnAndRow(3, $j, $inv->TG003);
+            $worksheet->setCellValueByColumnAndRow(4, $j, $inv->TG005);
+            $worksheet->setCellValueByColumnAndRow(5, $j, $inv->MB008);
+            $worksheet->setCellValueByColumnAndRow(6, $j, $inv->MB006);
+            $worksheet->setCellValueByColumnAndRow(7, $j, $inv->TH004);
+            $worksheet->setCellValueByColumnAndRow(8, $j, $inv->TH005);
+            $worksheet->setCellValueByColumnAndRow(9, $j, $inv->QTY);
+            $worksheet->setCellValueByColumnAndRow(10, $j, $inv->TG012);
+            $worksheet->setCellValueByColumnAndRow(11, $j, $inv->TG098);
+            $worksheet->setCellValueByColumnAndRow(12, $j, $inv->TG014);
+            $worksheet->setCellValueByColumnAndRow(13, $j, $inv->TH001);
+            $worksheet->setCellValueByColumnAndRow(14, $j, $inv->TH002);
+            $worksheet->setCellValueByColumnAndRow(15, $j, $inv->TH003);
+
+        }
+
+        $spreadsheet->createSheet(); //新增工作頁
+        $spreadsheet->setActiveSheetIndex(1); //指定工作頁索引
+        $worksheet = $spreadsheet->getActiveSheet(1)->setTitle('Stocks'); //指定工作表名稱
+        //$worksheet = $spreadsheet->setTitle('進貨單');
+
+        $spreadsheet->setActiveSheetIndex(0); //最後指定回第一頁MS Excel開啟顯示
+        // 下载
+        $filename = '展場庫存&Invoice.xlsx';
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment;filename="'.$filename.'"');
         header('Cache-Control: max-age=0');
@@ -171,7 +246,7 @@ class ExcelController extends Controller
         ORDER BY TG004,TH002',['Y',$date_str,$date_end]);
 
         if (count($ship_data)<1) {
-            $result = 'No data!';
+            $result = '查無資料，請檢查條件是否輸入正確!!';
             return View('nodata')->with('result', $result);
         }else{
             //$result = 'Good Job!';
@@ -223,5 +298,62 @@ class ExcelController extends Controller
         
         }
     }
+
+    //製令工時匯出
+    public function WorkingTimeExport(Request $request) 
+    {
+        $sqlkey = $request->input('workdate').'%';
+        $worktimes = DB::connection('sqlsrv_tensall')->select('Select CSTMB.MB007,INVMB.MB002,SUM(MOCTA.TA017) as QTY,SUM(CSTMB.MB005) as hum_time,SUM(CSTMB.MB006) as mac_time
+        From CSTMB
+        LEFT JOIN INVMB ON CSTMB.MB007=INVMB.MB001
+        LEFT JOIN MOCTA ON CSTMB.MB003=MOCTA.TA001 And CSTMB.MB004=MOCTA.TA002 
+        WHERE CSTMB.MB002 like ?
+        And CSTMB.MB007 like ? 
+        And Left(CSTMB.MB007,2) <> ?
+        Or (CSTMB.MB002 like ?
+        And CSTMB.MB007 like ? 
+        And Left(CSTMB.MB007,2) <> ?)
+        Group By CSTMB.MB007,INVMB.MB002 
+        Order By CSTMB.MB007 asc',[$sqlkey,'A%','A-',$sqlkey,'B%','B-']);
+ 
+        if (count($worktimes)<1) {
+            $result = '查無資料，請檢查條件是否輸入正確!!';
+            return View('nodata')->with('result', $result);
+        }else{
+            //$result = 'Good Job!';
+            //return View('nodata')->with('result', $result);
+        
+        $spreadsheet = new Spreadsheet();  // 開新excel檔案
+        $worksheet = $spreadsheet->getActiveSheet(); 
+        $worksheet->setTitle($workdate);
+        //定義欄位
+        $worksheet->setCellValueByColumnAndRow(1, 1, '品號');
+        $worksheet->setCellValueByColumnAndRow(2, 1, '品名');
+        $worksheet->setCellValueByColumnAndRow(3, 1, '數量');
+        $worksheet->setCellValueByColumnAndRow(4, 1, '人時');
+        $worksheet->setCellValueByColumnAndRow(5, 1, '機時');
+
+        $j = 1;
+        foreach ($worktimes as $worktime) {
+            $j = $j + 1;
+            $worksheet->setCellValueByColumnAndRow(1, $j, $worktime->MB007);
+            $worksheet->setCellValueByColumnAndRow(2, $j, $worktime->MB002);
+            $worksheet->setCellValueByColumnAndRow(3, $j, $worktime->QTY);
+            $worksheet->setCellValueByColumnAndRow(4, $j, $worktime->hum_time);
+            $worksheet->setCellValueByColumnAndRow(5, $j, $worktime->mac_time);
+        }
+
+        // 下载
+        $filename = '製令工時.xlsx';
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="'.$filename.'"');
+        header('Cache-Control: max-age=0');
+
+        $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
+        $writer->save('php://output'); 
+        
+        }
+    }
+
 
 }

@@ -14,7 +14,7 @@
                     <label>結束日期(輸入格式為ex:20190630)</label>
                     <input type="text" name="date2">                    
                     <button type="submit" class="btn btn-primary btn-sm">查詢</button>
-                    <button type="submit" class="btn btn-secondary btn-sm" formaction="exportfiles\export_posinv.php" onclick="return confirm('確認是否匯出Excel?');">匯出Excel</button>
+                    <button type="submit" class="btn btn-secondary btn-sm" formaction={{ route('pos_inv_export') }} onclick="return confirm('確認是否匯出Excel?');">匯出Excel</button>
             </div>        
             </form>
         </div>

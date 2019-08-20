@@ -76,7 +76,9 @@ Route::get('userexport','ExcelController@userexport')->name('userexport');
 Route::post('userimport','ExcelController@userimport')->name('userimport');
 Route::get('AllUserExport','ExcelController@AllUserExport')->name('AllUserExport');
 Route::post('export_xls','ExcelController@export_xls')->name('export_xls');
+Route::post('pos_inv_export','ExcelController@pos_inv_export')->name('pos_inv_export');
 Route::post('ship_data_export','ExcelController@ship_data_export')->name('ship_data_export');
+Route::post('WorkingTimeExport','ExcelController@WorkingTimeExport')->name('WorkingTimeExport');
 
 //檢查MS SQL連線結果
 Route::get('dbresult', 'Auth\VerificationController@dbresult')->name('auth.dbresult');
@@ -87,8 +89,11 @@ Route::get('searchs', 'SearchsController@index')->name('searchs.index');
 Route::get('searchs/search1', 'SearchsController@search1')->name('searchs.search1');
 Route::get('searchs/search2', 'SearchsController@search2')->name('searchs.search2');
 Route::get('searchs/search3', 'SearchsController@search3')->name('searchs.search3');
+//Route::get('searchs/search4', 'SearchsController@search4')->name('searchs.search4');
 Route::post('searchs/store', 'SearchsController@store')->name('searchs.store');
 Route::post('searchs/result01', 'SearchsController@result01')->name('searchs.result01');
 Route::post('searchs/purth_result', 'SearchsController@purth_result')->name('searchs.purth_result');
 Route::post('searchs/pos_inv', 'SearchsController@pos_inv')->name('searchs.pos_inv');
 Route::post('searchs/ship_data', 'SearchsController@ship_data')->name('searchs.ship_data');
+Route::post('searchs/WorkingTime', 'SearchsController@WorkingTime')->name('searchs.WorkingTime');
+

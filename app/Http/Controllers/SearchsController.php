@@ -81,7 +81,7 @@ class SearchsController extends Controller
         
         $date_str = $request->input('date1');
         $date_end = $request->input('date2');
-        $invs = DB::connection('sqlsrv_tensall')->select('SELECT TH001,TH002,TH003,TH004,TH005,TG003,TG004,TG005,TG007,TG012,TG014,TG098,MB006,MB008,SUM(TH008+TH024) as QTY FROM COPTH LEFT JOIN COPTG ON (COPTH.TH001=COPTG.TG001 AND COPTH.TH002=COPTG.TG002 AND COPTH.TH007=? AND COPTG.TG004=? AND COPTG.TG023<>?) LEFT JOIN INVMB ON (COPTH.TH004=INVMB.MB001) WHERE COPTG.TG003>=? AND COPTG.TG003<=? GROUP BY TH001,TH002,TH003,TH004,TH005,TG003,TG004,TG005,TG007,TG012,TG014,TG098,MB006,MB008',['B24','ATP0002','V',$date_str,$date_end]);
+        $invs = DB::connection('sqlsrv_tensall')->select('SELECT TH001,TH002,TH003,TH004,TH005,TG003,TG004,CASE TG005 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END as TG005,TG007,TG012,TG014,TG098,CASE MB006 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END as MB006,CASE MB008 WHEN ? THEN ? WHEN ? THEN ? ELSE ? END as MB008,SUM(TH008+TH024) as QTY FROM COPTH LEFT JOIN COPTG ON (COPTH.TH001=COPTG.TG001 AND COPTH.TH002=COPTG.TG002 AND COPTH.TH007=? AND COPTG.TG004=? AND COPTG.TG023<>?) LEFT JOIN INVMB ON (COPTH.TH004=INVMB.MB001) WHERE COPTG.TG003>=? AND COPTG.TG003<=? GROUP BY TH001,TH002,TH003,TH004,TH005,TG003,TG004,TG005,TG007,TG012,TG014,TG098,MB006,MB008',['D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','21','食品','22','化妝品','23','私密保養品','26','商品成品','Other','01','TS6','02','ODM','Other','B24','ATP0002','V',$date_str,$date_end]);
 
         /*
         $invs = DB::connection('sqlsrv_tensall')
@@ -124,6 +124,29 @@ public function ship_data(Request $request)
     public function export_file(Request $request)
     {
         //     
+    }
+
+    public function WorkingTime(Request $request)
+    {
+        
+        $workdate = $request->input('workdate').'%';
+        $works = DB::connection('sqlsrv_tensall')->select('Select CSTMB.MB007,INVMB.MB002,SUM(MOCTA.TA017) as QTY,SUM(CSTMB.MB005) as hum_time,SUM(CSTMB.MB006) as mac_time
+        From CSTMB
+        LEFT JOIN INVMB ON CSTMB.MB007=INVMB.MB001
+        LEFT JOIN MOCTA ON CSTMB.MB003=MOCTA.TA001 And CSTMB.MB004=MOCTA.TA002 
+        WHERE CSTMB.MB002 like ?
+        And CSTMB.MB007 like ? 
+        And Left(CSTMB.MB007,2) <> ?
+        Or (CSTMB.MB002 like ?
+        And CSTMB.MB007 like ? 
+        And Left(CSTMB.MB007,2) <> ?)
+        Group By CSTMB.MB007,INVMB.MB002 
+        Order By CSTMB.MB007 asc',[$workdate,'A%','A-',$workdate,'B%','B-']);
+
+        $data=[
+            'works'=>$works
+        ];
+        return view('searchs.ShowWorkingTime', $data);
     }
 
 
