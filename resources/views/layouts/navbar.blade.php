@@ -18,7 +18,8 @@
                         <a class="dropdown-item font-weight-bold" id='search1' href={{ route('searchs.search1')}}>進貨資訊查詢</a>
                         <a class="dropdown-item font-weight-bold" id='search2' href={{ route('searchs.search2')}}>展場庫存查詢</a>
                         <a class="dropdown-item font-weight-bold" id='search3' href={{ route('searchs.search3')}}>對帳單查詢</a>
-                        <a class="dropdown-item font-weight-bold" id='search4' href={{ route('searchs.index')}}>資料查詢_All</a>
+                        <a class="dropdown-item font-weight-bold" id='search4' href={{ route('searchs.search4')}}>結帳前&後檢查</a>
+                        <a class="dropdown-item font-weight-bold" href={{ route('searchs.index')}}>資料查詢_All</a>
                     </div>
                 </li>
                 <li class="nav-item">
@@ -50,11 +51,12 @@
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                     @csrf
                     </form>
-                @endauth
+                @if (auth()->user()->user_level==99)
                 <li class="nav-item">
-                    <a class="nav-link font-weight-bold" href={{ route('register')}}>Register</a>
+                    <a class="nav-link font-weight-bold" href={{ route('UsersProfile.UsersIndex')}}>使用者列表</a>
                 </li>
-      
+                @endif
+                @endauth
             </ul>
         </div>
 </nav>

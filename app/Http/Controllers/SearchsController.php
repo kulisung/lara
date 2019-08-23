@@ -32,6 +32,10 @@ class SearchsController extends Controller
         return view('searchs.search3');        
     }
 
+    public function search4()
+    {
+        return view('searchs.search4');        
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -76,21 +80,13 @@ class SearchsController extends Controller
         return view('searchs.purth_result', $data);
     }
 
+    //展場Invoice
     public function pos_inv(Request $request)
     {
         
         $date_str = $request->input('date1');
         $date_end = $request->input('date2');
         $invs = DB::connection('sqlsrv_tensall')->select('SELECT TH001,TH002,TH003,TH004,TH005,TG003,TG004,CASE TG005 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END as TG005,TG007,TG012,TG014,TG098,CASE MB006 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END as MB006,CASE MB008 WHEN ? THEN ? WHEN ? THEN ? ELSE ? END as MB008,SUM(TH008+TH024) as QTY FROM COPTH LEFT JOIN COPTG ON (COPTH.TH001=COPTG.TG001 AND COPTH.TH002=COPTG.TG002 AND COPTH.TH007=? AND COPTG.TG004=? AND COPTG.TG023<>?) LEFT JOIN INVMB ON (COPTH.TH004=INVMB.MB001) WHERE COPTG.TG003>=? AND COPTG.TG003<=? GROUP BY TH001,TH002,TH003,TH004,TH005,TG003,TG004,TG005,TG007,TG012,TG014,TG098,MB006,MB008',['D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','21','食品','22','化妝品','23','私密保養品','26','商品成品','Other','01','TS6','02','ODM','Other','B24','ATP0002','V',$date_str,$date_end]);
-
-        /*
-        $invs = DB::connection('sqlsrv_tensall')
-                    ->table('COPTG', 'COPTH', 'INVMB')
-                    ->select('TH001', 'TH002', 'TH003', 'TH004', 'TG003', 'TG004', 'TG005', 'TG014', 'TG098', 'MB006', 'MB008')
-                    ->where('TG003', '>=', $date_str)
-                    ->where('TG003', '<=', $date_end)
-                    ->get();
-        */
 
         $data=[
             'invs'=>$invs
@@ -99,7 +95,26 @@ class SearchsController extends Controller
         return view('searchs.pos_inv', $data);
     }
 
-public function ship_data(Request $request)
+    //展場Stocks
+    public function pos_stocks(Request $request)
+    {
+        
+        $date_str = $request->input('date1');
+        $date_end = $request->input('date2');
+        $stocks = DB::connection('sqlsrv_tensall')->select('SELECT P.AA,P.BB,P.CC,SUM(P.DD) AS QTY FROM (SELECT TH004 AS AA,TH005 AS BB,TH006 AS CC , SUM(TH008+TH024) AS DD FROM COPTG,COPTH WHERE TG001=TH001 AND TG002=TH002 AND (TG004=?) AND TG003>=? AND TG003<=? AND TH007=? AND TG023<>? GROUP BY  TH004,TH005,TH006 
+        UNION
+        SELECT TJ004 AS AA,TJ005 AS BB,TJ006 AS CC,SUM(TJ007)*-1 AS DD
+        FROM COPTI,COPTJ WHERE TI001=TJ001 AND TI002=TJ002 AND (TI004=?) AND TI003>=? AND TI003<=? AND TJ013=? AND TI019<>? GROUP BY TJ004,TJ005,TJ006) P GROUP BY AA,BB,CC',['ATP0002',$date_str,$date_end,'B24','V','ATP0002',$date_str,$date_end,'B24','V']);
+
+        $data=[
+            'stocks'=>$stocks
+        ];
+        //return view('searchs.show', $data);
+        return view('searchs.pos_stocks', $data);
+    }
+
+
+    public function ship_data(Request $request)
     {
         
         $date_str = $request->input('date3');
@@ -149,7 +164,44 @@ public function ship_data(Request $request)
         return view('searchs.ShowWorkingTime', $data);
     }
 
+    //結帳前檢查Settle Accounts Begin Checking
+    public function SA_Begin_Check(Request $request)
+    {
+        
+        $fin_month = $request->input('fin_date1').'%';
+        $fin_end = $request->input('fin_date2');
+        $sa_arrays = DB::connection('sqlsrv_tensall')->select('SELECT * FROM (SELECT TG004,TG007,TG003,CASE TG005 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END as TG005,MB008,MB006,MA038,MA019,TH005,QTY=TH008+TH024,TG012,TH037,TH038,TH001,TH002,TH003 
+        FROM COPMA D,COPTG E,COPTH H,INVMB K
+        WHERE E.TG001=H.TH001 
+        AND E.TG002=H.TH002
+        AND H.TH004=K.MB001
+        AND D.MA001=TG004
+        AND D.MA001=E.TG004
+        AND TH026 = ?
+        AND TG003 like ? 
+        AND MB001 <> ?
+        UNION
+        SELECT TI004,TI021,TI003,CASE TI005 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END as TG005,MB008,MB006,MA038,MA019,TJ005,TJ007=(TJ007+TJ042)*-1,TI009,TJ033*-1,TJ034*-1,TJ001,TJ002,TJ003 
+        FROM COPMA D,COPTI E,COPTJ H,INVMB K
+        WHERE E.TI001=H.TJ001 
+        AND E.TI002=H.TJ002
+        AND H.TJ004=K.MB001
+        AND D.MA001=TI004
+        AND D.MA001=E.TI004
+        AND TJ024 = ?
+        AND TI003 like ? 
+        AND MB001 <> ?) P  
+        ORDER BY MB006,TG004,TG003',
+        ['D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','Y',$fin_month,'9090','D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','Y',$fin_month,'9090']);
 
+        $data=[
+            'sa_arrays'=>$sa_arrays
+        ];
+        return view('searchs.SA_Begin_Check', $data);
+
+
+    }
+    
     /**
      * Display the specified resource.
      *

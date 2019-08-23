@@ -112,4 +112,5 @@ class PostsController extends Controller
         return redirect()->route('posts.index');
     }
 
+
 }

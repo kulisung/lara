@@ -160,20 +160,26 @@ class ExcelController extends Controller
     {
         $date_str = $request->input('date1');
         $date_end = $request->input('date2');
+        //Page_Invoice_SQL
         $invs = DB::connection('sqlsrv_tensall')->select('SELECT TH001,TH002,TH003,TH004,TH005,TG003,TG004,CASE TG005 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END as TG005,TG007,TG012,TG014,TG098,CASE MB006 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END as MB006,CASE MB008 WHEN ? THEN ? WHEN ? THEN ? ELSE ? END as MB008,SUM(TH008+TH024) as QTY FROM COPTH LEFT JOIN COPTG ON (COPTH.TH001=COPTG.TG001 AND COPTH.TH002=COPTG.TG002 AND COPTH.TH007=? AND COPTG.TG004=? AND COPTG.TG023<>?) LEFT JOIN INVMB ON (COPTH.TH004=INVMB.MB001) WHERE COPTG.TG003>=? AND COPTG.TG003<=? GROUP BY TH001,TH002,TH003,TH004,TH005,TG003,TG004,TG005,TG007,TG012,TG014,TG098,MB006,MB008',['D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','21','食品','22','化妝品','23','私密保養品','26','商品成品','Other','01','TS6','02','ODM','Other','B24','ATP0002','V',$date_str,$date_end]);
+
+        //Page_Stocks_SQL
+        $stocks = DB::connection('sqlsrv_tensall')->select('SELECT P.AA,P.BB,P.CC,SUM(P.DD) AS QTY FROM (SELECT TH004 AS AA,TH005 AS BB,TH006 AS CC , SUM(TH008+TH024) AS DD FROM COPTG,COPTH WHERE TG001=TH001 AND TG002=TH002 AND (TG004=?) AND TG003>=? AND TG003<=? AND TH007=? AND TG023<>? GROUP BY  TH004,TH005,TH006 
+        UNION
+        SELECT TJ004 AS AA,TJ005 AS BB,TJ006 AS CC,SUM(TJ007)*-1 AS DD
+        FROM COPTI,COPTJ WHERE TI001=TJ001 AND TI002=TJ002 AND (TI004=?) AND TI003>=? AND TI003<=? AND TJ013=? AND TI019<>? GROUP BY TJ004,TJ005,TJ006) P GROUP BY AA,BB,CC',['ATP0002',$date_str,$date_end,'B24','V','ATP0002',$date_str,$date_end,'B24','V']);
 
         if (count($invs)<1) {
             $result = '查無資料，請檢查條件是否輸入正確!!';
             return View('nodata')->with('result', $result);
+        }elseif(count($stocks)<1) {
+            $result = '查無資料，請檢查條件是否輸入正確!!';
+            return View('nodata')->with('result', $result);
         }else{
-            //$result = 'Good Job!';
-            //return View('nodata')->with('result', $result);
         
         $spreadsheet = new Spreadsheet();  // 開新excel檔案
         $spreadsheet->setActiveSheetIndex(0);  //指定工作頁索引
-        $worksheet = $spreadsheet->getActiveSheet(0)->setTitle('sales&invoice'); //指定工作表明稱
-        //$worksheet = $spreadsheet->setTitle('進貨單資料明細'); 
-        //$worksheet->setTitle('進貨單資料明細');
+        $worksheet = $spreadsheet->getActiveSheet(0)->setTitle('sales&invoice'); //指定工作表名稱
         //定義欄位
         $worksheet->setCellValueByColumnAndRow(1, 1, '客戶代碼');
         $worksheet->setCellValueByColumnAndRow(2, 1, '客戶全名');
@@ -209,13 +215,25 @@ class ExcelController extends Controller
             $worksheet->setCellValueByColumnAndRow(13, $j, $inv->TH001);
             $worksheet->setCellValueByColumnAndRow(14, $j, $inv->TH002);
             $worksheet->setCellValueByColumnAndRow(15, $j, $inv->TH003);
-
         }
 
         $spreadsheet->createSheet(); //新增工作頁
         $spreadsheet->setActiveSheetIndex(1); //指定工作頁索引
         $worksheet = $spreadsheet->getActiveSheet(1)->setTitle('Stocks'); //指定工作表名稱
-        //$worksheet = $spreadsheet->setTitle('進貨單');
+        //定義第二頁籤欄位
+        $worksheet->setCellValueByColumnAndRow(1, 1, '品號');
+        $worksheet->setCellValueByColumnAndRow(2, 1, '品名');
+        $worksheet->setCellValueByColumnAndRow(3, 1, '規格');
+        $worksheet->setCellValueByColumnAndRow(4, 1, '數量');
+
+        $k = 1;
+        foreach ($stocks as $stock) {
+            $k = $k + 1;
+            $worksheet->setCellValueByColumnAndRow(1, $k, $stock->AA);
+            $worksheet->setCellValueByColumnAndRow(2, $k, $stock->BB);
+            $worksheet->setCellValueByColumnAndRow(3, $k, $stock->CC);
+            $worksheet->setCellValueByColumnAndRow(4, $k, $stock->QTY);
+        }
 
         $spreadsheet->setActiveSheetIndex(0); //最後指定回第一頁MS Excel開啟顯示
         // 下载

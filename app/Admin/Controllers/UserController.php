@@ -4,6 +4,7 @@ namespace App\Admin\Controllers;
 
 use App\User;
 use Encore\Admin\Controllers\AdminController;
+use Illuminate\Support\Facades\Hash;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
@@ -78,7 +79,12 @@ class UserController extends AdminController
         $form->text('user_level', __('UserLevel(0-99)'));
         $form->email('email', __('Email'));
         //$form->datetime('email_verified_at', __('Email verified at'))->default(date('Y-m-d H:i:s'));
-        //$form->password('password', __('Password'));
+        $form->password('password', __('Password'));
+        $form->saving(function (Form $form) {
+            if ($form->password && $form->model()->password != $form->password) {
+                $form->password = bcrypt($form->password);
+            }
+        });
         //$form->text('remember_token', __('Remember token'));
 
         return $form;

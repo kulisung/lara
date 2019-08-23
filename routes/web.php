@@ -57,7 +57,8 @@ Route::get('posts/{id}', 'PostsController@show')->name('posts.show');
 /*實際post的儲存表單 */
 Route::post('posts/store', 'PostsController@store')->name('posts.store');
 /*實際儲存修改的資料 */
-Route::patch('posts/{id}', 'PostsController@update')->name('posts.update');
+//Route::patch('posts/{id}', 'PostsController@update')->name('posts.update');
+Route::patch('posts/{username}', 'PostsController@UsersUpdate')->name('posts.UsersUpdate');
 /*刪除指定改的資料 */
 Route::delete('posts/{id}', 'PostsController@destroy')->name('posts.destroy');
 
@@ -89,11 +90,21 @@ Route::get('searchs', 'SearchsController@index')->name('searchs.index');
 Route::get('searchs/search1', 'SearchsController@search1')->name('searchs.search1');
 Route::get('searchs/search2', 'SearchsController@search2')->name('searchs.search2');
 Route::get('searchs/search3', 'SearchsController@search3')->name('searchs.search3');
-//Route::get('searchs/search4', 'SearchsController@search4')->name('searchs.search4');
+Route::get('searchs/search4', 'SearchsController@search4')->name('searchs.search4');
 Route::post('searchs/store', 'SearchsController@store')->name('searchs.store');
 Route::post('searchs/result01', 'SearchsController@result01')->name('searchs.result01');
 Route::post('searchs/purth_result', 'SearchsController@purth_result')->name('searchs.purth_result');
 Route::post('searchs/pos_inv', 'SearchsController@pos_inv')->name('searchs.pos_inv');
+Route::post('searchs/pos_stocks', 'SearchsController@pos_stocks')->name('searchs.pos_stocks');
 Route::post('searchs/ship_data', 'SearchsController@ship_data')->name('searchs.ship_data');
 Route::post('searchs/WorkingTime', 'SearchsController@WorkingTime')->name('searchs.WorkingTime');
+Route::post('searchs/SA_Begin_Check', 'SearchsController@SA_Begin_Check')->name('searchs.SA_Begin_Check');
 
+//UserProfileEdit
+/*顯示使用者清單 */
+Route::get('UsersProfile', 'UsersProfileController@UsersIndex')->name('UsersProfile.UsersIndex');
+/*修改使用者資料 */
+Route::get('UsersProfile/{username}/UsersEdit', 'UsersProfileController@UsersEdit')->name('UsersProfile.UsersEdit');
+Route::patch('UsersProfile/{username}', 'UsersProfileController@UsersResetPassword')->name('UsersProfile.UsersResetPassword');
+Route::patch('UsersProfile/{username}', 'UsersProfileController@UsersUpdate')->name('UsersProfile.UsersUpdate');
+Route::delete('UsersProfile/{username}', 'UsersProfileController@destroy')->name('UsersProfile.destroy');
