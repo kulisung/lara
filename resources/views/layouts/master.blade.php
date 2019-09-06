@@ -4,6 +4,9 @@
         <meta charset="UTF-8">
         <title>@yield('title') | {{ env('APP_NAME') }}</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+
+
     <style>
         .table{
             width:100%;
@@ -14,20 +17,22 @@
         }
         .table>thead>tr>th {
             white-space: nowrap;
-            padding: 10px;
+            padding: 5px;
             /*text-align: center;*/
-            font-size: 16px;
+            font-size: 14px;
         }
  
         .table>tbody>tr:nth-child(odd){
-             background: #fff;
-             white-space: nowrap;
-             font-size: 16px;
+            background: #fff;
+            white-space: nowrap;
+            font-size: 14px;
+            line-height: 2px;
          }
         .table>tbody>tr:nth-child(even){
             background: #f7f7f7;
             white-space: nowrap;
-            font-size: 16px;
+            font-size: 14px;
+            line-height: 2px;
         }
         .table>tbody>tr:hover{
             background: #e3ecfc;

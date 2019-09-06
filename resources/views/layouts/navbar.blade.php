@@ -15,13 +15,21 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link font-weight-bold dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">資料查詢</a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item font-weight-bold" id='search1' href={{ route('searchs.search1')}}>進貨資訊查詢</a>
+                        <a class="dropdown-item font-weight-bold" id='search1' href={{ route('searchs.search1')}}>進退貨資訊查詢</a>
                         <a class="dropdown-item font-weight-bold" id='search2' href={{ route('searchs.search2')}}>展場庫存查詢</a>
-                        <a class="dropdown-item font-weight-bold" id='search3' href={{ route('searchs.search3')}}>對帳單查詢</a>
-                        <a class="dropdown-item font-weight-bold" id='search4' href={{ route('searchs.search4')}}>結帳前&後檢查</a>
                         <a class="dropdown-item font-weight-bold" href={{ route('searchs.index')}}>資料查詢_All</a>
                     </div>
                 </li>
+                @if (auth()->user()->user_level==9 or auth()->user()->user_level==5)
+                <li class="nav-item dropdown">
+                    <a class="nav-link font-weight-bold dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">財務專用</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item font-weight-bold" id='fsearch1' href={{ route('finance.fsearch1')}}>對帳單查詢</a>
+                        <a class="dropdown-item font-weight-bold" id='fsearch2' href={{ route('finance.fsearch2')}}>結帳前&後檢查</a>
+                        <a class="dropdown-item font-weight-bold" href={{ route('searchs.index')}}>資料查詢_All</a>
+                    </div>
+                </li>
+                @endif
                 <li class="nav-item">
                     <a class="nav-link font-weight-bold" href={{ route('AllUserExport')}}>資料匯入</a>
                 </li>
@@ -51,7 +59,7 @@
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                     @csrf
                     </form>
-                @if (auth()->user()->user_level==99)
+                @if (auth()->user()->user_level==9)
                 <li class="nav-item">
                     <a class="nav-link font-weight-bold" href={{ route('UsersProfile.UsersIndex')}}>使用者列表</a>
                 </li>

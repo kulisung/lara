@@ -114,28 +114,6 @@ class SearchsController extends Controller
     }
 
 
-    public function ship_data(Request $request)
-    {
-        
-        $date_str = $request->input('date3');
-        $date_end = $request->input('date4');
-        $ships = DB::connection('sqlsrv_tensall')->select('SELECT TG004,TG007,TG003,TH001,TH002,TH027,TH028,SUM(TH013) as NTD 
-        FROM COPTH A,COPTG B 
-        WHERE A.TH001=B.TG001 
-        AND A.TH002=B.TG002 
-        AND A.TH026=? 
-        AND B.TG003>=? 
-        AND B.TG003<=? 
-        GROUP BY TG004,TG007,TG003,TH001,TH002,TH027,TH028 
-        ORDER BY TG004,TH002',['Y',$date_str,$date_end]);
-
-        $data=[
-            'ships'=>$ships
-        ];
-        //return view('searchs.show', $data);
-        return view('searchs.ship_data', $data);
-    }
-
     public function export_file(Request $request)
     {
         //     
@@ -164,44 +142,6 @@ class SearchsController extends Controller
         return view('searchs.ShowWorkingTime', $data);
     }
 
-    //結帳前檢查Settle Accounts Begin Checking
-    public function SA_Begin_Check(Request $request)
-    {
-        
-        $fin_month = $request->input('fin_date1').'%';
-        $fin_end = $request->input('fin_date2');
-        $sa_arrays = DB::connection('sqlsrv_tensall')->select('SELECT * FROM (SELECT TG004,TG007,TG003,CASE TG005 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END as TG005,MB008,MB006,MA038,MA019,TH005,QTY=TH008+TH024,TG012,TH037,TH038,TH001,TH002,TH003 
-        FROM COPMA D,COPTG E,COPTH H,INVMB K
-        WHERE E.TG001=H.TH001 
-        AND E.TG002=H.TH002
-        AND H.TH004=K.MB001
-        AND D.MA001=TG004
-        AND D.MA001=E.TG004
-        AND TH026 = ?
-        AND TG003 like ? 
-        AND MB001 <> ?
-        UNION
-        SELECT TI004,TI021,TI003,CASE TI005 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END as TG005,MB008,MB006,MA038,MA019,TJ005,TJ007=(TJ007+TJ042)*-1,TI009,TJ033*-1,TJ034*-1,TJ001,TJ002,TJ003 
-        FROM COPMA D,COPTI E,COPTJ H,INVMB K
-        WHERE E.TI001=H.TJ001 
-        AND E.TI002=H.TJ002
-        AND H.TJ004=K.MB001
-        AND D.MA001=TI004
-        AND D.MA001=E.TI004
-        AND TJ024 = ?
-        AND TI003 like ? 
-        AND MB001 <> ?) P  
-        ORDER BY MB006,TG004,TG003',
-        ['D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','Y',$fin_month,'9090','D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','Y',$fin_month,'9090']);
-
-        $data=[
-            'sa_arrays'=>$sa_arrays
-        ];
-        return view('searchs.SA_Begin_Check', $data);
-
-
-    }
-    
     /**
      * Display the specified resource.
      *

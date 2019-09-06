@@ -57,8 +57,7 @@ Route::get('posts/{id}', 'PostsController@show')->name('posts.show');
 /*實際post的儲存表單 */
 Route::post('posts/store', 'PostsController@store')->name('posts.store');
 /*實際儲存修改的資料 */
-//Route::patch('posts/{id}', 'PostsController@update')->name('posts.update');
-Route::patch('posts/{username}', 'PostsController@UsersUpdate')->name('posts.UsersUpdate');
+Route::patch('posts/{id}', 'PostsController@update')->name('posts.update');
 /*刪除指定改的資料 */
 Route::delete('posts/{id}', 'PostsController@destroy')->name('posts.destroy');
 
@@ -77,34 +76,48 @@ Route::get('userexport','ExcelController@userexport')->name('userexport');
 Route::post('userimport','ExcelController@userimport')->name('userimport');
 Route::get('AllUserExport','ExcelController@AllUserExport')->name('AllUserExport');
 Route::post('export_xls','ExcelController@export_xls')->name('export_xls');
+//展場庫存匯出
 Route::post('pos_inv_export','ExcelController@pos_inv_export')->name('pos_inv_export');
-Route::post('ship_data_export','ExcelController@ship_data_export')->name('ship_data_export');
+//銷貨對帳單匯出
+Route::post('fin_ship_export','ExcelController@fin_ship_export')->name('fin_ship_export');
+//製令工時匯出
 Route::post('WorkingTimeExport','ExcelController@WorkingTimeExport')->name('WorkingTimeExport');
 
 //檢查MS SQL連線結果
 Route::get('dbresult', 'Auth\VerificationController@dbresult')->name('auth.dbresult');
-//Route::post('auth/test', 'Auth\VerificationController@test')->name('auth.test');
 
 // Search Route
-Route::get('searchs', 'SearchsController@index')->name('searchs.index');
+Route::get('searchs', 'SearchsController@index')->name('searchs.index'); //查詢List
+//進貨查詢 & 賢齊進退貨查詢
 Route::get('searchs/search1', 'SearchsController@search1')->name('searchs.search1');
+//展場庫存查詢
 Route::get('searchs/search2', 'SearchsController@search2')->name('searchs.search2');
-Route::get('searchs/search3', 'SearchsController@search3')->name('searchs.search3');
-Route::get('searchs/search4', 'SearchsController@search4')->name('searchs.search4');
+//Route::get('searchs/search3', 'SearchsController@search3')->name('searchs.search3');
+//Route::get('searchs/search4', 'SearchsController@search4')->name('searchs.search4');
 Route::post('searchs/store', 'SearchsController@store')->name('searchs.store');
 Route::post('searchs/result01', 'SearchsController@result01')->name('searchs.result01');
 Route::post('searchs/purth_result', 'SearchsController@purth_result')->name('searchs.purth_result');
 Route::post('searchs/pos_inv', 'SearchsController@pos_inv')->name('searchs.pos_inv');
 Route::post('searchs/pos_stocks', 'SearchsController@pos_stocks')->name('searchs.pos_stocks');
-Route::post('searchs/ship_data', 'SearchsController@ship_data')->name('searchs.ship_data');
 Route::post('searchs/WorkingTime', 'SearchsController@WorkingTime')->name('searchs.WorkingTime');
-Route::post('searchs/SA_Begin_Check', 'SearchsController@SA_Begin_Check')->name('searchs.SA_Begin_Check');
+
 
 //UserProfileEdit
 /*顯示使用者清單 */
 Route::get('UsersProfile', 'UsersProfileController@UsersIndex')->name('UsersProfile.UsersIndex');
 /*修改使用者資料 */
 Route::get('UsersProfile/{username}/UsersEdit', 'UsersProfileController@UsersEdit')->name('UsersProfile.UsersEdit');
-Route::patch('UsersProfile/{username}', 'UsersProfileController@UsersResetPassword')->name('UsersProfile.UsersResetPassword');
+Route::get('UsersProfile/{username}/UsersResetPWD', 'UsersProfileController@UsersResetPWD')->name('UsersProfile.UsersResetPWD');
 Route::patch('UsersProfile/{username}', 'UsersProfileController@UsersUpdate')->name('UsersProfile.UsersUpdate');
+Route::patch('UsersProfile/reset/{username}', 'UsersProfileController@UsersResetPassword')->name('UsersProfile.UsersResetPassword');
 Route::delete('UsersProfile/{username}', 'UsersProfileController@destroy')->name('UsersProfile.destroy');
+
+/* Finance 財務查詢&結算檢查 */
+//銷貨對帳單查詢
+Route::get('finance/fsearch1', 'FinanceController@fsearch1')->name('finance.fsearch1');
+Route::post('finance/fin_ship', 'FinanceController@fin_ship')->name('finance.fin_ship');
+//結帳前檢查輸入畫面
+Route::get('finance/fsearch2', 'FinanceController@fsearch2')->name('finance.fsearch2');
+Route::post('finance/fin_b4_chk', 'FinanceController@fin_b4_chk')->name('finance.fin_b4_chk');
+//Tab test
+Route::post('finance/fin_b4chk', 'FinanceController@fin_b4chk')->name('finance.fin_b4chk');

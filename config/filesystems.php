@@ -63,13 +63,18 @@ return [
             'bucket' => env('AWS_BUCKET'),
             'url' => env('AWS_URL'),
         ],
-
+        //For laravel admin upload path config
         'admin' => [
         'driver' => 'local',
         'root' => public_path('uploads'),
         'visibility' => 'public',
         'url' => env('APP_URL').'/uploads',
         ],
+
+        'backups' => [
+            'driver' => 'local',
+            'root'   => storage_path('backups'), // that's where your backups are stored by default: storage/backups
+        ]        
 
     ],
 

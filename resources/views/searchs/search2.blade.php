@@ -5,7 +5,7 @@
 <div class="container" style="background-color:#DEFFFF;">
     <div class="row">
         <div class="col-12">
-            <h5>#展場庫存查詢(測試)</h5>
+            <h5>#展場庫存查詢</h5>
             <form method="post" action={{ route('searchs.pos_inv') }}>
             @csrf
             <div class="form-group">

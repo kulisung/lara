@@ -16,7 +16,7 @@
                     <button type="submit" class="btn btn-primary btn-sm">查詢</button>
             </div>
             </form>
-            <h5>#賢齊進退貨資料查詢(測試)</h5>
+            <h5>#賢齊進退貨資料查詢</h5>
             <form method="post" action={{ route('searchs.purth_result') }}>
             @csrf
             <div class="form-group">

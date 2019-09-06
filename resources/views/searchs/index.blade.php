@@ -16,7 +16,7 @@
                     <button type="submit" class="btn btn-primary btn-sm">查詢</button>
             </div>
             </form>
-            <h5>#02#賢齊進退貨資料查詢(測試)</h5>
+            <h5>#02#賢齊進退貨資料查詢</h5>
             <form method="post" action={{ route('searchs.purth_result') }}>
             @csrf
             <div class="form-group">
@@ -26,7 +26,7 @@
                     <button type="submit" class="btn btn-secondary btn-sm" formaction={{ route('export_xls') }} onclick="return confirm('確認是否匯出Excel?');">匯出Excel</button>
             </div>
             </form>
-            <h5>#03#展場庫存查詢(測試)</h5>
+            <h5>#03#展場庫存查詢</h5>
             <form method="post" action={{ route('searchs.pos_inv') }}>
             @csrf
             <div class="form-group">
@@ -40,7 +40,7 @@
             </div>        
             </form>
             <h5>#04#銷貨對帳單查詢</h5>
-            <form method="post" action={{ route('searchs.ship_data') }}>
+            <form method="post" action={{ route('finance.fin_ship') }}>
             @csrf
             <div class="form-group">
                     <label>起始日期(輸入格式為ex:20190601)</label>
@@ -48,7 +48,7 @@
                     <label>結束日期(輸入格式為ex:20190630)</label>
                     <input type="text" name="date4">                    
                     <button type="submit" class="btn btn-primary btn-sm">查詢</button>
-                    <button type="submit" class="btn btn-secondary btn-sm" formaction={{ route('ship_data_export') }} onclick="return confirm('確認是否匯出Excel?');">匯出Excel</button>
+                    <button type="submit" class="btn btn-secondary btn-sm" formaction={{ route('fin_ship_export') }} onclick="return confirm('確認是否匯出Excel?');">匯出Excel</button>
             </div>        
             </form>
             <h5>#05#起始品號A or B製令工時查詢(不包含'A-'與'B-'起始品號)</h5>

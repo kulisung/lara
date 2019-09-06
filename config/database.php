@@ -45,6 +45,10 @@ return [
 
         'mysql' => [
             'driver' => 'mysql',
+            //Laravel backup add dump config
+            'dump_command_path' => '/path/to/the/binary', // only the path, so without 'mysqldump' or 'pg_dump' 若為XAMPP環境則可直接新增環境變數路徑xampp/mysql/bin
+            'dump_command_timeout' => 60 * 5, // 5 minute timeout
+            'dump_using_single_transaction' => true, // perform dump using a single transaction
             'url' => env('DATABASE_URL'),
             'host' => env('DB_HOST', '127.0.0.1'),
             'port' => env('DB_PORT', '3306'),

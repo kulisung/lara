@@ -249,7 +249,7 @@ class ExcelController extends Controller
     }
 
     //銷貨對帳單匯出
-    public function ship_data_export(Request $request) 
+    public function fin_ship_export(Request $request) 
     {
         $date_str = $request->input('date3');
         $date_end = $request->input('date4');

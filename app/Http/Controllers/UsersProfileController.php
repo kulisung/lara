@@ -16,7 +16,7 @@ class UsersProFileController extends Controller
     public function UsersIndex ()
     {
         //
-        $users = DB::select('select * from users order by username DESC');
+        $users = DB::select('select * from users order by username ASC');
         $usersdata=[
             'users'=>$users
         ];
@@ -74,6 +74,16 @@ class UsersProFileController extends Controller
             'user' => $user[0],
         ];
         return view('UsersProfile.UsersEdit', $data);
+    }
+
+    public function UsersResetPWD($username)
+    {
+        //
+        $user = DB::select('select * from users where username = ?', [$username]);
+        $data = [
+            'user' => $user[0],
+        ];
+        return view('UsersProfile.UsersResetPWD', $data);
     }
 
     /**
