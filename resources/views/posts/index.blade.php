@@ -5,9 +5,9 @@
     <div class="row">
         <div class="col-12">
             <br>
-            <h3>公告內容列表</h3>
+            <h6>公告內容列表</h6>
         @auth
-        <a href="{{ route('posts.create')}}" class="btn btn-success btn-sm">新增內容</a>
+        <a href="{{ route('posts.create')}}" class="btn btn-success btn-sm" style="font-size:14px">新增內容</a>
         @endauth
         </div>
         <br>

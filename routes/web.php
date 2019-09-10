@@ -38,13 +38,13 @@ Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail'
 Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
 Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 
-/*測試首頁 */
+/*首頁 */
 Route::get('/', function () {
     return view('index');
 })->name('index');
 
 /*TestsController */
-Route::get('foo', 'TestsController@index');
+//Route::get('foo', 'TestsController@index');
 
 /*取得PostsController後續頁面Route與Controller搭配 --此例為公告列表*/
 Route::get('posts', 'PostsController@index')->name('posts.index');
@@ -118,6 +118,6 @@ Route::get('finance/fsearch1', 'FinanceController@fsearch1')->name('finance.fsea
 Route::post('finance/fin_ship', 'FinanceController@fin_ship')->name('finance.fin_ship');
 //結帳前檢查輸入畫面
 Route::get('finance/fsearch2', 'FinanceController@fsearch2')->name('finance.fsearch2');
-Route::post('finance/fin_b4_chk', 'FinanceController@fin_b4_chk')->name('finance.fin_b4_chk');
+Route::post('finance/fin_b4check', 'FinanceController@fin_b4check')->name('finance.fin_b4check');
 //Tab test
 Route::post('finance/fin_b4chk', 'FinanceController@fin_b4chk')->name('finance.fin_b4chk');

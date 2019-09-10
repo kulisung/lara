@@ -6,7 +6,7 @@
 <div class="container" style="background-color:#DEFFFF;">
     <div class="row">
         <div class="col-12">
-            <h5>#銷貨對帳單查詢</h5>
+            <h6>#銷貨對帳單查詢</h6>
             <form method="post" action={{ route('finance.fin_ship') }}>
             @csrf
             <div class="form-group">

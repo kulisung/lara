@@ -7,7 +7,7 @@
     <div class="row">
         <div class="col-12">
             <br>
-            <h5>使用者列表</h5>
+            <h6>使用者列表</h6>
         </div>
         <br>
         <div class="col-12 table-cont" id="table-cont">
