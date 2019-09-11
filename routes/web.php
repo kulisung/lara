@@ -84,7 +84,7 @@ Route::post('fin_ship_export','ExcelController@fin_ship_export')->name('fin_ship
 Route::post('WorkingTimeExport','ExcelController@WorkingTimeExport')->name('WorkingTimeExport');
 
 //檢查MS SQL連線結果
-Route::get('dbresult', 'Auth\VerificationController@dbresult')->name('auth.dbresult');
+//Route::get('dbresult', 'Auth\VerificationController@dbresult')->name('auth.dbresult');
 
 // Search Route
 Route::get('searchs', 'SearchsController@index')->name('searchs.index'); //查詢List

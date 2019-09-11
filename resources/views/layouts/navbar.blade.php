@@ -34,9 +34,6 @@
                 <li class="nav-item">
                     <a class="nav-link font-weight-bold" style="font-size:14px" href={{ route('AllUserExport')}}>資料匯入</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link font-weight-bold" style="font-size:14px" href={{ route('auth.dbresult')}}>DB連線檢查</a>                    
-                </li>
                 @endif
                 @endauth
                 <li class="nav-item dropdown">
