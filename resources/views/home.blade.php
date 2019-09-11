@@ -13,7 +13,7 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    已登入系統！ 3秒後轉至首頁！！
+                    已登入系統！！ 3秒後轉至首頁！！
                 </div>
             </div>
         </div>
