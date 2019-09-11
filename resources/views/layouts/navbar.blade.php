@@ -6,6 +6,9 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
+                  <a class="nav-link font-weight-bold" style="font-size:14px" href={{ route('index') }}>Home</a>
+                </li>
+                <li class="nav-item">
                   <a class="nav-link font-weight-bold" style="font-size:14px" href={{ route('posts.index') }}>簡易公告系統</a>
                 </li>
                 @auth

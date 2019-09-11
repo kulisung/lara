@@ -1,5 +1,5 @@
 @extends('layouts.master')
-
+<meta http-equiv="refresh" content="3;url={{ route('index')}}">
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -13,8 +13,7 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
-                    You are logged in!
+                    已登入系統！ 3秒後轉至首頁！！
                 </div>
             </div>
         </div>
