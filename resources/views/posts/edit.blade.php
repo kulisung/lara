@@ -1,6 +1,7 @@
 @extends('layouts.master')
 @section('title','公告系統')
 @section('content')
+@auth
 <div class="container">
     <div class="row">
         <div class="col-12">
@@ -27,5 +28,6 @@
             </form>
         </div>
     </div>
-</div>  
+</div>
+@endauth  
 @endsection

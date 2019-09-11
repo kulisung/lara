@@ -1,6 +1,7 @@
 @extends('layouts.master')
 @section('title','查詢系統')
 @section('content')
+@auth
 <div class="container">
     <div class="row">
         <div class="col-12">
@@ -183,5 +184,6 @@
         </div>
     </div>
 </div>
+@endauth
 @endsection
 

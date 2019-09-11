@@ -37,7 +37,7 @@
                         <td>
                             <a href="{{ route('UsersProfile.UsersResetPWD',$user->username) }}" class="btn btn-primary btn-sm" style="font-size:12px">ResetPassword</a>
                         </td>
-                        <td>
+                        <td>                            
                             <form method="post" action="{{ route('UsersProfile.destroy',$user->username) }}" id='delete'>
                                 @csrf
                                 {{ method_field('DELETE') }}

@@ -23,15 +23,16 @@
                     <input type="text" name="email" value="{{ $user->email }}"></div>
                 </div>
                 <div style="text-align:center">
-                <label style="font-size:10px">## 註:User Level權限預設=0；1-行政；2-業務；3-生產；4-研發；5-財務；9系統管理員。 ##</label>
+                    <label style="font-size:10px">## 註:User Level權限預設=0；1-行政；2-業務；3-生產；4-研發；5-財務；9系統管理員。 ##</label>
                 </div>
                 <div style="text-align:center">
-                @if (auth()->user()->user_level==9) 
-                <a href="{{ route('UsersProfile.UsersIndex')}}" class="btn btn-secondary btn-sm" style="font-size:14px">返回</a>
-                @else
-                <a href="{{ route('index')}}" class="btn btn-secondary btn-sm" style="font-size:14px">返回</a>
-                @endif
-                <button type="submit" class="btn btn-primary btn-sm" style="font-size:14px" onclick="return confirm('是否確認儲存?');">儲存</button>
+                    @if (auth()->user()->user_level==9) 
+                    <a href="{{ route('UsersProfile.UsersIndex')}}" class="btn btn-secondary btn-sm" style="font-size:14px">返回</a>
+                    @else
+                    <a href="{{ route('index')}}" class="btn btn-secondary btn-sm" style="font-size:14px">返回首頁</a>
+                    @endif
+                    <button type="submit" class="btn btn-primary btn-sm" style="font-size:14px" onclick="return confirm('是否確認儲存?');">儲存</button>
+                    <a href="{{ route('UsersProfile.UsersResetPWD',$user->username) }}" class="btn btn-primary btn-sm" style="font-size:12px">ResetPassword</a>
                 </div><br>
             </form>
         </div>

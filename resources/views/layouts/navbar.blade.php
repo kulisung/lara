@@ -39,8 +39,9 @@
                 <li class="nav-item dropdown">
                   <a class="nav-link font-weight-bold dropdown-toggle" style="font-size:14px" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Other</a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item font-weight-bold" style="font-size:14px" id='fsearch1' href="http://www.tensall.com.tw">Tensall</a>
-                            <a class="dropdown-item font-weight-bold" style="font-size:14px" id='fsearch2' href="#">Other</a>
+                            <a class="dropdown-item font-weight-bold" style="font-size:14px" id='osearch1' href="https://www.tensall.com.tw">Tensall官網</a>
+                            <a class="dropdown-item font-weight-bold" style="font-size:14px" id='osearch2' href="https://www.ts6.com.tw">TS6官網</a>
+                            <a class="dropdown-item font-weight-bold" style="font-size:14px" id='osearch3' href="#">Other</a>
                     </div>
                 </li>
             </ul>

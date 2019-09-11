@@ -2,7 +2,7 @@
 @section('title','UserEdit')
 @section('content')
 @auth
-@if (auth()->user()->user_level==9)
+
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-6 "><br>
@@ -34,13 +34,17 @@
                     </div>
                 </div>
                 <div style="text-align:center">
-                <a href="{{ route('UsersProfile.UsersIndex')}}" class="btn btn-secondary btn-sm" style="font-size:14px">返回</a>
-                <button type="submit" class="btn btn-primary btn-sm" style="font-size:14px" onclick="return confirm('是否確認儲存?');">儲存</button>
+                    @if (auth()->user()->user_level==9) 
+                    <a href="{{ route('UsersProfile.UsersIndex')}}" class="btn btn-secondary btn-sm" style="font-size:14px">返回</a>
+                    @else
+                    <a href="{{ route('index')}}" class="btn btn-secondary btn-sm" style="font-size:14px">返回首頁</a>
+                    @endif
+                    <button type="submit" class="btn btn-primary btn-sm" style="font-size:14px" onclick="return confirm('是否確認儲存?');">儲存</button>
                 </div><br>
             </form>
         </div>
     </div>
 </div>  
-@endif
+
 @endauth
 @endsection
