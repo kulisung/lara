@@ -1,7 +1,7 @@
 /node_modules
 /public/hot
 /public/storage
-/stroge/app/TENSALL
+/stroge/backups/
 /storage/*.key
 /vendor
 /config/database.php
