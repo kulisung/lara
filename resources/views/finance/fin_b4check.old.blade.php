@@ -53,7 +53,7 @@ a.tabs-menu.tabs-menu-active {
             <br>
         <h5>查詢結果，請稍後...(資料量大)</h5>
         <p><a href={{ route('finance.fsearch2') }} class="btn btn-success btn-sm">返回</a> 
-        <label style='font-size:14px'>結算年月：{{ $fin_chk }}，累計為該年度1月起計算。</label>         
+        <label style='font-size:16px'>結算年月：{{ $fin_chk }}，累計為該年度1月起計算。</label>         
         </p>
         </div>
     <div id="js-tabs" style="width:100%">

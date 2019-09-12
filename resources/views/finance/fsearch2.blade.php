@@ -10,21 +10,21 @@
             <form method="post" action={{ route('finance.fin_b4check') }}>
             @csrf
             <div class="form-group">
-                    <label style="font-size:14px">結算的起始年月(格式為ex:201901)</label>
+                    <label style="font-size:16px">結算的起始年月(格式為ex:201901)</label>
                     <input type="text" name="fin_date1">
-                    <button type="submit" style="font-size:14px" class="btn btn-primary btn-sm">結帳前檢查</button>
-                    <button type="submit" style="font-size:14px" class="btn btn-warning btn-sm" formaction={{ route('finance.fin_b4chk') }}>結帳前檢查(明細)</button>
-                    <button type="submit" style="font-size:14px" class="btn btn-info btn-sm" formaction={{ route('fin_b4_export') }} onclick="return confirm('確認是否匯出Excel?');">明細匯出Excel</button>
+                    <button type="submit" style="font-size:16px" class="btn btn-primary btn-sm">結帳前檢查</button>
+                    <button type="submit" style="font-size:16px" class="btn btn-warning btn-sm" formaction={{ route('finance.fin_b4chk') }}>結帳前檢查(明細)</button>
+                    <button type="submit" style="font-size:16px" class="btn btn-info btn-sm" formaction={{ route('fin_b4_export') }} onclick="return confirm('確認是否匯出Excel?');">明細匯出Excel</button>
             </div>        
             </form>
             <span style="color:blue;"><h6>#結帳後檢查(測試)</h6></span>
             <form method="post" action={{ route('finance.fin_b4chk') }}>
             @csrf
             <div class="form-group">
-                    <label style="font-size:14px">結算的起始年月(格式為ex:201901)</label>
+                    <label style="font-size:16px">結算的起始年月(格式為ex:201901)</label>
                     <input type="text" name="fin_date3">
-                    <button type="submit" style="font-size:14px" class="btn btn-primary btn-sm">結帳後檢查</button>
-                    <button type="submit" style="font-size:14px" class="btn btn-info btn-sm" formaction={{ route('finance.fin_b4chk') }} onclick="return confirm('確認是否匯出Excel?');">匯出Excel</button>
+                    <button type="submit" style="font-size:16px" class="btn btn-primary btn-sm">結帳後檢查</button>
+                    <button type="submit" style="font-size:16px" class="btn btn-info btn-sm" formaction={{ route('finance.fin_b4chk') }} onclick="return confirm('確認是否匯出Excel?');">匯出Excel</button>
             </div>        
             </form>
         </div>

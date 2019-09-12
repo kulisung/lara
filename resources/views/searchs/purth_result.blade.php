@@ -6,7 +6,7 @@
         <div class="col-12">
             <br>
             <h6>賢齊進退貨資料查詢結果</h6>
-        <p><a href={{ route('searchs.search1') }} class="btn btn-success btn-sm" style="font-size:14px">返回</a></p>
+        <p><a href={{ route('searchs.search1') }} class="btn btn-success btn-sm" style="font-size:16px">返回</a></p>
         </div>
         <div class="col-12 table-cont" id="table-cont">
             <table class="table table-hover table-striped">

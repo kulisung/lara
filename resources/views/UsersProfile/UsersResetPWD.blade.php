@@ -15,12 +15,12 @@
                 </div>
                 <div class="card-body">
                     <div class="form-group row">
-                        <label for="loginid" class="col-md-4 col-form-label text-md-right" style="font-size:14px">Login-ID</label>
+                        <label for="loginid" class="col-md-4 col-form-label text-md-right" style="font-size:16px">Login-ID</label>
                         <div class="col-md-6">
-                        <label for="loginid" class="col-md-4 col-form-label text-md-right" style="font-size:14px">{{ $user->username }}</label>
+                        <label for="loginid" class="col-md-4 col-form-label text-md-right" style="font-size:16px">{{ $user->username }}</label>
                         </div>
 
-                        <label for="password" class="col-md-4 col-form-label text-md-right" style="font-size:14px">{{ __('Password') }}</label>
+                        <label for="password" class="col-md-4 col-form-label text-md-right" style="font-size:16px">{{ __('Password') }}</label>
 
                         <div class="col-md-6">
                             <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
@@ -35,11 +35,11 @@
                 </div>
                 <div style="text-align:center">
                     @if (auth()->user()->user_level==9) 
-                    <a href="{{ route('UsersProfile.UsersIndex')}}" class="btn btn-secondary btn-sm" style="font-size:14px">返回</a>
+                    <a href="{{ route('UsersProfile.UsersIndex')}}" class="btn btn-secondary btn-sm" style="font-size:16px">返回</a>
                     @else
-                    <a href="{{ route('index')}}" class="btn btn-secondary btn-sm" style="font-size:14px">返回首頁</a>
+                    <a href="{{ route('index')}}" class="btn btn-secondary btn-sm" style="font-size:16px">返回首頁</a>
                     @endif
-                    <button type="submit" class="btn btn-primary btn-sm" style="font-size:14px" onclick="return confirm('是否確認儲存?');">儲存</button>
+                    <button type="submit" class="btn btn-primary btn-sm" style="font-size:16px" onclick="return confirm('是否確認儲存?');">儲存</button>
                 </div><br>
             </form>
         </div>

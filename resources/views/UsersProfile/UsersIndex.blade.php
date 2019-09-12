@@ -7,7 +7,7 @@
     <div class="row">
         <div class="col-12">
             <br>
-            <h6>使用者列表</h6>
+            <span style="color:blue;"><h6>使用者列表</h6></span>
         </div>
         <br>
         <div class="col-12 table-cont" id="table-cont">
@@ -32,16 +32,16 @@
                         <td>{{ $user->user_level }}</td>
                         <td>{{ $user->email }}</td>
                         <td>
-                            <a href="{{ route('UsersProfile.UsersEdit',$user->username) }}" style="font-size:12px" class="btn btn-primary btn-sm">Edit</a>
+                            <a href="{{ route('UsersProfile.UsersEdit',$user->username) }}" style="font-size:10px" class="btn btn-primary btn-sm">Edit</a>
                         </td>
                         <td>
-                            <a href="{{ route('UsersProfile.UsersResetPWD',$user->username) }}" class="btn btn-primary btn-sm" style="font-size:12px">ResetPassword</a>
+                            <a href="{{ route('UsersProfile.UsersResetPWD',$user->username) }}" class="btn btn-primary btn-sm" style="font-size:10px">ResetPassword</a>
                         </td>
                         <td>                            
                             <form method="post" action="{{ route('UsersProfile.destroy',$user->username) }}" id='delete'>
                                 @csrf
                                 {{ method_field('DELETE') }}
-                                <button type="submit" style="font-size:12px" class="btn btn-danger btn-sm" onclick="return confirm('是否確認刪除?');">Delete</button>
+                                <button type="submit" style="font-size:10px" class="btn btn-danger btn-sm" onclick="return confirm('是否確認刪除?');">Delete</button>
                             </form>
                         </td>
                     </tr>  

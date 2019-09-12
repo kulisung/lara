@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row">
         <div class="col-12">
-        <h3>{{ $result }}</h3>
+        <h4>{{ $result }}</h4>
         </div>
     </div>
 </div>  

@@ -10,12 +10,12 @@
             <form method="post" action={{ route('finance.fin_ship') }}>
             @csrf
             <div class="form-group">
-                    <label style="font-size:14px">起始日期(輸入格式為ex:20190601)</label>
+                    <label style="font-size:16px">起始日期(輸入格式為ex:20190601)</label>
                     <input type="text" name="date3"><br>
-                    <label style="font-size:14px">結束日期(輸入格式為ex:20190630)</label>
+                    <label style="font-size:16px">結束日期(輸入格式為ex:20190630)</label>
                     <input type="text" name="date4">                    
-                    <button type="submit" style="font-size:14px" class="btn btn-primary btn-sm">查詢</button>
-                    <button type="submit" style="font-size:14px" class="btn btn-info btn-sm" formaction={{ route('fin_ship_export') }} onclick="return confirm('確認是否匯出Excel?');">匯出Excel</button>
+                    <button type="submit" style="font-size:16px" class="btn btn-primary btn-sm">查詢</button>
+                    <button type="submit" style="font-size:16px" class="btn btn-info btn-sm" formaction={{ route('fin_ship_export') }} onclick="return confirm('確認是否匯出Excel?');">匯出Excel</button>
             </div>        
             </form>
         </div>

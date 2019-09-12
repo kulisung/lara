@@ -7,10 +7,10 @@
         <br>
         </div>
         <div>
-        <a href="{{ route('posts.index') }}" class="btn btn-secondary btn-sm" style="font-size:14px">返回</a>
+        <a href="{{ route('posts.index') }}" class="btn btn-secondary btn-sm" style="font-size:16px">返回</a>
         @auth
-        <a href="{{ route('posts.edit',$post->id) }}" class="btn btn-primary btn-sm" style="font-size:14px">編輯</a>
-        <a href="#" class="btn btn-danger btn-sm"  style="font-size:14px" onclick="document.getElementById('delete').submit()">刪除</a>
+        <a href="{{ route('posts.edit',$post->id) }}" class="btn btn-primary btn-sm" style="font-size:16px">編輯</a>
+        <a href="#" class="btn btn-danger btn-sm"  style="font-size:16px" onclick="document.getElementById('delete').submit()">刪除</a>
         @endauth
         <form method="post" action="{{ route('posts.destroy',$post->id) }}" id='delete'>
             @csrf
@@ -20,9 +20,9 @@
         <div class="col-12"><br>
             <div class="card">
                 <div class="card-header">
-                    <h3>{{ $post->title }}</h3>
+                    <h5>{{ $post->title }}</h5>
                 </div>
-                <div class="card-body">
+                <div style="font-size:16px" class="card-body">
                     {{ $post->content }}
                 </div>
             </div>

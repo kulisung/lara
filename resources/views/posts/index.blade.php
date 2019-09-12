@@ -7,7 +7,7 @@
             <br>
             <span style="color:blue;"><h6>公告內容列表</h6></span>
         @auth
-        <a href="{{ route('posts.create')}}" class="btn btn-success btn-sm" style="font-size:14px">新增內容</a>
+        <a href="{{ route('posts.create')}}" class="btn btn-success btn-sm" style="font-size:16px">新增內容</a>
         @endauth
         </div>
         <br>

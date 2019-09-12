@@ -7,7 +7,7 @@
         <div class="col-12">
             <br>
             <span style="color:blue;"><h6>查詢結果</h6></span>
-        <p><a href={{ route('finance.fsearch1') }} class="btn btn-success btn-sm" style="font-size:14px">返回</a></p>
+        <p><a href={{ route('finance.fsearch1') }} class="btn btn-success btn-sm" style="font-size:16px">返回</a></p>
         </div>
         <div class="col-12 table-cont" id="table-cont">
             <table class="table table-hover table-striped">

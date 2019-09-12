@@ -7,8 +7,8 @@
         <div class="col-12">
             <br>
         <h6>查詢結果，請稍後...(資料量大)</h6>
-        <p><a href={{ route('finance.fsearch2') }} class="btn btn-success btn-sm" style="font-size:14px">返回</a> 
-        <label style="font-size:14px"><span style="color:blue;">結算年月：{{ $fin_chk }}，累計起始年月：{{ $fin_date }}。</span></label></p>
+        <p><a href={{ route('finance.fsearch2') }} class="btn btn-success btn-sm" style="font-size:16px">返回</a> 
+        <label style="font-size:16px"><span style="color:blue;">結算年月：{{ $fin_chk }}，累計起始年月：{{ $fin_date }}。</span></label></p>
         </div>
         <div class="col-12 table-cont">
             <div class="col-12 table-cont" style="float:left">

@@ -11,7 +11,7 @@
              <div class="card-body">
                  <ul class="nav nav-tabs card-header-tabs">
                      <li class="nav-item">
-                         <a href="{{ route('userexport') }}" style="font-size:14px" class="nav-link">Download Users file</a>
+                         <a href="{{ route('userexport') }}" style="font-size:16px" class="nav-link">Download Users file</a>
                      </li>
 
                  </ul>
@@ -49,8 +49,8 @@
                         </div>
                     @endif
 
-                    <input style="font-size:14px" type="file" name="import_file" />
-                    <button style="font-size:14px" class="btn btn-primary">Import CSV</button>
+                    <input style="font-size:16px" type="file" name="import_file" />
+                    <button style="font-size:16px" class="btn btn-primary">Import CSV</button>
                 </form>
              </div>
          </div>
