@@ -2,15 +2,16 @@
 @section('title','Import and Export !')
 @section('content')
 @auth
+@if (auth()->user()->user_level==9)
      <div class="container">
          <div class="card-text-center">
              <div class="card-header">
-                <h8>使用者帳號匯出</h8>
+                <h6>使用者帳號匯出</h6>
              </div>
              <div class="card-body">
                  <ul class="nav nav-tabs card-header-tabs">
                      <li class="nav-item">
-                         <a href="{{ route('userexport') }}" class="nav-link">Download Users file</a>
+                         <a href="{{ route('userexport') }}" style="font-size:14px" class="nav-link">Download Users file</a>
                      </li>
 
                  </ul>
@@ -18,7 +19,7 @@
          </div>
          <div class="card">
              <div class="card-header">
-                <h8>使用者帳號匯入</h8>
+                <h6>使用者帳號匯入</h6>
              </div>
              <div class="card-body">
                 <form style="border: 1pt solid #a1cbef;margin: 10px;padding: 10px;" action="{{ route('userimport') }}" class="form" method="post" enctype="multipart/form-data">
@@ -48,11 +49,12 @@
                         </div>
                     @endif
 
-                    <input type="file" name="import_file" />
-                    <button class="btn btn-primary">Import CSV</button>
+                    <input style="font-size:14px" type="file" name="import_file" />
+                    <button style="font-size:14px" class="btn btn-primary">Import CSV</button>
                 </form>
              </div>
          </div>
      </div>
+@endif
 @endauth
 @endsection

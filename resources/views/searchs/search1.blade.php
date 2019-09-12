@@ -23,7 +23,7 @@
                 <label style="font-size:14px">By品號</label>
                 <input type="text" name="TH004" id="TH004">
                 <button type="submit" class="btn btn-primary btn-sm" style="font-size:14px">查詢</button>
-                <button type="submit" class="btn btn-secondary btn-sm" style="font-size:14px" formaction={{ route('export_xls') }} onclick="return confirm('確認是否匯出Excel?');">匯出Excel</button>
+                <button type="submit" class="btn btn-info btn-sm" style="font-size:14px" formaction={{ route('export_xls') }} onclick="return confirm('確認是否匯出Excel?');">匯出Excel</button>
             </div>
             </form>
          </div>

@@ -130,6 +130,7 @@ class FinanceController extends Controller
     {
         $fin_chk = $request->input('fin_date1');
         $fin_date = substr($fin_chk,0,4).'01';  //累計由該年度一月開始計算
+        //淨額合計
         $b4_checks = DB::connection('sqlsrv_tensall')->select('SELECT SUM(TH037) AS SUMCOST,SUM(TH038) AS SUMTAX FROM (SELECT TG004,TG007,TG003,CASE TG005 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END as TG005,MB008,MB006,MA038,MA019,TH005,QTY=TH008+TH024,TG012,TH037,TH038,TH001,TH002,TH003 
         FROM COPMA D,COPTG E,COPTH H,INVMB K
         WHERE E.TG001=H.TH001 
@@ -153,10 +154,24 @@ class FinanceController extends Controller
         AND MB001 <> ?) P',
         ['D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','Y',$fin_chk,'9090','D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','Y',$fin_chk,'9090']);
 
+        //銷貨合計
         $b4_shipchecks = DB::connection('sqlsrv_tensall')->select('SELECT SUM(TH037) AS SUMSHIP,SUM(TH038) AS SUMTAX 
         FROM COPMA D,COPTG E,COPTH H,INVMB K
         WHERE E.TG001=H.TH001 
         AND E.TG002=H.TH002
+        AND H.TH004=K.MB001
+        AND D.MA001=TG004
+        AND D.MA001=E.TG004
+        AND TH026 = ?
+        AND left(TG003,6) = ?
+        AND MB001 <> ?',
+        ['Y',$fin_chk,'9090']);
+
+        //客戶總額統計
+        $b4_customers = DB::connection('sqlsrv_tensall')->select('SELECT SUM(TH037) AS SUMCUS,SUM(TH038) AS SUMTAX
+        FROM COPMA D,COPTG E,COPTH H,INVMB K
+        WHERE E.TG001=H.TH001   
+        AND E.TG002=H.TH002 
         AND H.TH004=K.MB001
         AND D.MA001=TG004
         AND D.MA001=E.TG004
@@ -312,7 +327,7 @@ class FinanceController extends Controller
             $result = '查無資料，請檢查條件是否輸入正確!!';
             return View('nodata')->with('result', $result);
         }else{
-            return view('finance.fin_b4check', compact('fin_chk','fin_date','b4_checks','b4_shipchecks','b4_sumbacks','b4_sumdiscs','b4_items','b4_sumitems','b4_brands','b4_sumbrands','b4_returns','b4_sumreturns','b4_allowances','b4_sumallowances','b4_discounts','b4_sumdiscounts'));
+            return view('finance.fin_b4check', compact('fin_chk','fin_date','b4_checks','b4_shipchecks','b4_sumbacks','b4_sumdiscs','b4_items','b4_sumitems','b4_brands','b4_sumbrands','b4_customers','b4_returns','b4_sumreturns','b4_allowances','b4_sumallowances','b4_discounts','b4_sumdiscounts'));
         }
     }
     
@@ -476,7 +491,7 @@ class FinanceController extends Controller
         ['4191','4172',$fin_date,$fin_chk]);
 
         //單月銷退
-        $b4_shipbacks = DB::connection('sqlsrv_tensall')->select('SELECT TI004,TI021,TI003,CASE TI005 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS TG005,CASE MB008 WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,CASE MB006 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB006,CASE MA038 WHEN ? THEN ? ELSE ? END AS MA038,MA019,TJ005,TJ007=TJ007+TJ042,TI009,TJ033,TJ034,TJ001,TJ002,TJ003
+        $b4_shipbacks = DB::connection('sqlsrv_tensall')->select('SELECT TI004,TI021,TI003,CASE TI005 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS TG005,CASE MB008 WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,CASE MB006 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB006,CASE MA038 WHEN ? THEN ? ELSE ? END AS MA038,MA019,TJ005,QTY=TJ007+TJ042,TI009,TJ033,TJ034,TJ001,TJ002,TJ003
         FROM COPMA D,COPTI E,COPTJ H,INVMB K
         WHERE E.TI001=H.TJ001   
         AND E.TI002=H.TJ002
@@ -491,7 +506,7 @@ class FinanceController extends Controller
         ['D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','01','TS6','02','ODM','OTHER','21','食品','22','化妝品','23','私密保養品','26','商品成品','OTHER','3','外銷','內銷','Y','1',$fin_date,$fin_chk,'9090']);
 
         //單月折讓
-        $b4_shipdiscs = DB::connection('sqlsrv_tensall')->select('SELECT TI004,TI021,TI003,CASE TI005 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS TG005,CASE MB008 WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,CASE MB006 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB006,CASE MA038 WHEN ? THEN ? ELSE ? END AS MA038,MA019,TJ005,TJ007=TJ007+TJ042,TI009,TJ033, TJ034,TJ001,TJ002,TJ003
+        $b4_shipdiscs = DB::connection('sqlsrv_tensall')->select('SELECT TI004,TI021,TI003,CASE TI005 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS TG005,CASE MB008 WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,CASE MB006 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB006,CASE MA038 WHEN ? THEN ? ELSE ? END AS MA038,MA019,TJ005,QTY=TJ007+TJ042,TI009,TJ033, TJ034,TJ001,TJ002,TJ003
         FROM COPMA D,COPTI E,COPTJ H,INVMB K
         WHERE E.TI001=H.TJ001   
         AND E.TI002=H.TJ002
@@ -506,7 +521,7 @@ class FinanceController extends Controller
         ['D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','01','TS6','02','ODM','OTHER','21','食品','22','化妝品','23','私密保養品','26','商品成品','OTHER','3','外銷','內銷','Y','2',$fin_date,$fin_chk,'9090']);
 
         //客戶總額統計
-        $b4_customers = DB::connection('sqlsrv_tensall')->select('SELECT TG004,TG007,SUM(TH037) AS SUMCUS,SUM(TH038) AS SUMCOST
+        $b4_customers = DB::connection('sqlsrv_tensall')->select('SELECT TG004,TG007,SUM(TH037) AS SUMCUS,SUM(TH038) AS SUMTAX
         FROM COPMA D,COPTG E,COPTH H,INVMB K
         WHERE E.TG001=H.TH001   
         AND E.TG002=H.TH002 
@@ -519,6 +534,50 @@ class FinanceController extends Controller
         GROUP BY TG004,TG007 ORDER BY TG004,TG007',
         ['Y',$fin_chk,'9090']);
 
+        //銷退單銷退By客戶
+        $b4_cusshipbacks = DB::connection('sqlsrv_tensall')->select('SELECT TI004,TI021,SUM(TJ033) AS TJ033,SUM(TJ034) AS TJ034
+        FROM COPMA D,COPTI E,COPTJ H,INVMB K
+        WHERE E.TI001=H.TJ001
+        AND E.TI002=H.TJ002 
+        AND H.TJ004=K.MB001
+        AND D.MA001=TI004
+        AND D.MA001=E.TI004
+        AND TJ024 = ?
+        AND left(TI003,6) = ?
+        AND MB001 <> ? 
+        GROUP BY TI004,TI021 ORDER BY TI004,TI021',
+        ['Y',$fin_chk,'9090']);
+
+        //銷退單單身銷退By客戶
+        $b4_cusbacks = DB::connection('sqlsrv_tensall')->select('SELECT TI004,TI021,SUM(TJ033) AS TJ033,SUM(TJ034) AS TJ034
+        FROM COPMA D,COPTI E,COPTJ H,INVMB K
+        WHERE E.TI001=H.TJ001
+        AND E.TI002=H.TJ002 
+        AND H.TJ004=K.MB001
+        AND D.MA001=TI004
+        AND D.MA001=E.TI004
+        AND TJ024 = ?
+        AND TJ030 = ?
+        AND left(TI003,6) = ?
+        AND MB001 <> ? 
+        GROUP BY TI004,TI021 ORDER BY TI004,TI021',
+        ['Y','1',$fin_chk,'9090']);
+
+        //銷退單單身折讓By客戶
+        $b4_cusdiscs = DB::connection('sqlsrv_tensall')->select('SELECT TI004,TI021,SUM(TJ033) AS TJ033,SUM(TJ034) AS TJ034
+        FROM COPMA D,COPTI E,COPTJ H,INVMB K
+        WHERE E.TI001=H.TJ001
+        AND E.TI002=H.TJ002 
+        AND H.TJ004=K.MB001
+        AND D.MA001=TI004
+        AND D.MA001=E.TI004
+        AND TJ024 = ?
+        AND TJ030 = ?
+        AND left(TI003,6) = ?
+        AND MB001 <> ? 
+        GROUP BY TI004,TI021 ORDER BY TI004,TI021',
+        ['Y','2',$fin_chk,'9090']);
+
         //判斷是否有資料
         $data_records = count($b4_chks); //資料筆數
         $ship_records = count($b4_shipchks); //資料筆數
@@ -527,7 +586,7 @@ class FinanceController extends Controller
             $result = '查無資料，請檢視查詢條件是否輸入正確!!';
             return View('nodata')->with('result', $result);
         }else{
-            return view('finance.fin_b4chk', compact('fin_chk','b4_chks','b4_shipchks','b4_items','b4_sumitems','b4_brands','b4_sumbrands','b4_returns','b4_sumreturns','b4_allowances','b4_sumallowances','b4_discounts','b4_sumdiscounts','b4_shipbacks','b4_shipdiscs','b4_customers','data_records','ship_records'));
+            return view('finance.fin_b4chk', compact('fin_chk','b4_chks','b4_shipchks','b4_items','b4_sumitems','b4_brands','b4_sumbrands','b4_returns','b4_sumreturns','b4_allowances','b4_sumallowances','b4_discounts','b4_sumdiscounts','b4_shipbacks','b4_shipdiscs','b4_customers','b4_cusshipbacks','b4_cusbacks','b4_cusdiscs','data_records','ship_records'));
         }
     }
 

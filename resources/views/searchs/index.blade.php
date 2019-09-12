@@ -23,7 +23,7 @@
                     <label style="font-size:14px">By品號</label>
                     <input type="text" name="TH004" id="TH004">
                     <button type="submit" class="btn btn-primary btn-sm" style="font-size:14px">查詢</button>
-                    <button type="submit" class="btn btn-secondary btn-sm" style="font-size:14px" formaction={{ route('export_xls') }} onclick="return confirm('確認是否匯出Excel?');">匯出Excel</button>
+                    <button type="submit" class="btn btn-info btn-sm" style="font-size:14px" formaction={{ route('export_xls') }} onclick="return confirm('確認是否匯出Excel?');">匯出Excel</button>
             </div>
             </form>
             <span style="color:blue;"><h6>#03#展場庫存查詢</h6></span>
@@ -36,7 +36,7 @@
                     <input type="text" name="date2">                    
                     <button type="submit" class="btn btn-primary btn-sm" style="font-size:14px">Invoice查詢</button>
                     <button type="submit" class="btn btn-primary btn-sm" style="font-size:14px" formaction={{ route('searchs.pos_stocks') }}>數量查詢</button>
-                    <button type="submit" class="btn btn-secondary btn-sm" style="font-size:14px" formaction={{ route('pos_inv_export') }} onclick="return confirm('確認是否匯出Excel?');">合併匯出Excel</button>
+                    <button type="submit" class="btn btn-info btn-sm" style="font-size:14px" formaction={{ route('pos_inv_export') }} onclick="return confirm('確認是否匯出Excel?');">合併匯出Excel</button>
             </div>        
             </form>
             <span style="color:blue;"><h6>#04#起始品號A or B製令工時查詢(不包含'A-'與'B-'起始品號)</h6></span>
@@ -46,7 +46,7 @@
                     <label style="font-size:14px">輸入製令工時年月(輸入格式為ex:201908)</label>
                     <input type="text" name="workdate">
                     <button type="submit" class="btn btn-primary btn-sm" style="font-size:14px">查詢</button>
-                    <button type="submit" class="btn btn-secondary btn-sm" style="font-size:14px" formaction={{ route('WorkingTimeExport') }} onclick="return confirm('確認是否匯出Excel?');">匯出Excel</button>
+                    <button type="submit" class="btn btn-info btn-sm" style="font-size:14px" formaction={{ route('WorkingTimeExport') }} onclick="return confirm('確認是否匯出Excel?');">匯出Excel</button>
             </div>
             </form>
         </div>

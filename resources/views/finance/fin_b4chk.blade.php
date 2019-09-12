@@ -67,6 +67,8 @@ a.tabs-menu.tabs-menu-active {
         <a href="#tab4" onclick="jsTabs(event,'tab4');return false" class="tabs-menu">銷退\折讓\尾折未稅合計</a>
         <a href="#tab5" onclick="jsTabs(event,'tab5');return false" class="tabs-menu">銷退明細</a>
         <a href="#tab6" onclick="jsTabs(event,'tab6');return false" class="tabs-menu">折讓明細</a>
+        <a href="#tab7" onclick="jsTabs(event,'tab7');return false" class="tabs-menu">客戶明細彙總</a>
+        <a href="#tab8" onclick="jsTabs(event,'tab8');return false" class="tabs-menu">銷退折讓彙總</a>
         </div>
 
         <div class="tabs-container">
@@ -105,10 +107,10 @@ a.tabs-menu.tabs-menu-active {
                             <td>{{ $b4_chk->MA038 }}</td>
                             <td>{{ $b4_chk->MA019 }}</td>
                             <td>{{ $b4_chk->TH005 }}</td>
-                            <td>{{ $b4_chk->QTY }}</td>
-                            <td>{{ $b4_chk->TG012 }}</td>
-                            <td>{{ $b4_chk->TH037 }}</td>
-                            <td>{{ $b4_chk->TH038 }}</td>
+                            <td>{{ (int)$b4_chk->QTY }}</td>
+                            <td>{{ (int)$b4_chk->TG012 }}</td>
+                            <td>{{ (int)$b4_chk->TH037 }}</td>
+                            <td>{{ (int)$b4_chk->TH038 }}</td>
                             <td>{{ $b4_chk->TH001 }}</td>
                             <td>{{ $b4_chk->TH002 }}</td>
                             <td>{{ $b4_chk->TH003 }}</td>
@@ -154,10 +156,10 @@ a.tabs-menu.tabs-menu-active {
                             <td>{{ $b4_shipchk->MA038 }}</td>
                             <td>{{ $b4_shipchk->MA019 }}</td>
                             <td>{{ $b4_shipchk->TH005 }}</td>
-                            <td>{{ $b4_shipchk->QTY }}</td>
-                            <td>{{ $b4_shipchk->TG012 }}</td>
-                            <td>{{ $b4_shipchk->TH037 }}</td>
-                            <td>{{ $b4_shipchk->TH038 }}</td>
+                            <td>{{ (int)$b4_shipchk->QTY }}</td>
+                            <td>{{ (int)$b4_shipchk->TG012 }}</td>
+                            <td>{{ (int)$b4_shipchk->TH037 }}</td>
+                            <td>{{ (int)$b4_shipchk->TH038 }}</td>
                             <td>{{ $b4_shipchk->TH001 }}</td>
                             <td>{{ $b4_shipchk->TH002 }}</td>
                             <td>{{ $b4_shipchk->TH003 }}</td>
@@ -181,7 +183,7 @@ a.tabs-menu.tabs-menu-active {
                         @foreach ($b4_items as $b4_item)
                         <tr>
                             <td>{{ $b4_item->MB006 }}</td>
-                            <td>{{ $b4_item->COST }}</td>
+                            <td>{{ (int)$b4_item->COST }}</td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -200,7 +202,7 @@ a.tabs-menu.tabs-menu-active {
                         @foreach ($b4_sumitems as $b4_sumitem)
                         <tr>
                             <td>{{ $b4_sumitem->MB006 }}</td>
-                            <td>{{ $b4_sumitem->COST }}</td>
+                            <td>{{ (int)$b4_sumitem->COST }}</td>
                         </tr>  
                         @endforeach
                     </tbody>
@@ -222,7 +224,7 @@ a.tabs-menu.tabs-menu-active {
                         @foreach ($b4_brands as $b4_brand)
                         <tr>
                             <td>{{ $b4_brand->MB008 }}</td>
-                            <td>{{ $b4_brand->COST }}</td>
+                            <td>{{ (int)$b4_brand->COST }}</td>
                         </tr>  
                         @endforeach
                     </tbody>
@@ -241,7 +243,7 @@ a.tabs-menu.tabs-menu-active {
                         @foreach ($b4_sumbrands as $b4_sumbrand)
                         <tr>
                             <td>{{ $b4_sumbrand->MB008 }}</td>
-                            <td>{{ $b4_sumbrand->COST }}</td>
+                            <td>{{ (int)$b4_sumbrand->COST }}</td>
                         </tr>  
                         @endforeach
                     </tbody>
@@ -264,13 +266,13 @@ a.tabs-menu.tabs-menu-active {
 
                     <tr>
                         @foreach ($b4_returns as $b4_return)
-                        <td>{{ $b4_return->COST }}</td>
+                        <td>{{ (int)$b4_return->COST }}</td>
                         @endforeach
                         @foreach ($b4_allowances as $b4_allowance)
-                        <td>{{ $b4_allowance->ML008 }}</td>
+                        <td>{{ (int)$b4_allowance->ML008 }}</td>
                         @endforeach
                         @foreach ($b4_discounts as $b4_discount)
-                        <td>{{ $b4_discount->TD015 }}</td>
+                        <td>{{ (int)$b4_discount->TD015 }}</td>
                         @endforeach
                     </tr>  
 
@@ -286,13 +288,13 @@ a.tabs-menu.tabs-menu-active {
 
                     <tr>
                         @foreach ($b4_sumreturns as $b4_sumreturn)
-                        <td>{{ $b4_sumreturn->COST }}</td>
+                        <td>{{ (int)$b4_sumreturn->COST }}</td>
                         @endforeach
                         @foreach ($b4_sumallowances as $b4_sumallowance)
-                        <td>{{ $b4_sumallowance->ML008 }}</td>
+                        <td>{{ (int)$b4_sumallowance->ML008 }}</td>
                         @endforeach
                         @foreach ($b4_sumdiscounts as $b4_sumdiscount)
-                        <td>{{ $b4_sumdiscount->TD015 }}</td>
+                        <td>{{ (int)$b4_sumdiscount->TD015 }}</td>
                         @endforeach
                     </tr>  
 
@@ -337,10 +339,10 @@ a.tabs-menu.tabs-menu-active {
                             <td>{{ $b4_shipback->MA038 }}</td>
                             <td>{{ $b4_shipback->MA019 }}</td>
                             <td>{{ $b4_shipback->TJ005 }}</td>
-                            <td>{{ $b4_shipback->TJ007 }}</td>
-                            <td>{{ $b4_shipback->TI009 }}</td>
-                            <td>{{ $b4_shipback->TJ033 }}</td>
-                            <td>{{ $b4_shipback->TJ034 }}</td>
+                            <td>{{ (int)$b4_shipback->QTY }}</td>
+                            <td>{{ (int)$b4_shipback->TI009 }}</td>
+                            <td>{{ (int)$b4_shipback->TJ033 }}</td>
+                            <td>{{ (int)$b4_shipback->TJ034 }}</td>
                             <td>{{ $b4_shipback->TJ001 }}</td>
                             <td>{{ $b4_shipback->TJ002 }}</td>
                             <td>{{ $b4_shipback->TJ003 }}</td>
@@ -387,10 +389,10 @@ a.tabs-menu.tabs-menu-active {
                             <td>{{ $b4_shipdisc->MA038 }}</td>
                             <td>{{ $b4_shipdisc->MA019 }}</td>
                             <td>{{ $b4_shipdisc->TJ005 }}</td>
-                            <td>{{ $b4_shipdisc->TJ007 }}</td>
-                            <td>{{ $b4_shipdisc->TI009 }}</td>
-                            <td>{{ $b4_shipdisc->TJ033 }}</td>
-                            <td>{{ $b4_shipdisc->TJ034 }}</td>
+                            <td>{{ (int)$b4_shipdisc->QTY }}</td>
+                            <td>{{ (int)$b4_shipdisc->TI009 }}</td>
+                            <td>{{ (int)$b4_shipdisc->TJ033 }}</td>
+                            <td>{{ (int)$b4_shipdisc->TJ034 }}</td>
                             <td>{{ $b4_shipdisc->TJ001 }}</td>
                             <td>{{ $b4_shipdisc->TJ002 }}</td>
                             <td>{{ $b4_shipdisc->TJ003 }}</td>
@@ -401,11 +403,106 @@ a.tabs-menu.tabs-menu-active {
                 </div>
             </div>
 
+            <div id="tab7" class="tabs-panel" style="display:block">
+                <div class="col-12 table-cont">
+                    <table class="table table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>客戶代碼</th>
+                            <th>客戶全名</th>
+                            <th>未稅總金額</th>
+                            <th>稅額總額</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($b4_customers as $b4_customer)
+                        <tr>
+                            <td>{{ $b4_customer->TG004 }}</td>
+                            <td>{{ $b4_customer->TG007 }}</td>
+                            <td>{{ (int)$b4_customer->SUMCUS }}</td>
+                            <td>{{ (int)$b4_customer->SUMTAX }}</td>
+                        </tr>  
+                        @endforeach
+                    </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="tab8" class="tabs-panel" style="display:block">
+                <div class="col-12 table-cont" style="float:left">
+                    <table class="table table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>客戶代碼</th>
+                            <th>客戶全名</th>
+                            <th>銷退未稅總金額</th>
+                            <th>銷退稅額總額</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($b4_cusshipbacks as $b4_cusshipback)
+                        <tr>
+                            <td>{{ $b4_cusshipback->TI004 }}</td>
+                            <td>{{ $b4_cusshipback->TI021 }}</td>
+                            <td>{{ (int)$b4_cusshipback->TJ033 }}</td>
+                            <td>{{ (int)$b4_cusshipback->TJ034 }}</td>
+                        </tr>  
+                        @endforeach
+                    </tbody>
+                    </table>
+                </div>
+
+                <div class="col-12 table-cont" style="float:left">
+                    <table class="table table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>客戶代碼</th>
+                            <th>客戶全名</th>
+                            <th>單身銷退未稅總金額</th>
+                            <th>單身銷退稅額總額</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($b4_cusbacks as $b4_cusback)
+                        <tr>
+                            <td>{{ $b4_cusback->TI004 }}</td>
+                            <td>{{ $b4_cusback->TI021 }}</td>
+                            <td>{{ (int)$b4_cusback->TJ033 }}</td>
+                            <td>{{ (int)$b4_cusback->TJ034 }}</td>
+                        </tr>  
+                        @endforeach
+                    </tbody>
+                    </table>
+                </div>
+
+                <div class="col-12 table-cont" style="float:left">
+                    <table class="table table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>客戶代碼</th>
+                            <th>客戶全名</th>
+                            <th>單身銷退未稅總金額</th>
+                            <th>單身銷退稅額總額</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($b4_cusdiscs as $b4_cusdisc)
+                        <tr>
+                            <td>{{ $b4_cusdisc->TI004 }}</td>
+                            <td>{{ $b4_cusdisc->TI021 }}</td>
+                            <td>{{ (int)$b4_cusdisc->TJ033 }}</td>
+                            <td>{{ (int)$b4_cusdisc->TJ034 }}</td>
+                        </tr>  
+                        @endforeach
+                    </tbody>
+                    </table>
+                </div>
+
+            </div>
+
 
         </div>
     </div>
-
-
     </div>
 </div>
 

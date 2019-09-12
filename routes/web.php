@@ -82,6 +82,8 @@ Route::post('pos_inv_export','ExcelController@pos_inv_export')->name('pos_inv_ex
 Route::post('fin_ship_export','ExcelController@fin_ship_export')->name('fin_ship_export');
 //製令工時匯出
 Route::post('WorkingTimeExport','ExcelController@WorkingTimeExport')->name('WorkingTimeExport');
+//結帳前明細匯出
+Route::post('fin_b4_export','ExcelController@fin_b4_export')->name('fin_b4_export');
 
 //檢查MS SQL連線結果
 //Route::get('dbresult', 'Auth\VerificationController@dbresult')->name('auth.dbresult');

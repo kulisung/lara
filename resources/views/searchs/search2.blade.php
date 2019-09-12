@@ -15,7 +15,7 @@
                     <input type="text" name="date2">                    
                     <button type="submit" class="btn btn-primary btn-sm" style="font-size:14px">Invoice查詢</button>
                     <button type="submit" class="btn btn-primary btn-sm" style="font-size:14px" formaction={{ route('searchs.pos_stocks') }}>數量查詢</button>
-                    <button type="submit" class="btn btn-secondary btn-sm" style="font-size:14px" formaction={{ route('pos_inv_export') }} onclick="return confirm('確認是否匯出Excel?');">合併匯出Excel</button>
+                    <button type="submit" class="btn btn-info btn-sm" style="font-size:14px" formaction={{ route('pos_inv_export') }} onclick="return confirm('確認是否匯出Excel?');">合併匯出Excel</button>
             </div>       
             </form>
         </div>

@@ -7,66 +7,60 @@
         <div class="col-12">
             <br>
         <h6>查詢結果，請稍後...(資料量大)</h6>
-        <p><a href={{ route('finance.fsearch2') }} class="btn btn-success btn-sm">返回</a> 
-        <label style="font-size:14px">結算年月：{{ $fin_chk }}，累計起始年月：{{ $fin_date }}。</label></p>
+        <p><a href={{ route('finance.fsearch2') }} class="btn btn-success btn-sm" style="font-size:14px">返回</a> 
+        <label style="font-size:14px"><span style="color:blue;">結算年月：{{ $fin_chk }}，累計起始年月：{{ $fin_date }}。</span></label></p>
         </div>
         <div class="col-12 table-cont">
-            <div class="col-6 table-cont" style="float:left">
+            <div class="col-12 table-cont" style="float:left">
                 <table class="table table-hover table-striped">
                     <thead>
                         <tr>
-                            <th>淨額未稅金額合計</th>
-                            <th>淨稅額合計</th>
-                            <th>銷貨未稅金額合計</th>
-                            <th>銷貨稅額合計</th>
+                            <th style="background-color:#CCCCFF;">淨額未稅合計</th>
+                            <th style="background-color:#CCCCFF;">淨額稅額合計</th>
+                            <th><span style="color:blue;">銷貨未稅合計</span></th>
+                            <th><span style="color:blue;">銷貨稅額合計</span></th>
+                            <th style="background-color:#CCCCFF;">銷退未稅合計</th>
+                            <th style="background-color:#CCCCFF;">銷退稅額合計</th>
+                            <th><span style="color:blue;">折讓未稅合計</span></th>
+                            <th><span style="color:blue;">折讓稅額合計</span></th>
+                            <th style="background-color:#CCCCFF;">客戶未稅合計</th>
+                            <th style="background-color:#CCCCFF;">客戶稅額合計</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             @foreach($b4_checks as $b4_check)
-                            <td>{{ (int)$b4_check->SUMCOST }}</td>
-                            <td>{{ (int)$b4_check->SUMTAX }}</td>
+                            <td style="background-color:#EBEBFF;">{{ (int)$b4_check->SUMCOST }}</td>
+                            <td style="background-color:#EBEBFF;">{{ (int)$b4_check->SUMTAX }}</td>
                             @endforeach
                             @foreach($b4_shipchecks as $b4_shipcheck)
                             <td>{{ (int)$b4_shipcheck->SUMSHIP }}</td>
                             <td>{{ (int)$b4_shipcheck->SUMTAX }}</td>
+                            @endforeach
+                            @foreach ($b4_sumbacks as $b4_sumback)
+                            <td style="background-color:#EBEBFF;">{{ (int)$b4_sumback->SUMBACK }}</td>
+                            <td style="background-color:#EBEBFF;">{{ (int)$b4_sumback->SUMTAX }}</td>
+                            @endforeach
+                            @foreach ($b4_sumdiscs as $b4_sumdisc)
+                            <td>{{ (int)$b4_sumdisc->SUMDISC }}</td>
+                            <td>{{ (int)$b4_sumdisc->SUMTAX }}</td>
+                            @endforeach
+                            @foreach ($b4_customers as $b4_customer)
+                            <td style="background-color:#EBEBFF;">{{ (int)$b4_customer->SUMCUS }}</td>
+                            <td style="background-color:#EBEBFF;">{{ (int)$b4_customer->SUMTAX }}</td>
                             @endforeach
                         </tr>  
                     </tbody>
                 </table>
             </div>
 
-            <div class="col-6 table-cont" style="float:left">
-                <table class="table table-hover table-striped">
-                    <thead>
-                        <tr>
-                            <th>銷退未稅金額合計</th>
-                            <th>銷退稅額合計</th>
-                            <th>折讓未稅金額合計</th>
-                            <th>折讓稅額合計</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            @foreach ($b4_sumbacks as $b4_sumback)
-                            <td>{{ (int)$b4_sumback->SUMBACK }}</td>
-                            <td>{{ (int)$b4_sumback->SUMTAX }}</td>
-                            @endforeach
-                            @foreach ($b4_sumdiscs as $b4_sumdisc)
-                            <td>{{ (int)$b4_sumdisc->SUMDISC }}</td>
-                            <td>{{ (int)$b4_sumdisc->SUMTAX }}</td>
-                            @endforeach
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
 
             <div class="col-6 table-cont" style="float:left">
                 <table class="table table-hover table-striped">
                     <thead>
                         <tr>
-                            <th>四大類</th>
-                            <th>四大類單月未稅合計</th>
+                            <th><span style="color:blue;">四大類</span></th>
+                            <th><span style="color:blue;">四大類單月未稅合計</span></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -84,8 +78,8 @@
                 <table class="table table-hover table-striped">
                     <thead>
                         <tr>
-                            <th>四大類</th>
-                            <th>四大類累計未稅合計</th>
+                            <th><span style="color:blue;">四大類</span></th>
+                            <th><span style="color:blue;">四大類累計未稅合計</span></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -103,8 +97,8 @@
                 <table class="table table-hover table-striped">
                     <thead>
                         <tr>
-                            <th>品牌</th>
-                            <th>品牌單月未稅合計</th>
+                            <th><span style="color:blue;">品牌</span></th>
+                            <th><span style="color:blue;">品牌單月未稅合計</span></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -122,8 +116,8 @@
                 <table class="table table-hover table-striped">
                     <thead>
                         <tr>
-                            <th>品牌</th>
-                            <th>品牌累計未稅合計</th>
+                            <th><span style="color:blue;">品牌</span></th>
+                            <th><span style="color:blue;">品牌累計未稅合計</span></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -141,9 +135,9 @@
                 <table class="table table-hover table-striped">
                     <thead>
                         <tr>
-                            <th>單月銷退未稅合計</th>
-                            <th>單月折讓未稅合計</th>
-                            <th>單月尾折未稅合計</th>
+                            <th><span style="color:blue;">單月銷退未稅合計</span></th>
+                            <th><span style="color:blue;">單月折讓未稅合計</span></th>
+                            <th><span style="color:blue;">單月尾折未稅合計</span></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -161,9 +155,9 @@
                     </tbody>
                     <thead>
                         <tr>
-                            <th>累計銷退未稅合計</th>
-                            <th>累計折讓未稅合計</th>
-                            <th>累計尾折未稅合計</th>
+                            <th><span style="color:blue;">累計銷退未稅合計</span></th>
+                            <th><span style="color:blue;">累計折讓未稅合計</span></th>
+                            <th><span style="color:blue;">累計尾折未稅合計</span></th>
                         </tr>
                     </thead>
                     <tbody>
