@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title','查詢系統')
+@section('title','財務專用')
 @section('content')
 @auth
 <div class="container">

@@ -1,12 +1,11 @@
 @extends('layouts.master')
-@section('title','查詢系統')
+@section('title','財務專用')
 @section('content')
 @auth
 <div class="container">
     <div class="row">
         <div class="col-12">
-            <br>
-            <span style="color:blue;"><h6>查詢結果</h6></span>
+        <span style="color:blue;"><h6>結帳單查詢結果</h6></span>
         <p><a href={{ route('finance.fsearch1') }} class="btn btn-success btn-sm" style="font-size:16px">返回</a></p>
         </div>
         <div class="col-12 table-cont" id="table-cont">

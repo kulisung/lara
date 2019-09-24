@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title','資料查詢系統')
+@section('title','財務專用')
 @section('content')
 @auth
 @if (auth()->user()->user_level==9 or auth()->user()->user_level==5)
