@@ -481,8 +481,8 @@ a.tabs-menu.tabs-menu-active {
                         <tr>
                             <th>客戶代碼</th>
                             <th>客戶全名</th>
-                            <th>單身銷退未稅總金額</th>
-                            <th>單身銷退稅額總額</th>
+                            <th>單身折讓未稅總金額</th>
+                            <th>單身折讓稅額總額</th>
                         </tr>
                     </thead>
                     <tbody>
