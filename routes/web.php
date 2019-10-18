@@ -82,8 +82,9 @@ Route::post('pos_inv_export','ExcelController@pos_inv_export')->name('pos_inv_ex
 Route::post('fin_ship_export','ExcelController@fin_ship_export')->name('fin_ship_export');
 //製令工時匯出
 Route::post('WorkingTimeExport','ExcelController@WorkingTimeExport')->name('WorkingTimeExport');
-//結帳前明細匯出
+//結帳前&後明細匯出
 Route::post('fin_b4_export','ExcelController@fin_b4_export')->name('fin_b4_export');
+Route::post('fin_af_export','ExcelController@fin_af_export')->name('fin_af_export');
 
 //檢查MS SQL連線結果
 //Route::get('dbresult', 'Auth\VerificationController@dbresult')->name('auth.dbresult');
@@ -121,5 +122,7 @@ Route::post('finance/fin_ship', 'FinanceController@fin_ship')->name('finance.fin
 //結帳前檢查輸入畫面
 Route::get('finance/fsearch2', 'FinanceController@fsearch2')->name('finance.fsearch2');
 Route::post('finance/fin_b4check', 'FinanceController@fin_b4check')->name('finance.fin_b4check');
+Route::post('finance/fin_afcheck', 'FinanceController@fin_afcheck')->name('finance.fin_afcheck');
 //Tab test
 Route::post('finance/fin_b4chk', 'FinanceController@fin_b4chk')->name('finance.fin_b4chk');
+Route::post('finance/fin_afchk', 'FinanceController@fin_afchk')->name('finance.fin_afchk');
