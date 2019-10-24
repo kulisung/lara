@@ -53,8 +53,7 @@ a.tabs-menu.tabs-menu-active {
             <br>
         <h6>結帳後查詢結果，資料量大請稍後......</h6>
         <p><a href={{ route('finance.fsearch2') }} class="btn btn-success btn-sm">返回</a> 
-        <label style="font-size:16px">結算年月：{{ $fin_chk }}，累計為該年度1月起計算。淨額資料筆數：{{ $data_records }}筆。</label>
-            <label style="font-size:16px">銷貨資料筆數：{{ $ship_records }}筆。</label>            
+        <label style="font-size:16px">結算年月：{{ $fin_chk }}，累計為該年度1月起計算。淨額資料筆數：{{ $data_records }}筆。</label><label style="font-size:16px">銷貨資料筆數：{{ $ship_records }}筆。</label>            
         </p>
         </div>
     <div id="js-tabs" style="width:100%">
@@ -95,23 +94,23 @@ a.tabs-menu.tabs-menu-active {
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($b4_chks as $b4_chk)
+                        @foreach ($af_chks as $af_chk)
                         <tr>
-                            <td>{{ $b4_chk->TG004 }}</td>
-                            <td>{{ $b4_chk->TG007 }}</td>
-                            <td>{{ $b4_chk->TG003 }}</td>
-                            <td>{{ $b4_chk->TG005 }}</td>
-                            <td>{{ $b4_chk->MB008 }}</td>
-                            <td>{{ $b4_chk->MB006 }}</td>
-                            <td>{{ $b4_chk->MA038 }}</td>
-                            <td>{{ $b4_chk->TH005 }}</td>
-                            <td>{{ (int)$b4_chk->QTY }}</td>
-                            <td>{{ (int)$b4_chk->TG012 }}</td>
-                            <td>{{ (int)$b4_chk->TH037 }}</td>
-                            <td>{{ (int)$b4_chk->TH038 }}</td>
-                            <td>{{ $b4_chk->TH001 }}</td>
-                            <td>{{ $b4_chk->TH002 }}</td>
-                            <td>{{ $b4_chk->TH003 }}</td>
+                            <td>{{ $af_chk->TG004 }}</td>
+                            <td>{{ $af_chk->TG007 }}</td>
+                            <td>{{ $af_chk->TG003 }}</td>
+                            <td>{{ $af_chk->TG005 }}</td>
+                            <td>{{ $af_chk->MB008 }}</td>
+                            <td>{{ $af_chk->MB006 }}</td>
+                            <td>{{ $af_chk->MA038 }}</td>
+                            <td>{{ $af_chk->TH005 }}</td>
+                            <td>{{ (int)$af_chk->QTY }}</td>
+                            <td>{{ (int)$af_chk->TG012 }}</td>
+                            <td>{{ (int)$af_chk->TH037 }}</td>
+                            <td>{{ (int)$af_chk->TH038 }}</td>
+                            <td>{{ $af_chk->TH001 }}</td>
+                            <td>{{ $af_chk->TH002 }}</td>
+                            <td>{{ $af_chk->TH003 }}</td>
                         </tr>  
                         @endforeach
                     </tbody>
@@ -143,24 +142,24 @@ a.tabs-menu.tabs-menu-active {
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($b4_shipchks as $b4_shipchk)
+                        @foreach ($af_shipchks as $af_shipchk)
                         <tr>
-                            <td>{{ $b4_shipchk->TG004 }}</td>
-                            <td>{{ $b4_shipchk->TG007 }}</td>
-                            <td>{{ $b4_shipchk->TG003 }}</td>
-                            <td>{{ $b4_shipchk->TG005 }}</td>
-                            <td>{{ $b4_shipchk->MB008 }}</td>
-                            <td>{{ $b4_shipchk->MB006 }}</td>
-                            <td>{{ $b4_shipchk->MA038 }}</td>
-                            <td>{{ $b4_shipchk->MA019 }}</td>
-                            <td>{{ $b4_shipchk->TH005 }}</td>
-                            <td>{{ (int)$b4_shipchk->QTY }}</td>
-                            <td>{{ (int)$b4_shipchk->TG012 }}</td>
-                            <td>{{ (int)$b4_shipchk->TH037 }}</td>
-                            <td>{{ (int)$b4_shipchk->TH038 }}</td>
-                            <td>{{ $b4_shipchk->TH001 }}</td>
-                            <td>{{ $b4_shipchk->TH002 }}</td>
-                            <td>{{ $b4_shipchk->TH003 }}</td>
+                            <td>{{ $af_shipchk->TG004 }}</td>
+                            <td>{{ $af_shipchk->TG007 }}</td>
+                            <td>{{ $af_shipchk->TG003 }}</td>
+                            <td>{{ $af_shipchk->TG005 }}</td>
+                            <td>{{ $af_shipchk->MB008 }}</td>
+                            <td>{{ $af_shipchk->MB006 }}</td>
+                            <td>{{ $af_shipchk->MA038 }}</td>
+                            <td>{{ $af_shipchk->MA019 }}</td>
+                            <td>{{ $af_shipchk->TH005 }}</td>
+                            <td>{{ (int)$af_shipchk->QTY }}</td>
+                            <td>{{ (int)$af_shipchk->TG012 }}</td>
+                            <td>{{ (int)$af_shipchk->TH037 }}</td>
+                            <td>{{ (int)$af_shipchk->TH038 }}</td>
+                            <td>{{ $af_shipchk->TH001 }}</td>
+                            <td>{{ $af_shipchk->TH002 }}</td>
+                            <td>{{ $af_shipchk->TH003 }}</td>
                         </tr>  
                         @endforeach
                     </tbody>
@@ -178,10 +177,10 @@ a.tabs-menu.tabs-menu-active {
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($b4_items as $b4_item)
+                        @foreach ($af_items as $af_item)
                         <tr>
-                            <td>{{ $b4_item->MB006 }}</td>
-                            <td>{{ (int)$b4_item->COST }}</td>
+                            <td>{{ $af_item->MB006 }}</td>
+                            <td>{{ (int)$af_item->COST }}</td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -197,10 +196,10 @@ a.tabs-menu.tabs-menu-active {
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($b4_sumitems as $b4_sumitem)
+                        @foreach ($af_sumitems as $af_sumitem)
                         <tr>
-                            <td>{{ $b4_sumitem->MB006 }}</td>
-                            <td>{{ (int)$b4_sumitem->COST }}</td>
+                            <td>{{ $af_sumitem->MB006 }}</td>
+                            <td>{{ (int)$af_sumitem->COST }}</td>
                         </tr>  
                         @endforeach
                     </tbody>
@@ -219,10 +218,10 @@ a.tabs-menu.tabs-menu-active {
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($b4_brands as $b4_brand)
+                        @foreach ($af_brands as $af_brand)
                         <tr>
-                            <td>{{ $b4_brand->MB008 }}</td>
-                            <td>{{ (int)$b4_brand->COST }}</td>
+                            <td>{{ $af_brand->MB008 }}</td>
+                            <td>{{ (int)$af_brand->COST }}</td>
                         </tr>  
                         @endforeach
                     </tbody>
@@ -238,10 +237,10 @@ a.tabs-menu.tabs-menu-active {
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($b4_sumbrands as $b4_sumbrand)
+                        @foreach ($af_sumbrands as $af_sumbrand)
                         <tr>
-                            <td>{{ $b4_sumbrand->MB008 }}</td>
-                            <td>{{ (int)$b4_sumbrand->COST }}</td>
+                            <td>{{ $af_sumbrand->MB008 }}</td>
+                            <td>{{ (int)$af_sumbrand->COST }}</td>
                         </tr>  
                         @endforeach
                     </tbody>
@@ -263,14 +262,14 @@ a.tabs-menu.tabs-menu-active {
                 <tbody>
 
                     <tr>
-                        @foreach ($b4_returns as $b4_return)
-                        <td>{{ (int)$b4_return->COST }}</td>
+                        @foreach ($af_returns as $af_return)
+                        <td>{{ (int)$af_return->COST }}</td>
                         @endforeach
-                        @foreach ($b4_allowances as $b4_allowance)
-                        <td>{{ (int)$b4_allowance->ML008 }}</td>
+                        @foreach ($af_allowances as $af_allowance)
+                        <td>{{ (int)$af_allowance->ML008 }}</td>
                         @endforeach
-                        @foreach ($b4_discounts as $b4_discount)
-                        <td>{{ (int)$b4_discount->TD015 }}</td>
+                        @foreach ($af_discounts as $af_discount)
+                        <td>{{ (int)$af_discount->TD015 }}</td>
                         @endforeach
                     </tr>  
 
@@ -285,14 +284,14 @@ a.tabs-menu.tabs-menu-active {
                 <tbody>
 
                     <tr>
-                        @foreach ($b4_sumreturns as $b4_sumreturn)
-                        <td>{{ (int)$b4_sumreturn->COST }}</td>
+                        @foreach ($af_sumreturns as $af_sumreturn)
+                        <td>{{ (int)$af_sumreturn->COST }}</td>
                         @endforeach
-                        @foreach ($b4_sumallowances as $b4_sumallowance)
-                        <td>{{ (int)$b4_sumallowance->ML008 }}</td>
+                        @foreach ($af_sumallowances as $af_sumallowance)
+                        <td>{{ (int)$af_sumallowance->ML008 }}</td>
                         @endforeach
-                        @foreach ($b4_sumdiscounts as $b4_sumdiscount)
-                        <td>{{ (int)$b4_sumdiscount->TD015 }}</td>
+                        @foreach ($af_sumdiscounts as $af_sumdiscount)
+                        <td>{{ (int)$af_sumdiscount->TD015 }}</td>
                         @endforeach
                     </tr>  
 
@@ -326,24 +325,24 @@ a.tabs-menu.tabs-menu-active {
                     </thead>
                     <tbody>
 
-                        @foreach ($b4_shipbacks as $b4_shipback)
+                        @foreach ($af_shipbacks as $af_shipback)
                         <tr>
-                            <td>{{ $b4_shipback->TI004 }}</td>
-                            <td>{{ $b4_shipback->TI021 }}</td>
-                            <td>{{ $b4_shipback->TI003 }}</td>
-                            <td>{{ $b4_shipback->TG005 }}</td>
-                            <td>{{ $b4_shipback->MB008 }}</td>
-                            <td>{{ $b4_shipback->MB006 }}</td>
-                            <td>{{ $b4_shipback->MA038 }}</td>
-                            <td>{{ $b4_shipback->MA019 }}</td>
-                            <td>{{ $b4_shipback->TJ005 }}</td>
-                            <td>{{ (int)$b4_shipback->QTY }}</td>
-                            <td>{{ (int)$b4_shipback->TI009 }}</td>
-                            <td>{{ (int)$b4_shipback->TJ033 }}</td>
-                            <td>{{ (int)$b4_shipback->TJ034 }}</td>
-                            <td>{{ $b4_shipback->TJ001 }}</td>
-                            <td>{{ $b4_shipback->TJ002 }}</td>
-                            <td>{{ $b4_shipback->TJ003 }}</td>
+                            <td>{{ $af_shipback->TI004 }}</td>
+                            <td>{{ $af_shipback->TI021 }}</td>
+                            <td>{{ $af_shipback->TI003 }}</td>
+                            <td>{{ $af_shipback->TG005 }}</td>
+                            <td>{{ $af_shipback->MB008 }}</td>
+                            <td>{{ $af_shipback->MB006 }}</td>
+                            <td>{{ $af_shipback->MA038 }}</td>
+                            <td>{{ $af_shipback->MA019 }}</td>
+                            <td>{{ $af_shipback->TJ005 }}</td>
+                            <td>{{ (int)$af_shipback->QTY }}</td>
+                            <td>{{ (int)$af_shipback->TI009 }}</td>
+                            <td>{{ (int)$af_shipback->TJ033 }}</td>
+                            <td>{{ (int)$af_shipback->TJ034 }}</td>
+                            <td>{{ $af_shipback->TJ001 }}</td>
+                            <td>{{ $af_shipback->TJ002 }}</td>
+                            <td>{{ $af_shipback->TJ003 }}</td>
                         </tr>  
                         @endforeach
                     </tbody>
@@ -376,24 +375,24 @@ a.tabs-menu.tabs-menu-active {
                     </thead>
                     <tbody>
 
-                        @foreach ($b4_shipdiscs as $b4_shipdisc)
+                        @foreach ($af_shipdiscs as $af_shipdisc)
                         <tr>
-                            <td>{{ $b4_shipdisc->TI004 }}</td>
-                            <td>{{ $b4_shipdisc->TI021 }}</td>
-                            <td>{{ $b4_shipdisc->TI003 }}</td>
-                            <td>{{ $b4_shipdisc->TG005 }}</td>
-                            <td>{{ $b4_shipdisc->MB008 }}</td>
-                            <td>{{ $b4_shipdisc->MB006 }}</td>
-                            <td>{{ $b4_shipdisc->MA038 }}</td>
-                            <td>{{ $b4_shipdisc->MA019 }}</td>
-                            <td>{{ $b4_shipdisc->TJ005 }}</td>
-                            <td>{{ (int)$b4_shipdisc->QTY }}</td>
-                            <td>{{ (int)$b4_shipdisc->TI009 }}</td>
-                            <td>{{ (int)$b4_shipdisc->TJ033 }}</td>
-                            <td>{{ (int)$b4_shipdisc->TJ034 }}</td>
-                            <td>{{ $b4_shipdisc->TJ001 }}</td>
-                            <td>{{ $b4_shipdisc->TJ002 }}</td>
-                            <td>{{ $b4_shipdisc->TJ003 }}</td>
+                            <td>{{ $af_shipdisc->TI004 }}</td>
+                            <td>{{ $af_shipdisc->TI021 }}</td>
+                            <td>{{ $af_shipdisc->TI003 }}</td>
+                            <td>{{ $af_shipdisc->TG005 }}</td>
+                            <td>{{ $af_shipdisc->MB008 }}</td>
+                            <td>{{ $af_shipdisc->MB006 }}</td>
+                            <td>{{ $af_shipdisc->MA038 }}</td>
+                            <td>{{ $af_shipdisc->MA019 }}</td>
+                            <td>{{ $af_shipdisc->TJ005 }}</td>
+                            <td>{{ (int)$af_shipdisc->QTY }}</td>
+                            <td>{{ (int)$af_shipdisc->TI009 }}</td>
+                            <td>{{ (int)$af_shipdisc->TJ033 }}</td>
+                            <td>{{ (int)$af_shipdisc->TJ034 }}</td>
+                            <td>{{ $af_shipdisc->TJ001 }}</td>
+                            <td>{{ $af_shipdisc->TJ002 }}</td>
+                            <td>{{ $af_shipdisc->TJ003 }}</td>
                         </tr>  
                         @endforeach
                     </tbody>
@@ -413,12 +412,12 @@ a.tabs-menu.tabs-menu-active {
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($b4_customers as $b4_customer)
+                        @foreach ($af_customers as $af_customer)
                         <tr>
-                            <td>{{ $b4_customer->TG004 }}</td>
-                            <td>{{ $b4_customer->TG007 }}</td>
-                            <td>{{ (int)$b4_customer->SUMCUS }}</td>
-                            <td>{{ (int)$b4_customer->SUMTAX }}</td>
+                            <td>{{ $af_customer->TG004 }}</td>
+                            <td>{{ $af_customer->TG007 }}</td>
+                            <td>{{ (int)$af_customer->SUMCUS }}</td>
+                            <td>{{ (int)$af_customer->SUMTAX }}</td>
                         </tr>  
                         @endforeach
                     </tbody>
@@ -438,12 +437,12 @@ a.tabs-menu.tabs-menu-active {
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($b4_cusshipbacks as $b4_cusshipback)
+                        @foreach ($af_cusshipbacks as $af_cusshipback)
                         <tr>
-                            <td>{{ $b4_cusshipback->TI004 }}</td>
-                            <td>{{ $b4_cusshipback->TI021 }}</td>
-                            <td>{{ (int)$b4_cusshipback->TJ033 }}</td>
-                            <td>{{ (int)$b4_cusshipback->TJ034 }}</td>
+                            <td>{{ $af_cusshipback->TI004 }}</td>
+                            <td>{{ $af_cusshipback->TI021 }}</td>
+                            <td>{{ (int)$af_cusshipback->TJ033 }}</td>
+                            <td>{{ (int)$af_cusshipback->TJ034 }}</td>
                         </tr>  
                         @endforeach
                     </tbody>
@@ -461,12 +460,12 @@ a.tabs-menu.tabs-menu-active {
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($b4_cusbacks as $b4_cusback)
+                        @foreach ($af_cusbacks as $af_cusback)
                         <tr>
-                            <td>{{ $b4_cusback->TI004 }}</td>
-                            <td>{{ $b4_cusback->TI021 }}</td>
-                            <td>{{ (int)$b4_cusback->TJ033 }}</td>
-                            <td>{{ (int)$b4_cusback->TJ034 }}</td>
+                            <td>{{ $af_cusback->TI004 }}</td>
+                            <td>{{ $af_cusback->TI021 }}</td>
+                            <td>{{ (int)$af_cusback->TJ033 }}</td>
+                            <td>{{ (int)$af_cusback->TJ034 }}</td>
                         </tr>  
                         @endforeach
                     </tbody>
@@ -484,12 +483,12 @@ a.tabs-menu.tabs-menu-active {
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($b4_cusdiscs as $b4_cusdisc)
+                        @foreach ($af_cusdiscs as $af_cusdisc)
                         <tr>
-                            <td>{{ $b4_cusdisc->TI004 }}</td>
-                            <td>{{ $b4_cusdisc->TI021 }}</td>
-                            <td>{{ (int)$b4_cusdisc->TJ033 }}</td>
-                            <td>{{ (int)$b4_cusdisc->TJ034 }}</td>
+                            <td>{{ $af_cusdisc->TI004 }}</td>
+                            <td>{{ $af_cusdisc->TI021 }}</td>
+                            <td>{{ (int)$af_cusdisc->TJ033 }}</td>
+                            <td>{{ (int)$af_cusdisc->TJ034 }}</td>
                         </tr>  
                         @endforeach
                     </tbody>
