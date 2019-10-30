@@ -126,3 +126,9 @@ Route::post('finance/fin_afcheck', 'FinanceController@fin_afcheck')->name('finan
 //Tab test
 Route::post('finance/fin_b4chk', 'FinanceController@fin_b4chk')->name('finance.fin_b4chk');
 Route::post('finance/fin_afchk', 'FinanceController@fin_afchk')->name('finance.fin_afchk');
+
+//SalesController 業務用
+Route::get('sales/ts6index', 'SalesController@ts6index')->name('sales.ts6index');
+Route::post('sales/ts6members', 'SalesController@ts6members')->name('sales.ts6members');
+Route::post('sales/orderscount', 'SalesController@orderscount')->name('sales.orderscount');
+Route::post('sales/ts6detail', 'SalesController@ts6detail')->name('sales.ts6detail');

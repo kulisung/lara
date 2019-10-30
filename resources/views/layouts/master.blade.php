@@ -69,7 +69,7 @@
             }
             .table-cont{
                 /**make table can scroll**/
-                max-height: 500px;
+                max-height: 480px;
                 overflow: auto;
                 /** add some style**/
                 /*padding: 2px;*/

@@ -32,7 +32,7 @@ a.tabs-menu.tabs-menu-active {
 .tabs-container {
    border: solid 1px #1b91ab;
    margin-top: -1px;
-   max-height: 520px;
+   max-height: 500px;
    background-color: #fff;
    overflow-x: scroll;
    overflow-y: scroll;
@@ -40,7 +40,7 @@ a.tabs-menu.tabs-menu-active {
 }
 .tabs-panel {
    display: none;
-   max-height: 520px;
+   max-height: 500px;
    min-height: 100px;
    overflow: auto;
    padding: 10px;
