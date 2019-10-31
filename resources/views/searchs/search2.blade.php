@@ -9,9 +9,9 @@
             <form method="post" action={{ route('searchs.pos_inv') }}>
             @csrf
             <div class="form-group">
-                    <label style="font-size:16px">起始日期(輸入格式為ex:20190601)</label>
+                    <label style="font-size:16px">參展起始日期(輸入格式為ex:20190601)</label>
                     <input type="text" name="date1"><br>
-                    <label style="font-size:16px">結束日期(輸入格式為ex:20190630)</label>
+                    <label style="font-size:16px">參展結束日期(輸入格式為ex:20190630)</label>
                     <input type="text" name="date2">                    
                     <button type="submit" class="btn btn-primary btn-sm" style="font-size:16px">發票查詢</button>
                     <button type="submit" class="btn btn-primary btn-sm" style="font-size:16px" formaction={{ route('searchs.pos_stocks') }}>數量查詢</button>
