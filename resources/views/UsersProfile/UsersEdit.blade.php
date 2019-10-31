@@ -17,14 +17,18 @@
                     <div><label class="col-md-4 col-form-label text-md-right" style="font-size:16px">Login-ID：</label><input type="text" name="username" value="{{ $user->username }}" readonly><label style="font-size:10px">(ReadOnly無法修改)</label></div>
                     <div><label class="col-md-4 col-form-label text-md-right" style="font-size:16px">Name：</label>
                     <input type="text" name="name" value="{{ $user->name }}"></div>
+                    @if (auth()->user()->user_level==9)
                     <div><label class="col-md-4 col-form-label text-md-right" style="font-size:16px">User Level：</label>
                     <input type="text" name="user_level" value="{{ $user->user_level }}"></div>
+                    @endif
                     <div><label class="col-md-4 col-form-label text-md-right" style="font-size:16px">E-mail：</label>
                     <input type="text" name="email" value="{{ $user->email }}"></div>
                 </div>
+                @if (auth()->user()->user_level==9)
                 <div style="text-align:center">
                     <label style="font-size:10px">## 註:User Level權限預設=0；1-行政；2-業務；3-生產；4-研發；5-財務；9系統管理員。 ##</label>
                 </div>
+                @endif
                 <div style="text-align:center">
                     @if (auth()->user()->user_level==9) 
                     <a href="{{ route('UsersProfile.UsersIndex')}}" class="btn btn-secondary btn-sm" style="font-size:16px">返回</a>
