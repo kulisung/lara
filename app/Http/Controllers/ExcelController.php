@@ -109,7 +109,7 @@ class ExcelController extends Controller
         //return redirect('/')->with('success', 'All good!');
     }
     
-    public function export_xls(Request $request) 
+    public function export_xls(Request $request) //20191031註記不使用
     {
         $productid = $request->input('TH004').'%';
         $worktimes = DB::connection('sqlsrv_atv0002')->select('select TH001,TH002,TH003,TH004,TH007,SUM(TJ009) as SUMQTY from worktime LEFT JOIN PURTJ ON worktime.TH002=PURTJ.TJ014 and worktime.TH003=PURTJ.TJ015 and PURTJ.TJ020=? WHERE TH030=? AND TH004 like ? GROUP BY TH001,TH002,TH003,TH004,TH007 ORDER BY TH002 DESC,TH003',['Y', 'Y', $productid]);
