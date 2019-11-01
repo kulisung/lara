@@ -11,26 +11,38 @@ class SalesController extends Controller
     public function ts6index()
     {
         //
-        return view('sales.ts6index');
+        //$memberfresh = DB::select('SELECT register_date FROM ts6members ORDER BY register_date DESC LIMIT 1');
+        $member_refresh = DB::table('ts6members')->orderby('register_date','desc')->limit(1)->value('register_date');
+        $order_refresh = DB::table('ts6orders')->orderby('order_time','desc')->limit(1)->value('order_time');
+        $membertime = substr($member_refresh,0,10);
+        $ordertime = substr($order_refresh,0,10);
+        return view('sales.ts6index',compact('membertime', 'ordertime'));
     }
 
     public function ts6members(Request $request)
     {
         //依加入時間查詢會員資料，並記錄總數
-        $join_enddate = $request->input('enddate');
-        $sqlend = substr($join_enddate,0,4).'-'.substr($join_enddate,4,2).'-'.substr($join_enddate,6,2);
+        $join_strdate = $request->input('strdate');
+        //$join_enddate = $request->input('enddate');
+        $member_finaldata = DB::table('ts6members')->orderby('register_date','desc')->limit(1)->value('register_date');
+        if ($join_strdate < 1) {
+            $sqlstr = '2017-01-01';
+        }else{
+            $sqlstr = substr($join_strdate,0,4).'-'.substr($join_strdate,4,2).'-'.substr($join_strdate,6,2);
+        }
+        $sqlend = substr($member_finaldata,0,10);
         $members = DB::select('SELECT name,email,cellphone,tel,register_date 
         FROM ts6members
-        WHERE register_date <= ?
+        WHERE left(register_date,10) >= ? and left(register_date,10) <= ?
         ORDER BY register_date DESC',
-        [$sqlend]);
+        [$sqlstr,$sqlend]);
 
         $memberscount = count($members);
         if ($memberscount < 1) {
             $result = '查無資料，請檢查條件是否輸入正確!!';
             return View('nodata')->with('result', $result);
         }else{
-        return view('sales.ts6members', compact('join_enddate','memberscount','members'));
+        return view('sales.ts6members', compact('sqlstr','sqlend','memberscount','members'));
         }
 
     }
@@ -39,10 +51,11 @@ class SalesController extends Controller
     {
         //查詢大於等於輸入次數，並顯示聯繫資料
         $orderscount = $request->input('orders');
-        if ($orderscount < 1) {
+        $order_enddate = $request->input('orderend');
+        //判斷次數未輸入則視為大於等於1
+        if ($orderscount < 1 or $order_enddate < 1) {
             $orderscount = 1;
         }
-        $order_enddate = $request->input('orderend');
         $sqlend = substr($order_enddate,0,4).'/'.substr($order_enddate,4,2).'/'.substr($order_enddate,6,2);
         $orders = DB::select('SELECT name,email,count(order_id) AS orders_count,sum(total_amount) AS total_amount
         FROM ( SELECT DISTINCT order_id,name,email,total_amount FROM ts6orders WHERE order_time <= ? ) P
@@ -53,7 +66,7 @@ class SalesController extends Controller
 
         $ordertimes = count($orders);
         if ($ordertimes < 1) {
-            $result = '查無資料，請檢查條件是否輸入正確!!!';
+            $result = '查無資料，請檢查條件是否輸入正確(截止日期不可空白)!!!';
             return View('nodata')->with('result', $result);
         }else{
         return view('sales.ts6orders', compact('order_enddate','orderscount','ordertimes','orders'));
@@ -89,5 +102,27 @@ class SalesController extends Controller
 
     }
 
+    public function ts6noorder(Request $request)
+    {
+        //By時間查詢未下單資料
+        $noorder_strdate = $request->input('noorder');
+        if ($noorder_strdate < 1) {
+            $noorder_strdate = '20171101';
+        }
+        $no_str = substr($noorder_strdate,0,4).'-'.substr($noorder_strdate,4,2).'-'.substr($noorder_strdate,6,2);
+        $noorders = DB::select('SELECT name,email,cellphone,tel,register_date 
+        FROM ts6members
+        WHERE NOT EXISTS (SELECT * FROM ts6orders WHERE ts6orders.email = ts6members.email) AND register_date >= ?
+        ORDER BY register_date DESC',[$no_str]);
+
+        $noorderscount = count($noorders);
+        if ($noorderscount < 1) {
+            $result = '查無資料，請檢查條件是否輸入正確!!';
+            return View('nodata')->with('result', $result);
+        }else{
+        return view('sales.ts6noorder', compact('noorder_strdate','noorderscount','noorders'));
+        }
+
+    }
 
 }

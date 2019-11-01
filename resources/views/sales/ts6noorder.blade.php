@@ -5,9 +5,9 @@
 <div class="container">
     <div class="row">
         <div class="col-12">
-            <span style="color:blue;"><h6>查詢結果</h6></span>
-            <a href={{ route('sales.ts6index') }} class="btn btn-success btn-sm" style="font-size:16px">返回</a>
-        <label style="font-size:16px"><span style="color:blue;">截至：{{ $sqlstr }} - {{ $sqlend }}為止；會員總數共：{{ $memberscount }}名。</span></label>
+        <span style="color:blue;"><h6>查詢結果</h6></span>
+        <p><a href={{ route('sales.ts6index') }} class="btn btn-success btn-sm" style="font-size:16px">返回</a>
+        <label style="font-size:16px"><span style="color:blue;">自{{ $noorder_strdate }}起，未下單會員總數：{{ $noorderscount }}</span></label>
         </div>
         <div class="col-12 table-cont" id="table-cont">
             <table class="table table-hover table-striped">
@@ -21,13 +21,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($members as $member)
+                    @foreach ($noorders as $noorder)
                     <tr>
-                        <td style="background-color:#F2FFF2;">{{ $member->name }}</td>
-                        <td>{{ $member->email }}</td>
-                        <td style="background-color:#F2FFF2;">{{ $member->cellphone }}</td>
-                        <td>{{ $member->tel }}</td>
-                        <td style="background-color:#F2FFF2;">{{ $member->register_date }}</td>
+                        <td style="background-color:#F2FFF2;">{{ $noorder->name }}</td>
+                        <td>{{ $noorder->email }}</td>
+                        <td style="background-color:#F2FFF2;">{{ $noorder->cellphone }}</td>
+                        <td>{{ $noorder->tel }}</td>
+                        <td style="background-color:#F2FFF2;">{{ $noorder->register_date }}</td>
                     </tr>  
                     @endforeach
                 </tbody>

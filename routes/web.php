@@ -132,3 +132,7 @@ Route::get('sales/ts6index', 'SalesController@ts6index')->name('sales.ts6index')
 Route::post('sales/ts6members', 'SalesController@ts6members')->name('sales.ts6members');
 Route::post('sales/orderscount', 'SalesController@orderscount')->name('sales.orderscount');
 Route::post('sales/ts6detail', 'SalesController@ts6detail')->name('sales.ts6detail');
+Route::post('sales/ts6noorder', 'SalesController@ts6noorder')->name('sales.ts6noorder');
+
+//ts6export會員資料匯出
+Route::post('ts6members_export', 'TS6ExportController@ts6members_export')->name('ts6members_export');

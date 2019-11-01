@@ -6,9 +6,11 @@
         <div class="col-12">
             <br>
             <span style="color:blue;"><h6>公告內容列表</h6></span>
-        @auth
-        <a href="{{ route('posts.create')}}" class="btn btn-success btn-sm" style="font-size:16px">新增內容</a>
-        @endauth
+            @auth
+            @if (auth()->user()->user_level==9)
+            <a href="{{ route('posts.create')}}" class="btn btn-success btn-sm" style="font-size:16px">新增內容</a>
+            @endif
+            @endauth
         </div>
         <br>
         <div class="col-12">

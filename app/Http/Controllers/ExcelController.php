@@ -109,7 +109,8 @@ class ExcelController extends Controller
         //return redirect('/')->with('success', 'All good!');
     }
     
-    public function export_xls(Request $request) //20191031註記不使用
+    /*//20191031註記不使用
+    public function export_xls(Request $request) 
     {
         $productid = $request->input('TH004').'%';
         $worktimes = DB::connection('sqlsrv_atv0002')->select('select TH001,TH002,TH003,TH004,TH007,SUM(TJ009) as SUMQTY from worktime LEFT JOIN PURTJ ON worktime.TH002=PURTJ.TJ014 and worktime.TH003=PURTJ.TJ015 and PURTJ.TJ020=? WHERE TH030=? AND TH004 like ? GROUP BY TH001,TH002,TH003,TH004,TH007 ORDER BY TH002 DESC,TH003',['Y', 'Y', $productid]);
@@ -154,6 +155,7 @@ class ExcelController extends Controller
         
         }
     }
+    */
 
     //展場銷貨匯出
     public function pos_inv_export(Request $request) 
