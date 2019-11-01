@@ -24,7 +24,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link font-weight-bold dropdown-toggle" style="font-size:16px" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">業務專用</a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item font-weight-bold" style="font-size:16px" id='fsearch1' href={{ route('sales.ts6index')}}>TS6資料查詢</a>
+                        <a class="dropdown-item font-weight-bold" style="font-size:16px" id='fsearch1' href={{ route('sales.ts6index')}}>TS6會員資料查詢</a>
                         <a class="dropdown-item font-weight-bold" style="font-size:16px" id='fsearch2' href=#>其他</a>
                     </div>
                 </li>

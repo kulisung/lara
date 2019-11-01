@@ -7,7 +7,7 @@
         <div class="col-12">
             <span style="color:blue;"><h6>查詢結果</h6></span>
             <a href={{ route('sales.ts6index') }} class="btn btn-success btn-sm" style="font-size:16px">返回</a>
-        <label style="font-size:16px"><span style="color:blue;">截至：{{ $sqlstr }} - {{ $sqlend }}為止；會員總數共：{{ $memberscount }}名。</span></label>
+            <label style="font-size:16px"><span style="color:blue;">截至：{{ $sqlstr }} - {{ $sqlend }}為止；會員總數共：{{ $memberscount }}名。</span></label>
         </div>
         <div class="col-12 table-cont" id="table-cont">
             <table class="table table-hover table-striped">
