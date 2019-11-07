@@ -7,7 +7,8 @@
         <div class="col-12">
             <span style="color:blue;"><h6>查詢結果</h6></span>
             <a href={{ route('sales.ts6index') }} class="btn btn-success btn-sm" style="font-size:16px">返回</a>
-            <label style="font-size:16px"><span style="color:blue;">截至：{{ $sqlstr }} - {{ $sqlend }}為止；會員總數共：{{ $memberscount }}名。</span></label>
+            <a href="{{ route('ts6members_export',$sqlstr) }}" style="text-decoration:none;"><input type="button" class="btn btn-info btn-sm" style="font-size:16px" value="匯出Excel" onclick="return confirm('確認是否要匯出Excel?');"></a>
+            <span style="color:blue;"><label style="font-size:16px">※資料截至：{{ $sqlstr }} - {{ $sqlend }}為止；會員總數共：{{ $memberscount }}名。</label></span>
         </div>
         <div class="col-12 table-cont" id="table-cont">
             <table class="table table-hover table-striped">
@@ -24,7 +25,7 @@
                     @foreach ($members as $member)
                     <tr>
                         <td style="background-color:#F2FFF2;">{{ $member->name }}</td>
-                        <td>{{ $member->email }}</td>
+                        <td><a href="{{ route('sales.ts6byemail',$member->email) }}">{{ $member->email }}</td>
                         <td style="background-color:#F2FFF2;">{{ $member->cellphone }}</td>
                         <td>{{ $member->tel }}</td>
                         <td style="background-color:#F2FFF2;">{{ $member->register_date }}</td>

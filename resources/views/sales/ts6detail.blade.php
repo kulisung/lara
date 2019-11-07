@@ -7,14 +7,15 @@
         <div class="col-12">
         <span style="color:blue;"><h6>TS6會員資訊查詢結果</h6></span>
         <p><a href={{ route('sales.ts6index') }} class="btn btn-success btn-sm" style="font-size:16px">返回</a>
-        <label style="font-size:16px"><span style="color:blue;">累計下單次數共：@foreach($order_times as $order_time){{ (int)$order_time->orders_count }}@endforeach 次。累計金額共：@foreach($order_times as $order_time){{ (int)$order_time->orders_amount }}@endforeach 元。</span></label>
+        <a href="{{ route('ts6detail_export',$mem_email) }}" style="text-decoration:none;"><input type="button" class="btn btn-info btn-sm" style="font-size:16px" value="匯出Excel" onclick="return confirm('確認是否要匯出Excel?');"></a>
+        <label style="font-size:16px"><span style="color:blue;">※累計下單次數共：@foreach($order_times as $order_time){{ (int)$order_time->orders_count }}@endforeach 次。累計金額共：@foreach($order_times as $order_time){{ (int)$order_time->orders_amount }}@endforeach 元。</span></label>
         </div>
         <div class="col-12 table-cont" id="table-cont">
             <table class="table table-hover table-striped">
                 <thead>
                     <tr>
                         <th>會員編號</th>
-                        <th>會員姓名</th>
+                        <th>姓名</th>
                         <th>Email</th>
                         <th>手機</th>
                         <th>生日</th>

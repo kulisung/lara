@@ -376,9 +376,9 @@ class ExcelController extends Controller
     }
 
     //結帳前明細資料匯出
-    public function fin_b4_export(Request $request) 
+    public function fin_b4_export(Request $request, $fin_chk)
     {
-        $fin_chk = $request->input('fin_b4date');
+        //$fin_chk = $request->input('fin_chk');
         $fin_date = substr($fin_chk,0,4).'01';  //累計由該年度一月開始計算
         $b4_chks = DB::connection('sqlsrv_tensall')->select('SELECT * FROM (SELECT TG004,TG007,TG003,CASE TG005 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS TG005,CASE MB008 WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,CASE MB006 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB006,CASE MA038 WHEN ? THEN ? ELSE ? END AS MA038,MA019,TH005,QTY=TH008+TH024,TG012,TH037,TH038,TH001,TH002,TH003 
         FROM COPMA D,COPTG E,COPTH H,INVMB K

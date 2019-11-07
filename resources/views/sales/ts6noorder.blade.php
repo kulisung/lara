@@ -7,7 +7,8 @@
         <div class="col-12">
         <span style="color:blue;"><h6>查詢結果</h6></span>
         <p><a href={{ route('sales.ts6index') }} class="btn btn-success btn-sm" style="font-size:16px">返回</a>
-        <label style="font-size:16px"><span style="color:blue;">自{{ $noorder_strdate }}起，未下單會員總數：{{ $noorderscount }}</span></label>
+        <a href="{{ route('ts6noorder_export') }}" style="text-decoration:none;"><input type="button" class="btn btn-info btn-sm" style="font-size:16px" value="匯出Excel" onclick="return confirm('確認是否要匯出Excel?');"></a>
+        <label style="font-size:16px"><span style="color:blue;">※自註冊後未曾下單會員總數：{{ $noorderscount }}；會員最後註冊時間：{{ $member_finaldata }}；最後訂單時間：{{ $noorder_finaldata }}。</span></label>
         </div>
         <div class="col-12 table-cont" id="table-cont">
             <table class="table table-hover table-striped">

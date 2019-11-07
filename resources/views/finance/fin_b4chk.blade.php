@@ -50,9 +50,9 @@ a.tabs-menu.tabs-menu-active {
 <div class="container">
     <div class="row">
         <div class="col-12">
-            <br>
-        <h6>查詢結果，請稍後...(資料量大)</h6>
-        <p><a href={{ route('finance.fsearch2') }} class="btn btn-success btn-sm">返回</a> 
+        <h6>查詢結果，請稍後...(資料量大)</h6><br>
+        <a href={{ route('finance.fsearch2') }} class="btn btn-success btn-sm">返回</a>
+        <a href="{{ route('fin_b4_export',$fin_chk) }}" style="text-decoration:none;"><input type="button" class="btn btn-info btn-sm" style="font-size:16px" value="匯出明細" onclick="return confirm('確認是否要匯出Excel?匯出資料量大，請耐心等候!!');"></a>  
         <label style="font-size:16px">結算年月：{{ $fin_chk }}，累計為該年度1月起計算。淨額資料筆數：{{ $data_records }}筆。</label>
             <label style="font-size:16px">銷貨資料筆數：{{ $ship_records }}筆。</label>            
         </p>

@@ -83,7 +83,7 @@ Route::post('fin_ship_export','ExcelController@fin_ship_export')->name('fin_ship
 //製令工時匯出
 Route::post('WorkingTimeExport','ExcelController@WorkingTimeExport')->name('WorkingTimeExport');
 //結帳前&後明細匯出
-Route::post('fin_b4_export','ExcelController@fin_b4_export')->name('fin_b4_export');
+Route::get('fin_b4_export/{fin_chk}','ExcelController@fin_b4_export')->name('fin_b4_export');
 Route::post('fin_af_export','ExcelController@fin_af_export')->name('fin_af_export');
 
 //檢查MS SQL連線結果
@@ -131,8 +131,14 @@ Route::post('finance/fin_afchk', 'FinanceController@fin_afchk')->name('finance.f
 Route::get('sales/ts6index', 'SalesController@ts6index')->name('sales.ts6index');
 Route::post('sales/ts6members', 'SalesController@ts6members')->name('sales.ts6members');
 Route::post('sales/orderscount', 'SalesController@orderscount')->name('sales.orderscount');
+Route::post('sales/itemscount', 'SalesController@itemscount')->name('sales.itemscount');
 Route::post('sales/ts6detail', 'SalesController@ts6detail')->name('sales.ts6detail');
+Route::get('sales/{email}', 'SalesController@ts6byemail')->name('sales.ts6byemail');
 Route::post('sales/ts6noorder', 'SalesController@ts6noorder')->name('sales.ts6noorder');
 
 //ts6export會員資料匯出
-Route::post('ts6members_export', 'TS6ExportController@ts6members_export')->name('ts6members_export');
+Route::get('ts6export/{sqlstr}/ts6members_export', 'TS6ExportController@ts6members_export')->name('ts6members_export');
+Route::get('ts6counts_export', 'TS6ExportController@ts6counts_export')->name('ts6counts_export');
+Route::get('ts6items_export', 'TS6ExportController@ts6items_export')->name('ts6items_export');
+Route::get('ts6export/{mem_email}/ts6detail_export', 'TS6ExportController@ts6detail_export')->name('ts6detail_export');
+Route::get('ts6export/ts6noorder_export', 'TS6ExportController@ts6noorder_export')->name('ts6noorder_export');
