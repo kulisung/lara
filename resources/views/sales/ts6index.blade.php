@@ -26,7 +26,7 @@
                     <input type="text" style="font-size:16px" name="orderstr"><br>
                     <label style="font-size:16px">計算結束日期(輸入格式為ex:20190630)</label>
                     <input type="text" style="font-size:16px" name="orderend">
-                    <button type="submit" class="btn btn-primary btn-sm" style="font-size:16px">下單次數查詢</button>
+                    <button type="submit" class="btn btn-primary btn-sm" style="font-size:16px">累計下單查詢</button>
 
             </div> 
             </form>
@@ -39,7 +39,7 @@
                     <input type="text" style="font-size:16px" name="amountstr"><br>
                     <label style="font-size:16px">計算結束日期(輸入格式為ex:20190630)</label>
                     <input type="text" style="font-size:16px" name="amountend">
-                    <button type="submit" class="btn btn-primary btn-sm" style="font-size:16px">商品次數查詢</button>
+                    <button type="submit" class="btn btn-primary btn-sm" style="font-size:16px">累計金額查詢</button>
 
             </div> 
             </form>
