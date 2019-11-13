@@ -30,6 +30,19 @@
 
             </div> 
             </form>
+            <span style="color:blue;"><h6>TS6購買商品金額統計查詢</h6></span>
+            <form method="post" action={{ route('sales.amountover') }}>
+            @csrf
+            <div class="form-group">
+                    <label style="font-size:16px">商品累計金額大於等於<input type="text" name="amount">元。</label><br>
+                    <label style="font-size:16px">計算起始日期(輸入格式為ex:20190101)</label>
+                    <input type="text" style="font-size:16px" name="amountstr"><br>
+                    <label style="font-size:16px">計算結束日期(輸入格式為ex:20190630)</label>
+                    <input type="text" style="font-size:16px" name="amountend">
+                    <button type="submit" class="btn btn-primary btn-sm" style="font-size:16px">商品次數查詢</button>
+
+            </div> 
+            </form>
             <span style="color:blue;"><h6>TS6購買商品次數統計查詢</h6></span>
             <form method="post" action={{ route('sales.itemscount') }}>
             @csrf

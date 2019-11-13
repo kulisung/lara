@@ -7,8 +7,8 @@
         <div class="col-12">
         <span style="color:blue;"><h6>查詢結果</h6></span>
         <p><a href={{ route('sales.ts6index') }} class="btn btn-success btn-sm" style="font-size:16px">返回</a>
-        <a href="{{ route('ts6counts_export',compact('sqlstr','sqlend','orderscount')) }}" style="text-decoration:none;"><input type="button" class="btn btn-info btn-sm" style="font-size:16px" value="匯出Excel" onclick="return confirm('確認是否要匯出Excel?');"></a>
-        <label style="font-size:16px"><span style="color:blue;">※計算日期區間：{{ $sqlstr }} 至 {{ $sqlend }}。下單累計次數大於等於：{{ $orderscount }}次。資料總筆數：{{ $ordertimes }} 筆。</span></label>
+        <a href="{{ route('ts6amounts_export',compact('sqlstr','sqlend','amountover')) }}" style="text-decoration:none;"><input type="button" class="btn btn-info btn-sm" style="font-size:16px" value="匯出Excel" onclick="return confirm('確認是否要匯出Excel?');"></a>
+        <label style="font-size:16px"><span style="color:blue;">※計算日期區間：{{ $sqlstr }} 至 {{ $sqlend }}。商品累計金額大於等於：{{ $amountover }}元。資料總筆數：{{ $sumamounts }} 筆。</span></label>
         </div>
         <div class="col-12 table-cont" id="table-cont">
             <table class="table table-hover table-striped">
@@ -17,18 +17,18 @@
                         <th style="background-color:#CCCCFF;">姓名</th>
                         <th style="background-color:#CCCCFF;">Email</th>
                         <th style="background-color:#CCCCFF;">電話</th>
-                        <th style="background-color:#CCCCFF;">累計下單次數</th>
                         <th style="background-color:#CCCCFF;">累計下單金額</th>
+                        <th style="background-color:#CCCCFF;">累計下單次數</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($orders as $order)
+                    @foreach ($amounts as $amount)
                     <tr>
-                        <td style="background-color:#F2FFF2;">{{ $order->name }}</td>
-                        <td><a href="{{ route('sales.ts6byemail',$order->email) }}">{{ $order->email }}</td>
-                        <td style="background-color:#F2FFF2;">{{ $order->phone }}</td>
-                        <td>{{ $order->orders_count }}</td>
-                        <td style="background-color:#F2FFF2;">{{ $order->total_amount }}</td>
+                        <td style="background-color:#F2FFF2;">{{ $amount->name }}</td>
+                        <td><a href="{{ route('sales.ts6byemail',$amount->email) }}">{{ $amount->email }}</td>
+                        <td style="background-color:#F2FFF2;">{{ $amount->phone }}</td>
+                        <td>{{ $amount->total_amount }}</td>
+                        <td style="background-color:#F2FFF2;">{{ $amount->orders_count }}</td>
                     </tr>  
                     @endforeach
                 </tbody>

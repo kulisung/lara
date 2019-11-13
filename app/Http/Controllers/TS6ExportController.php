@@ -127,7 +127,7 @@ class TS6ExportController extends Controller
 
         $spreadsheet->setActiveSheetIndex(0); //最後指定回第一頁MS Excel開啟顯示
         // 下载
-        $filename = $sqlstr.'至'.$sqlend.'訂單大於'.$orderscount.'次會員清單.xlsx';
+        $filename = $sqlstr.'至'.$sqlend.'訂單累計次數'.$orderscount.'_List.xlsx';
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment;filename="'.$filename.'"');
         header('Cache-Control: max-age=0');
@@ -137,6 +137,59 @@ class TS6ExportController extends Controller
         
         }
     
+    }
+
+    //Amount Count
+    public function ts6amounts_export(Request $request)
+    {
+        //商品購買次數統計匯出
+        $sqlstr = $request->input('sqlstr');
+        $sqlend = $request->input('sqlend');
+        $amountover = $request->input('amountover');
+        $amounts = DB::select('SELECT name,email,phone,count(order_id) AS orders_count,sum(total_amount) AS total_amount
+        FROM ( SELECT DISTINCT order_id,name,email,phone,total_amount FROM ts6orders WHERE left(order_time,10) >= ? and left(order_time,10) <= ? ) P
+        GROUP BY name,email,phone
+        HAVING total_amount >= ?
+        ORDER BY total_amount DESC',
+        [$sqlstr, $sqlend, $amountover]);
+
+        $sumamounts = count($amounts);
+        if ($sumamounts < 1) {
+            $result = '查無資料，請檢查條件是否輸入正確!!!';
+            return View('nodata')->with('result', $result);
+        }else{
+    
+        $spreadsheet = new Spreadsheet();  // 開新excel檔案
+        $spreadsheet->setActiveSheetIndex(0);  //指定工作頁索引
+        $worksheet = $spreadsheet->getActiveSheet(0)->setTitle('商品金額累計統計'); //指定工作表名稱
+        //定義欄位
+        $worksheet->setCellValueByColumnAndRow(1, 1, '會員姓名');
+        $worksheet->setCellValueByColumnAndRow(2, 1, 'Email');
+        $worksheet->setCellValueByColumnAndRow(3, 1, '電話');
+        $worksheet->setCellValueByColumnAndRow(4, 1, '累計下單金額');
+        $worksheet->setCellValueByColumnAndRow(5, 1, '累計下單次數');
+
+        $j = 1;
+        foreach ($amounts as $amount) {
+            $j = $j + 1;
+            $worksheet->setCellValueByColumnAndRow(1, $j, $amount->name);
+            $worksheet->setCellValueByColumnAndRow(2, $j, $amount->email);
+            $worksheet->setCellValueByColumnAndRow(3, $j, $amount->phone);
+            $worksheet->setCellValueByColumnAndRow(4, $j, $amount->total_amount);
+            $worksheet->setCellValueByColumnAndRow(5, $j, $amount->orders_count);
+        }
+
+        $spreadsheet->setActiveSheetIndex(0); //最後指定回第一頁MS Excel開啟顯示
+        // 下载
+        $filename = $sqlstr.'to'.$sqlend.'商品累計金額'.$amountover.'_List.xlsx';
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="'.$filename.'"');
+        header('Cache-Control: max-age=0');
+
+        $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
+        $writer->save('php://output'); 
+        
+        }
     }
 
     //Items Count
@@ -186,7 +239,7 @@ class TS6ExportController extends Controller
 
         $spreadsheet->setActiveSheetIndex(0); //最後指定回第一頁MS Excel開啟顯示
         // 下载
-        $filename = $sqlstr.'至'.$sqlend.'商品次數大於'.$itemscount.'次會員清單.xlsx';
+        $filename = $sqlstr.'to'.$sqlend.'商品累計次數'.$itemscount.'_List.xlsx';
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment;filename="'.$filename.'"');
         header('Cache-Control: max-age=0');

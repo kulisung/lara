@@ -133,6 +133,47 @@ class SalesController extends Controller
         }
     }
 
+    //累計下單金額查詢
+    public function amountover(Request $request)
+    {
+        //查詢大於等於輸入次數，並顯示聯繫資料
+        $amountover = $request->input('amount');
+        $amount_strdate = $request->input('amountstr');
+        $amount_enddate = $request->input('amountend');
+        $order_finaldata = DB::table('ts6orders')->orderby('order_time','desc')->limit(1)->value('order_time');
+        //判斷次數未輸入則視為大於等於1
+        if ($amountover < 1) {
+            $amountover = 1;
+        }
+        //判斷起始日期是否為空
+        if ($amount_strdate < 1) {
+            $sqlstr = '2017/01/01'; //未輸入日期取最後一筆訂單時間
+        }else{ 
+            $sqlstr = substr($amount_strdate,0,4).'/'.substr($amount_strdate,4,2).'/'.substr($amount_strdate,6,2);
+        }
+        //判斷結束日期是否為空
+        if ($amount_enddate < 1) {
+            $sqlend = substr($order_finaldata,0,10); //未輸入日期取最後一筆訂單時間
+        }else{ 
+            $sqlend = substr($amount_enddate,0,4).'/'.substr($amount_enddate,4,2).'/'.substr($amount_enddate,6,2);
+        }
+                    
+        $amounts = DB::select('SELECT name,email,phone,count(order_id) AS orders_count,sum(total_amount) AS total_amount
+        FROM ( SELECT DISTINCT order_id,name,email,phone,total_amount FROM ts6orders WHERE left(order_time,10) >= ? and left(order_time,10) <= ? ) P
+        GROUP BY name,email,phone
+        HAVING total_amount >= ?
+        ORDER BY total_amount DESC',
+        [$sqlstr, $sqlend, $amountover]);
+
+        $sumamounts = count($amounts);
+        if ($sumamounts < 1) {
+            $result = '查無資料，請檢查條件是否輸入正確!!!';
+            return View('nodata')->with('result', $result);
+        }else{
+        return view('sales.amountover', compact('sqlstr','sqlend','amountover','sumamounts','amounts','order_finaldata'));
+        }
+    }
+
     //依Email查詢會員下單明細
     public function ts6detail(Request $request)
     {

@@ -8,7 +8,7 @@
         <span style="color:blue;"><h6>查詢結果</h6></span>
         <p><a href={{ route('sales.ts6index') }} class="btn btn-success btn-sm" style="font-size:16px">返回</a>
         <a href="{{ route('ts6items_export',compact('sqlstr','sqlend','itemscount')) }}" style="text-decoration:none;"><input type="button" class="btn btn-info btn-sm" style="font-size:16px" value="匯出Excel" onclick="return confirm('確認是否要匯出Excel?');"></a>
-        <label style="font-size:16px"><span style="color:blue;">※計算區間日期：{{ $sqlstr }} 至 {{ $sqlend }}。商品次數大於等於：{{ $itemscount }}筆。資料總筆數：{{ $itemstimes }} 筆。</span></label>
+        <label style="font-size:16px"><span style="color:blue;">※計算日期區間：{{ $sqlstr }} 至 {{ $sqlend }}。商品累計次數大於等於：{{ $itemscount }}次。資料總筆數：{{ $itemstimes }} 筆。</span></label>
         </div>
         <div class="col-12 table-cont" id="table-cont">
             <table class="table table-hover table-striped">
