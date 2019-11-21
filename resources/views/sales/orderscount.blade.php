@@ -8,7 +8,7 @@
         <span style="color:blue;"><h6>查詢結果</h6></span>
         <p><a href={{ route('sales.ts6index') }} class="btn btn-success btn-sm" style="font-size:16px">返回</a>
         <a href="{{ route('ts6counts_export',compact('sqlstr','sqlend','orderscount')) }}" style="text-decoration:none;"><input type="button" class="btn btn-info btn-sm" style="font-size:16px" value="匯出Excel" onclick="return confirm('確認是否要匯出Excel?');"></a>
-        <label style="font-size:16px"><span style="color:blue;">※計算日期區間：{{ $sqlstr }} 至 {{ $sqlend }}。下單累計次數大於等於：{{ $orderscount }}次。資料總筆數：{{ $ordertimes }} 筆。</span></label>
+        <label style="font-size:14px"><span style="color:blue;">※計算區間：{{ $sqlstr }} 至 {{ $sqlend }}。下單累計次數大於等於：{{ $orderscount }}次。資料總數：{{ $ordertimes }} 筆。點擊email可查詢該會員下單之歷史紀錄。</span></label>
         </div>
         <div class="col-12 table-cont" id="table-cont">
             <table class="table table-hover table-striped">

@@ -111,16 +111,13 @@ class FinanceController extends Controller
         GROUP BY TG004,TG007,TG003,TH001,TH002,TH027,TH028 
         ORDER BY TG004,TH002',['Y',$date_str,$date_end]);
 
-        $data=[
-            'ships'=>$ships
-        ];
-
-        if (count($ships)<1) {
+        $data_records = count($ships);
+        if ($data_records < 1) {
             $result = '查無資料，請檢查條件是否輸入正確!!';
             return View('nodata')->with('result', $result);
         }else{
         //return view('searchs.show', $data);
-        return view('finance.fin_ship', $data);
+        return view('finance.fin_ship', compact('date_str','date_end','ships','data_records'));
         }
     }
 

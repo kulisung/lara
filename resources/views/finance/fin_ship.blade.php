@@ -6,7 +6,9 @@
     <div class="row">
         <div class="col-12">
         <span style="color:blue;"><h6>結帳單查詢結果</h6></span>
-        <p><a href={{ route('finance.fsearch1') }} class="btn btn-success btn-sm" style="font-size:16px">返回</a></p>
+        <a href={{ route('finance.fsearch1') }} class="btn btn-success btn-sm" style="font-size:16px">返回</a>
+        <a href="{{ route('fin_ship_export',compact('date_str','date_end')) }}" style="text-decoration:none;"><input type="button" class="btn btn-info btn-sm" style="font-size:16px" value="匯出明細" onclick="return confirm('確認是否要匯出Excel?匯出資料量大，請耐心等候!!');"></a>
+        <span style="color:blue;"><label style="font-size:16px">查詢日期：{{ $date_str }} 至 {{ $date_end }} 止。資料筆數：{{ $data_records }}筆。</label></span>
         </div>
         <div class="col-12 table-cont" id="table-cont">
             <table class="table table-hover table-striped">
@@ -32,7 +34,7 @@
                         <td>{{ $ship->TH002 }}</td>
                         <td>{{ $ship->TH027 }}</td>
                         <td>{{ $ship->TH028 }}</td>
-                        <td>{{ $ship->NTD }}</td>
+                        <td>{{ (int)$ship->NTD }}</td>
                     </tr>  
                     @endforeach
                 </tbody>

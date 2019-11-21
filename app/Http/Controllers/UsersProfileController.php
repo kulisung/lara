@@ -98,7 +98,7 @@ class UsersProFileController extends Controller
         //
     }
 
-    public function UsersUpdate(Request $request, $username)
+    public function AdminUpdate(Request $request, $username)
     {
         $att['name'] = $request->input('name');
         $att['user_level'] = $request->input('user_level');
@@ -110,6 +110,20 @@ class UsersProFileController extends Controller
 
         return redirect()->route('UsersProfile.UsersIndex'); 
     }
+
+    public function UsersUpdate(Request $request, $username)
+    {
+        $att['name'] = $request->input('name');
+        //$att['user_level'] = $request->input('user_level');
+        $att['email'] = $request->input('email');
+        //$att['password'] = $request->input('password');
+        $att['updated_at'] = now();
+        DB::update('update users set name=?,email=?,updated_at=? where username=?', 
+        [$att['name'],$att['email'],$att['updated_at'],$username]);
+
+        return redirect()->route('index'); 
+    }
+
 
     public function UsersResetPassword(Request $request, $username)
     {

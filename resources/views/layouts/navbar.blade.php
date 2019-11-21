@@ -17,7 +17,7 @@
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item font-weight-bold" style="font-size:16px" id='search1' href={{ route('searchs.search1')}}>進退貨資訊查詢</a>
                         <a class="dropdown-item font-weight-bold" style="font-size:16px" id='search2' href={{ route('searchs.search2')}}>展場庫存查詢</a>
-                        <a class="dropdown-item font-weight-bold" style="font-size:16px" href={{ route('searchs.index')}}>其他資料查詢All</a>
+                        <a class="dropdown-item font-weight-bold" style="font-size:16px" href={{ route('searchs.index')}}>其他資料查詢</a>
                     </div>
                 </li>
                 @if (auth()->user()->user_level==9 or auth()->user()->user_level==2)

@@ -6,18 +6,18 @@
 <div class="container" style="background-color:#DEFFFF;">
     <div class="row">
         <div class="col-12">
-        <span style="color:red;">※會員資料更新至：{{ $membertime }} 止；訂單資料更新至：{{ $ordertime }} 止。會員總筆數：{{ $membercounts }}筆。</span></p>
-            <span style="color:blue;"><h6>TS6會員數量查詢（依註冊日期往後計算）</h6></span>
+        <span style="color:red;font-size:16px;">※會員資料最後一筆資料日期：{{ $membertime }} ；訂單最後一筆資料日期：{{ $ordertime }} 止。會員總筆數：{{ $membercounts }}筆。</span></p>
+            <span style="color:blue;"><h6>TS6會員數量統計查詢（依註冊日期往後計算）</h6></span><label style="font-size:12px">※若起始日期空白將從第一筆開啟統計，下列皆同。</label>
             <form method="post" action={{ route('sales.ts6members') }}>
             @csrf
             <div class="form-group">
-                    <label style="font-size:16px">計算起始日期(輸入格式為ex:20190101，空白則由第一筆計算至現有更新日期)</label>
+                    <label style="font-size:16px">計算起始日期(輸入格式為ex:20190101)</label>
                     <input type="text" style="font-size:16px" name="strdate"> 
                     <button type="submit" class="btn btn-primary btn-sm" style="font-size:16px">會員數量查詢</button>
 
             </div>
             </form>
-            <span style="color:blue;"><h6>TS6會員下單次數查詢(含金額)</h6></span>
+            <span style="color:blue;"><h6>TS6會員下單次數統計查詢</h6></span>
             <form method="post" action={{ route('sales.orderscount') }}>
             @csrf
             <div class="form-group">
@@ -30,7 +30,7 @@
 
             </div> 
             </form>
-            <span style="color:blue;"><h6>TS6購買商品金額統計查詢</h6></span>
+            <span style="color:blue;"><h6>TS6商品累計金額統計查詢</h6></span>
             <form method="post" action={{ route('sales.amountover') }}>
             @csrf
             <div class="form-group">
@@ -43,7 +43,7 @@
 
             </div> 
             </form>
-            <span style="color:blue;"><h6>TS6購買商品次數統計查詢</h6></span>
+            <span style="color:blue;"><h6>TS6商品累計次數統計查詢</h6></span>
             <form method="post" action={{ route('sales.itemscount') }}>
             @csrf
             <div class="form-group">

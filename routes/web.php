@@ -79,7 +79,7 @@ Route::get('AllUserExport','ExcelController@AllUserExport')->name('AllUserExport
 //展場庫存匯出
 Route::post('pos_inv_export','ExcelController@pos_inv_export')->name('pos_inv_export');
 //銷貨對帳單匯出
-Route::post('fin_ship_export','ExcelController@fin_ship_export')->name('fin_ship_export');
+Route::get('fin_ship_export','ExcelController@fin_ship_export')->name('fin_ship_export');
 //製令工時匯出
 Route::post('WorkingTimeExport','ExcelController@WorkingTimeExport')->name('WorkingTimeExport');
 //結帳前&後明細匯出
@@ -111,7 +111,8 @@ Route::get('UsersProfile', 'UsersProfileController@UsersIndex')->name('UsersProf
 /*修改使用者資料 */
 Route::get('UsersProfile/{username}/UsersEdit', 'UsersProfileController@UsersEdit')->name('UsersProfile.UsersEdit');
 Route::get('UsersProfile/{username}/UsersResetPWD', 'UsersProfileController@UsersResetPWD')->name('UsersProfile.UsersResetPWD');
-Route::patch('UsersProfile/{username}', 'UsersProfileController@UsersUpdate')->name('UsersProfile.UsersUpdate');
+Route::patch('UsersProfile/{username}/UsersUpdate', 'UsersProfileController@UsersUpdate')->name('UsersProfile.UsersUpdate');
+Route::patch('UsersProfile/{username}/AdminUpdate', 'UsersProfileController@AdminUpdate')->name('UsersProfile.AdminUpdate');
 Route::patch('UsersProfile/reset/{username}', 'UsersProfileController@UsersResetPassword')->name('UsersProfile.UsersResetPassword');
 Route::delete('UsersProfile/{username}', 'UsersProfileController@destroy')->name('UsersProfile.destroy');
 

@@ -6,7 +6,11 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8"><br>
+            @if (auth()->user()->user_level==9)
+            <form method="post" action="{{ route('UsersProfile.AdminUpdate', $user->username) }}">
+            @else
             <form method="post" action="{{ route('UsersProfile.UsersUpdate', $user->username) }}">
+            @endif
                 @csrf
                 {{ method_field('PATCH') }}
                 <div class="card">
