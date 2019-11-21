@@ -6,7 +6,7 @@
 <div class="container" style="background-color:#DEFFFF;">
     <div class="row">
         <div class="col-12">
-        <span style="color:red;font-size:16px;">※會員資料最後一筆資料日期：{{ $membertime }} ；訂單最後一筆資料日期：{{ $ordertime }} 止。會員總筆數：{{ $membercounts }}筆。</span></p>
+        <span style="color:red;font-size:16px;">※會員最後一筆資料日期：{{ $membertime }} ；訂單最後一筆資料日期：{{ $ordertime }} 止。會員總筆數：{{ $membercounts }}筆。</span></p>
             <span style="color:blue;"><h6>TS6會員數量統計查詢（依註冊日期往後計算）</h6></span><label style="font-size:12px">※若起始日期空白將從第一筆開啟統計，下列皆同。</label>
             <form method="post" action={{ route('sales.ts6members') }}>
             @csrf
