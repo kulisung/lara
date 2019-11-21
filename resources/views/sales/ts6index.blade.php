@@ -52,7 +52,7 @@
                     <input type="text" style="font-size:16px" name="countstr"><br>
                     <label style="font-size:16px">計算結束日期(輸入格式為ex:20190630)</label>
                     <input type="text" style="font-size:16px" name="countend">
-                    <button type="submit" class="btn btn-primary btn-sm" style="font-size:16px">商品次數查詢</button>
+                    <button type="submit" class="btn btn-primary btn-sm" style="font-size:16px">累計次數查詢</button>
 
             </div> 
             </form>
