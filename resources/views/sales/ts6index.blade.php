@@ -7,7 +7,7 @@
     <div class="row">
         <div class="col-12">
         <span style="color:red;font-size:16px;">※會員最後一筆資料日期：{{ $membertime }} ；訂單最後一筆資料日期：{{ $ordertime }} 止。會員總筆數：{{ $membercounts }}筆。</span></p>
-            <span style="color:blue;"><h6>TS6會員數量統計查詢（依註冊日期往後計算）</h6></span><label style="color:blue;font-size:12px">※若起始日期空白將從第一筆開啟統計；若皆空白表示全部查詢，查詢較為耗時請稍待片刻；下列其餘查詢方式皆同。</label>
+            <span style="color:blue;"><h6>TS6會員數量統計查詢（依註冊日期往後計算）</h6></span><label style="color:blue;font-size:12px">※若起始日期空白將從第一筆開啟統計；若皆空白表示全部查詢，查詢將較為耗時請稍待片刻；下列其餘查詢方式皆同。</label>
             <form method="post" action={{ route('sales.ts6members') }}>
             @csrf
             <div class="form-group">
@@ -66,7 +66,7 @@
 
             </div> 
             </form>
-            <span style="color:blue;"><h6>TS6會員未下單查詢。(會員資料量大，查詢&匯出結果請稍等！)</h6></span>
+            <span style="color:blue;"><h6>TS6未下單會員查詢。(會員資料量大，查詢&匯出結果請稍等！)</h6></span>
             <form method="post" action={{ route('sales.ts6noorder') }}>
             @csrf
             <div class="form-group">
