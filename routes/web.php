@@ -100,6 +100,7 @@ Route::get('searchs/search2', 'SearchsController@search2')->name('searchs.search
 Route::post('searchs/store', 'SearchsController@store')->name('searchs.store');
 Route::post('searchs/result01', 'SearchsController@result01')->name('searchs.result01');
 Route::post('searchs/purth_result', 'SearchsController@purth_result')->name('searchs.purth_result');
+Route::post('searchs/pos_chk', 'SearchsController@pos_chk')->name('searchs.pos_chk');
 Route::post('searchs/pos_inv', 'SearchsController@pos_inv')->name('searchs.pos_inv');
 Route::post('searchs/pos_stocks', 'SearchsController@pos_stocks')->name('searchs.pos_stocks');
 Route::post('searchs/WorkingTime', 'SearchsController@WorkingTime')->name('searchs.WorkingTime');

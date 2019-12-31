@@ -5,6 +5,13 @@
 <div class="container" style="background-color:#DEFFFF;">
     <div class="row">
         <div class="col-12">
+            <span style="color:blue;"><h6>#展場資料代號更新</h6></span>
+            <form method="post" action={{ route('searchs.pos_chk') }}>
+            @csrf
+            <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-sm" style="font-size:16px">資料更新</button>
+            </div>       
+            </form>
             <span style="color:blue;"><h6>#展場庫存查詢</h6></span>
             <form method="post" action={{ route('searchs.pos_inv') }}>
             @csrf

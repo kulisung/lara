@@ -80,6 +80,25 @@ class SearchsController extends Controller
         return view('searchs.purth_result', $data);
     }
 
+    //展場代號更新
+    public function pos_chk(Request $request)
+    {
+        //$date_str = $request->input('chkdate1');
+        //$date_end = $request->input('chkdate2');
+        $poschks = DB::connection('sqlsrv_tensall_temp')->select('SELECT TA004,TA009,TA014,TA016 FROM TempPOSTA where TA009 <> ?',['ATP0002']);
+        //判斷是否有資料
+        $pos_datas = count($poschks); //資料筆數
+        if ($pos_datas < 1) {
+            $result = '查無資料需要更新，請重新確認POS資料是否有轉入!!';
+            return View('nodata')->with('result', $result);
+        }else{
+            DB::connection('sqlsrv_tensall_temp')->update('update TempPOSTA SET TA009 = ?',['ATP0002']);
+            $result = '資料已更新!!';
+            return View('nodata')->with('result', $result);
+        }
+
+    }
+
     //展場Invoice
     public function pos_inv(Request $request)
     {
