@@ -93,7 +93,7 @@ class SearchsController extends Controller
             return View('nodata')->with('result', $result);
         }else{
             DB::connection('sqlsrv_tensall_temp')->update('update TempPOSTA SET TA009 = ?',['ATP0002']);
-            $result = '資料已更新!!';
+            $result = '本次POS更新資料總數共'.$pos_datas.'筆，資料已更新!!';
             return View('nodata')->with('result', $result);
         }
 

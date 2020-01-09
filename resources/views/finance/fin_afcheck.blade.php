@@ -29,25 +29,25 @@
                     </thead>
                     <tbody>
                         <tr>
-                            @foreach($b4_checks as $b4_check)
-                            <td style="background-color:#EBEBFF;">{{ (int)$b4_check->SUMCOST }}</td>
-                            <td style="background-color:#EBEBFF;">{{ (int)$b4_check->SUMTAX }}</td>
+                            @foreach($af_checks as $af_check)
+                            <td style="background-color:#EBEBFF;">{{ (int)$af_check->SUMCOST }}</td>
+                            <td style="background-color:#EBEBFF;">{{ (int)$af_check->SUMTAX }}</td>
                             @endforeach
-                            @foreach($b4_shipchecks as $b4_shipcheck)
-                            <td>{{ (int)$b4_shipcheck->SUMSHIP }}</td>
-                            <td>{{ (int)$b4_shipcheck->SUMTAX }}</td>
+                            @foreach($af_shipchecks as $af_shipcheck)
+                            <td>{{ (int)$af_shipcheck->SUMSHIP }}</td>
+                            <td>{{ (int)$af_shipcheck->SUMTAX }}</td>
                             @endforeach
-                            @foreach ($b4_sumbacks as $b4_sumback)
-                            <td style="background-color:#EBEBFF;">{{ (int)$b4_sumback->SUMBACK }}</td>
-                            <td style="background-color:#EBEBFF;">{{ (int)$b4_sumback->SUMTAX }}</td>
+                            @foreach ($af_sumbacks as $af_sumback)
+                            <td style="background-color:#EBEBFF;">{{ (int)$af_sumback->SUMBACK }}</td>
+                            <td style="background-color:#EBEBFF;">{{ (int)$af_sumback->SUMTAX }}</td>
                             @endforeach
-                            @foreach ($b4_sumdiscs as $b4_sumdisc)
-                            <td>{{ (int)$b4_sumdisc->SUMDISC }}</td>
-                            <td>{{ (int)$b4_sumdisc->SUMTAX }}</td>
+                            @foreach ($af_sumdiscs as $af_sumdisc)
+                            <td>{{ (int)$af_sumdisc->SUMDISC }}</td>
+                            <td>{{ (int)$af_sumdisc->SUMTAX }}</td>
                             @endforeach
-                            @foreach ($b4_customers as $b4_customer)
-                            <td style="background-color:#EBEBFF;">{{ (int)$b4_customer->SUMCUS }}</td>
-                            <td style="background-color:#EBEBFF;">{{ (int)$b4_customer->SUMTAX }}</td>
+                            @foreach ($af_customers as $af_customer)
+                            <td style="background-color:#EBEBFF;">{{ (int)$af_customer->SUMCUS }}</td>
+                            <td style="background-color:#EBEBFF;">{{ (int)$af_customer->SUMTAX }}</td>
                             @endforeach
                         </tr>  
                     </tbody>
@@ -64,10 +64,10 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($b4_items as $b4_item)
+                        @foreach ($af_items as $af_item)
                         <tr>
-                            <td>{{ $b4_item->MB006 }}</td>
-                            <td>{{ (int)$b4_item->COST }}</td>
+                            <td>{{ $af_item->MB006 }}</td>
+                            <td>{{ (int)$af_item->COST }}</td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -83,10 +83,10 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($b4_sumitems as $b4_sumitem)
+                        @foreach ($af_sumitems as $af_sumitem)
                         <tr>
-                            <td>{{ $b4_sumitem->MB006 }}</td>
-                            <td>{{ (int)$b4_sumitem->COST }}</td>
+                            <td>{{ $af_sumitem->MB006 }}</td>
+                            <td>{{ (int)$af_sumitem->COST }}</td>
                         </tr>  
                         @endforeach
                     </tbody>
@@ -102,10 +102,10 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($b4_brands as $b4_brand)
+                        @foreach ($af_brands as $af_brand)
                         <tr>
-                            <td>{{ $b4_brand->MB008 }}</td>
-                            <td>{{ (int)$b4_brand->COST }}</td>
+                            <td>{{ $af_brand->MB008 }}</td>
+                            <td>{{ (int)$af_brand->COST }}</td>
                         </tr>  
                         @endforeach
                     </tbody>
@@ -121,10 +121,10 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($b4_sumbrands as $b4_sumbrand)
+                        @foreach ($af_sumbrands as $af_sumbrand)
                         <tr>
-                            <td>{{ $b4_sumbrand->MB008 }}</td>
-                            <td>{{ (int)$b4_sumbrand->COST }}</td>
+                            <td>{{ $af_sumbrand->MB008 }}</td>
+                            <td>{{ (int)$af_sumbrand->COST }}</td>
                         </tr>  
                         @endforeach
                     </tbody>
@@ -135,41 +135,41 @@
                 <table class="table table-hover table-striped">
                     <thead>
                         <tr>
-                            <th><span style="color:blue;">單月銷退未稅合計</span></th>
-                            <th><span style="color:blue;">單月折讓未稅合計</span></th>
-                            <th><span style="color:blue;">單月尾折未稅合計</span></th>
+                            <!-- <th><span style="color:blue;">單月銷退未稅合計</span></th> -->
+                            <th><span style="color:blue;">單月折扣合計</span></th>
+                            <th><span style="color:blue;">單月尾折合計</span></th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            @foreach ($b4_returns as $b4_return)
-                            <td>{{ (int)$b4_return->COST }}</td>
+                            <!-- @foreach ($af_returns as $af_return)
+                            <td>{{ (int)$af_return->COST }}</td> -->
                             @endforeach
-                            @foreach ($b4_allowances as $b4_allowance)
-                            <td>{{ (int)$b4_allowance->ML008 }}</td>
+                            @foreach ($af_allowances as $af_allowance)
+                            <td>{{ (int)$af_allowance->ML008 }}</td>
                             @endforeach
-                            @foreach ($b4_discounts as $b4_discount)
-                            <td>{{ (int)$b4_discount->TD015 }}</td>
+                            @foreach ($af_discounts as $af_discount)
+                            <td>{{ (int)$af_discount->TD015 }}</td>
                             @endforeach
                         </tr>  
                     </tbody>
                     <thead>
                         <tr>
-                            <th><span style="color:blue;">累計銷退未稅合計</span></th>
-                            <th><span style="color:blue;">累計折讓未稅合計</span></th>
-                            <th><span style="color:blue;">累計尾折未稅合計</span></th>
+                            <!-- <th><span style="color:blue;">累計銷退未稅合計</span></th> -->
+                            <th><span style="color:blue;">累計折扣合計</span></th>
+                            <th><span style="color:blue;">累計尾折合計</span></th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            @foreach ($b4_sumreturns as $b4_sumreturn)
-                            <td>{{ (int)$b4_sumreturn->COST }}</td>
+                            <!-- @foreach ($af_sumreturns as $af_sumreturn)
+                            <td>{{ (int)$af_sumreturn->COST }}</td> -->
                             @endforeach
-                            @foreach ($b4_sumallowances as $b4_sumallowance)
-                            <td>{{ (int)$b4_sumallowance->ML008 }}</td>
+                            @foreach ($af_sumallowances as $af_sumallowance)
+                            <td>{{ (int)$af_sumallowance->ML008 }}</td>
                             @endforeach
-                            @foreach ($b4_sumdiscounts as $b4_sumdiscount)
-                            <td>{{ (int)$b4_sumdiscount->TD015 }}</td>
+                            @foreach ($af_sumdiscounts as $af_sumdiscount)
+                            <td>{{ (int)$af_sumdiscount->TD015 }}</td>
                             @endforeach
                         </tr>  
                     </tbody>

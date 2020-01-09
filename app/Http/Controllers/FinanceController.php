@@ -587,7 +587,7 @@ class FinanceController extends Controller
         }
     }
 
-    /* #########結帳後檢查明細######### */
+    /* #########結帳後檢查明細######### 註記不使用此版 2019.12.23
     //結帳後檢查Finance結帳後檢查 明細
     public function fin_afchk(Request $request)
     {
@@ -859,15 +859,15 @@ class FinanceController extends Controller
         }else{
             return view('finance.fin_afchk', compact('fin_strnum','fin_chk','af_9090chk','af_chks','af_shipchks','af_items','af_sumitems','af_brands','af_sumbrands','af_returns','af_sumreturns','af_allowances','af_sumallowances','af_discounts','af_sumdiscounts','af_shipbacks','af_shipdiscs','af_customers','af_cusshipbacks','af_cusbacks','af_cusdiscs','data_records','ship_records'));
         }
-    }
+    }   */
 
     //結帳後檢查Finance結帳後檢查 金額彙總
     public function fin_afcheck(Request $request)
     {
         $fin_chk = $request->input('fin_afdate');
         $fin_date = substr($fin_chk,0,4).'01';  //累計由該年度一月開始計算
-        $fin_strnum = left(substr($fin_chk,2,4)).'0001'; //查詢9090起始單號
-        $fin_endnum = left(substr($fin_chk,2,4)).'9999'; //查詢9090結束單號
+        $fin_strnum = substr($fin_chk,2,4).'0001'; //查詢9090起始單號
+        $fin_endnum = substr($fin_chk,2,4).'9999'; //查詢9090結束單號
         //9090檢查
         $af_9090chk = DB::connection('sqlsrv_tensall')->select('SELECT TG004,TG007,TG003,CASE TG005 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS TG005,CASE MB008 WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,CASE MB006 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB006,CASE MA038 WHEN ? THEN ? ELSE ? END AS MA038,TH005,QTY=TH008+TH024,TG012,TH037,TH038,TH001,TH002,TH003 
         FROM COPMA D,COPTG E,COPTH H,INVMB K
@@ -883,7 +883,7 @@ class FinanceController extends Controller
 
         //淨額合計
         $af_checks = DB::connection('sqlsrv_tensall')->select('SELECT SUM(TH037) AS SUMCOST,SUM(TH038) AS SUMTAX FROM (SELECT TG004,TG007,TG003,CASE TG005 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END as TG005,MB008,MB006,MA038,MA019,TH005,QTY=TH008+TH024,TG012,TH037,TH038,TH001,TH002,TH003 
-        FROM COPMA D,COPTG E,COPTH H,INVMB K
+        FROM COPMA D,COPTG E,COPTH H,INVMB K,INVLA L
         WHERE E.TG001=H.TH001 
         AND E.TG002=H.TH002
         AND H.TH004=K.MB001
