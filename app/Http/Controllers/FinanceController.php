@@ -861,7 +861,7 @@ class FinanceController extends Controller
         }
     }   */
 
-    //結帳後檢查Finance結帳後檢查 金額彙總
+//**************************結帳後檢查Finance結帳後檢查 金額彙總***************************
     public function fin_afcheck(Request $request)
     {
         $fin_chk = $request->input('fin_afdate');

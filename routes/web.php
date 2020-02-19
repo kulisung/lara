@@ -84,7 +84,8 @@ Route::get('fin_ship_export','ExcelController@fin_ship_export')->name('fin_ship_
 Route::post('WorkingTimeExport','ExcelController@WorkingTimeExport')->name('WorkingTimeExport');
 //結帳前&後明細匯出
 Route::get('fin_b4_export/{fin_chk}','ExcelController@fin_b4_export')->name('fin_b4_export');
-Route::post('fin_af_export','ExcelController@fin_af_export')->name('fin_af_export');
+//Route::post('fin_af_export','ExcelController@fin_af_export')->name('fin_af_export');
+Route::get('fin_af_export/{fin_chk}','ExcelController@fin_af_export')->name('fin_af_export');
 
 //檢查MS SQL連線結果
 //Route::get('dbresult', 'Auth\VerificationController@dbresult')->name('auth.dbresult');

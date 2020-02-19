@@ -7,7 +7,8 @@
         <div class="col-12">
             <br>
         <h6>結帳後查詢結果，資料量大請稍後......</h6>
-        <p><a href={{ route('finance.fsearch2') }} class="btn btn-success btn-sm" style="font-size:16px">返回</a> 
+        <p><a href={{ route('finance.fsearch2') }} class="btn btn-success btn-sm" style="font-size:16px">返回</a>
+        <a href="{{ route('fin_af_export',$fin_chk) }}" style="text-decoration:none;"><input type="button" class="btn btn-info btn-sm" style="font-size:16px" value="匯出明細" onclick="return confirm('確認是否要匯出Excel?匯出資料量大，請耐心等候!!');"></a> 
         <label style="font-size:16px"><span style="color:blue;">結算年月：{{ $fin_chk }}，累計起始年月：{{ $fin_date }}。</span></label></p>
         </div>
         <div class="col-12 table-cont">
