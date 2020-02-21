@@ -86,6 +86,8 @@ Route::post('WorkingTimeExport','ExcelController@WorkingTimeExport')->name('Work
 Route::get('fin_b4_export/{fin_chk}','ExcelController@fin_b4_export')->name('fin_b4_export');
 //Route::post('fin_af_export','ExcelController@fin_af_export')->name('fin_af_export');
 Route::get('fin_af_export/{fin_chk}','ExcelController@fin_af_export')->name('fin_af_export');
+//結帳單銷貨暫出對照匯出
+Route::post('ACRTB_Ship_Export','ExcelController@ACRTB_Ship_Export')->name('ACRTB_Ship_Export');
 
 //檢查MS SQL連線結果
 //Route::get('dbresult', 'Auth\VerificationController@dbresult')->name('auth.dbresult');

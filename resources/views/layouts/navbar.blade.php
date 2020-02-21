@@ -33,8 +33,8 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link font-weight-bold dropdown-toggle" style="font-size:16px" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">財務專用</a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item font-weight-bold" style="font-size:16px" id='fsearch1' href={{ route('finance.fsearch1')}}>對帳單查詢</a>
-                        <a class="dropdown-item font-weight-bold" style="font-size:16px" id='fsearch2' href={{ route('finance.fsearch2')}}>結帳前&後檢查</a>
+                        <a class="dropdown-item font-weight-bold" style="font-size:16px" id='fsearch1' href={{ route('finance.fsearch1')}}>結帳&銷貨相關查詢</a>
+                        <a class="dropdown-item font-weight-bold" style="font-size:16px" id='fsearch2' href={{ route('finance.fsearch2')}}>結帳資料檢查</a>
                     </div>
                 </li>
                 @endif

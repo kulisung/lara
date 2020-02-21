@@ -19,7 +19,7 @@
                 
             </div>        
             </form>
-            <span style="color:blue;"><h6>#結帳後檢查(測試中)</h6></span>
+            <span style="color:blue;"><h6>#結帳後檢查</h6></span>
             <form method="post" action={{ route('finance.fin_afcheck') }}>
             @csrf
             <div class="form-group">

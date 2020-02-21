@@ -614,7 +614,7 @@ class ExcelController extends Controller
         WHERE TC001=TD001
         AND TC002=TD002
         AND (TD008 = ? OR TD008 = ?) 
-        AND left(TC002,6) = ?',
+        AND left(TC003,6) = ?',
         ['4191','4172',$fin_chk]);
 
         //累計尾折 last discount
@@ -622,7 +622,7 @@ class ExcelController extends Controller
         WHERE TC001=TD001
         AND TC002=TD002
         AND (TD008 = ? OR TD008 = ?) 
-        AND left(TC002,6) BETWEEN ? AND ?',
+        AND left(TC003,6) BETWEEN ? AND ?',
         ['4191','4172',$fin_date,$fin_chk]);
 
         $ship_records = count($b4_shipchks);
@@ -1109,11 +1109,26 @@ class ExcelController extends Controller
         AND TJ003=LA008
         AND left(TI003,6) = ?
         AND MB001 <> ?) P  
-        ORDER BY MB006 desc,TG004,TG003',
+        ORDER BY P.MB006 DESC,P.TG004,P.TG003',
         ['D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','01','TS6','02','ODM','OTHER','21','食品','22','化妝品','23','私密保養品','26','商品成品','OTHER','3','外銷','內銷','0','1','2','0','1','0','1','2','0','1','2','0','0','1','2','0','1','Y',$fin_chk,'9090','D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','01','TS6','02','ODM','OTHER','21','食品','22','化妝品','23','私密保養品','26','商品成品','OTHER','3','外銷','內銷','0','0','0','Y','9999','8888','Z-PD0066','9090',$fin_chk,'9090','D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','01','TS6','02','ODM','OTHER','21','食品','22','化妝品','23','私密保養品','26','商品成品','OTHER','3','外銷','內銷','0','1','2','0','1','0','1','2','0','1','2','0','0','1','2','0','1','Y',$fin_chk,'9090']);
 
         //結帳後銷售額總毛利查詢(不含運輸費用)
-        $af_shipchks = DB::connection('sqlsrv_tensall')->select('SELECT TG004,TG007,TG003,CASE TG005 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS TG005,CASE MB008 WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,CASE MB006 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB006,CASE MA038 WHEN ? THEN ? ELSE ? END AS MA038,MA019,TH005,QTY=TH008+TH024,TG012,TH037,TH038,TH001,TH002,TH003 
+        $af_shipchks = DB::connection('sqlsrv_tensall')->select('SELECT * FROM (SELECT TG004,TG007,TG003,CASE TG005 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS TG005,CASE MB008 WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,CASE MB006 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB006,CASE MA038 WHEN ? THEN ? ELSE ? END AS MA038,TH005,QTY=TH008+TH024,TG012,TH037,LA013,CASE WHEN TH024=? AND (TH031 = ? or TH031 = ?) THEN LA013 WHEN TH024<>? AND TH031 = ? THEN ROUND(TH061*LA012,0) END AS SCOST,CASE WHEN TH024<>? AND TH031 = ? THEN LA013-ROUND(TH061*LA012,0) WHEN TH024=? AND (TH031 = ? or TH031 = ?) THEN ? END AS TCOST,PROFIT=TH037-LA013,CASE WHEN TH024=? AND (TH031 = ? or TH031 = ?) THEN TH037-LA013 WHEN TH024<>? AND TH031=? THEN TH037-ROUND(TH061*LA012,0) END AS SPROFIT,TH038,TH001,TH002,TH003 
+        FROM COPMA D,COPTG E,COPTH H,INVMB K,INVLA L
+        WHERE E.TG001=H.TH001 
+        AND E.TG002=H.TH002
+        AND H.TH004=K.MB001
+        AND LA001=MB001
+        AND TH001=LA006
+        AND TH002=LA007
+        AND TH003=LA008
+        AND D.MA001=TG004
+        AND D.MA001=E.TG004
+        AND TH026 = ?
+        AND left(TG003,6) = ?
+        AND MB001 <> ?
+        UNION
+        SELECT TG004,TG007,TG003,CASE TG005 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS TG005,CASE MB008 WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,CASE MB006 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB006,CASE MA038 WHEN ? THEN ? ELSE ? END AS MA038,TH005,QTY=TH008+TH024,TG012,TH037,LA013 = ?,SCOST = ?,TCOST = ?,PROFIT=TH037,SPROFIT=TH037,TH038,TH001,TH002,TH003
         FROM COPMA D,COPTG E,COPTH H,INVMB K
         WHERE E.TG001=H.TH001 
         AND E.TG002=H.TH002
@@ -1121,14 +1136,32 @@ class ExcelController extends Controller
         AND D.MA001=TG004
         AND D.MA001=E.TG004
         AND TH026 = ?
+        AND (TH004 = ? OR TH004 = ? OR TH004 = ? OR TH004 = ?)
         AND left(TG003,6) = ?
-        AND MB001 <> ?
-        ORDER BY MB006,TG004,TG003',
-        ['D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','01','TS6','02','ODM','OTHER','21','食品','22','化妝品','23','私密保養品','26','商品成品','OTHER','3','外銷','內銷','Y',$fin_chk,'9090']);
+        AND MB001 <> ?) P
+        ORDER BY P.MB006 DESC,P.TG004,P.TG003',
+        ['D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','01','TS6','02','ODM','OTHER','21','食品','22','化妝品','23','私密保養品','26','商品成品','OTHER','3','外銷','內銷','0','1','2','0','1','0','1','0','1','2','0','0','1','2','0','1','Y',$fin_chk,'9090','D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','01','TS6','02','ODM','OTHER','21','食品','22','化妝品','23','私密保養品','26','商品成品','OTHER','3','外銷','內銷','0','0','0','Y','9999','8888','Z-PD0066','9090',$fin_chk,'9090']);
 
-        //單月銷退
-        $af_shipbacks = DB::connection('sqlsrv_tensall')->select('SELECT TI004,TI021,TI003,CASE TI005 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS TG005,CASE MB008 WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,CASE MB006 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB006,CASE MA038 WHEN ? THEN ? ELSE ? END AS MA038,MA019,TJ005,QTY=TJ007+TJ042,TI009,TJ033,TJ034,TJ001,TJ002,TJ003
-        FROM COPMA D,COPTI E,COPTJ H,INVMB K
+        //結帳後單月銷退及折讓
+        $af_allshipbacks = DB::connection('sqlsrv_tensall')->select('SELECT TI004,TI021,TI003,CASE TI005 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS TG005,CASE MB008 WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,CASE MB006 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB006,CASE MA038 WHEN ? THEN ? ELSE ? END AS MA038,MA019,TJ005,QTY=(TJ007+TJ042)*-1,TI009,TJ033=TJ033*-1,LA013=LA013*-1,CASE WHEN TJ042=? AND (TJ041=? or TJ041=?) THEN LA013*-1 WHEN TJ042<>? AND TJ041=? THEN ROUND(TJ050*LA012,0)*-1 END AS SCOST,CASE WHEN TJ042<>? AND TJ041=? THEN (LA013-ROUND(TJ050*LA012,0))*-1 WHEN TJ042=? AND (TJ041=? or TJ041=?) THEN ? END AS TCOST,PROFIT=(TJ033-LA013)*-1,CASE WHEN TJ042=? AND (TJ041=? or TJ041=?) THEN (TJ033-LA013)*-1 WHEN TJ042<>? AND TJ041=? THEN (TJ033-ROUND(TJ050*LA012,0))*-1 END AS SPROFIT,TJ034,TJ001,TJ002,TJ003
+        FROM COPMA D,COPTI E,COPTJ H,INVMB K,INVLA L
+        WHERE E.TI001=H.TJ001   
+        AND E.TI002=H.TJ002
+        AND H.TJ004=K.MB001
+        AND D.MA001=TI004
+        AND D.MA001=E.TI004
+        AND TJ024 = ?
+        AND TJ001=LA006
+        AND TJ002=LA007
+        AND TJ003=LA008
+        AND left(TI003,6) = ?  
+        AND MB001 <> ?
+        ORDER BY MB006 DESC,TI004,TI003',
+        ['D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','01','TS6','02','ODM','OTHER','21','食品','22','化妝品','23','私密保養品','26','商品成品','OTHER','3','外銷','內銷','0','1','2','0','1','0','1','0','1','2','0','0','1','2','0','1','Y',$fin_chk,'9090']);
+
+        //結帳後單月銷退
+        $af_shipbacks = DB::connection('sqlsrv_tensall')->select('SELECT TI004,TI021,TI003,CASE TI005 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS TG005,CASE MB008 WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,CASE MB006 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB006,CASE MA038 WHEN ? THEN ? ELSE ? END AS MA038,MA019,TJ005,QTY=(TJ007+TJ042)*-1,TI009,TJ033=TJ033*-1,LA013=LA013*-1,CASE WHEN TJ042=? AND (TJ041=? or TJ041=?) THEN LA013*-1 WHEN TJ042<>? AND TJ041=? THEN ROUND(TJ050*LA012,0)*-1 END AS SCOST,CASE WHEN TJ042<>? AND TJ041=? THEN (LA013-ROUND(TJ050*LA012,0))*-1 WHEN TJ042=? AND (TJ041=? or TJ041=?) THEN ? END AS TCOST,PROFIT=(TJ033-LA013)*-1,CASE WHEN TJ042=? AND (TJ041=? or TJ041=?) THEN (TJ033-LA013)*-1 WHEN TJ042<>? AND TJ041=? THEN (TJ033-ROUND(TJ050*LA012,0))*-1 END AS SPROFIT,TJ034,TJ001,TJ002,TJ003
+        FROM COPMA D,COPTI E,COPTJ H,INVMB K,INVLA L
         WHERE E.TI001=H.TJ001   
         AND E.TI002=H.TJ002
         AND H.TJ004=K.MB001
@@ -1136,14 +1169,17 @@ class ExcelController extends Controller
         AND D.MA001=E.TI004
         AND TJ024 = ?
         AND TJ030 = ?
+        AND TJ001=LA006
+        AND TJ002=LA007
+        AND TJ003=LA008
         AND left(TI003,6) = ?  
         AND MB001 <> ?
         ORDER BY MB006 DESC,TI004,TI003',
-        ['D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','01','TS6','02','ODM','OTHER','21','食品','22','化妝品','23','私密保養品','26','商品成品','OTHER','3','外銷','內銷','Y','1',$fin_chk,'9090']);
+        ['D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','01','TS6','02','ODM','OTHER','21','食品','22','化妝品','23','私密保養品','26','商品成品','OTHER','3','外銷','內銷','0','1','2','0','1','0','1','0','1','2','0','0','1','2','0','1','Y','1',$fin_chk,'9090']);
 
-        //單月折讓
-        $af_shipdiscs = DB::connection('sqlsrv_tensall')->select('SELECT TI004,TI021,TI003,CASE TI005 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS TG005,CASE MB008 WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,CASE MB006 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB006,CASE MA038 WHEN ? THEN ? ELSE ? END AS MA038,MA019,TJ005,QTY=TJ007+TJ042,TI009,TJ033, TJ034,TJ001,TJ002,TJ003
-        FROM COPMA D,COPTI E,COPTJ H,INVMB K
+        //結帳後折讓
+        $af_shipdiscs = DB::connection('sqlsrv_tensall')->select('SELECT TI004,TI021,TI003,CASE TI005 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS TG005,CASE MB008 WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,CASE MB006 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB006,CASE MA038 WHEN ? THEN ? ELSE ? END AS MA038,MA019,TJ005,QTY=(TJ007+TJ042)*-1,TI009,TJ033=TJ033*-1,LA013=LA013*-1,CASE WHEN TJ042=? AND (TJ041=? or TJ041=?) THEN LA013*-1 WHEN TJ042<>? AND TJ041=? THEN ROUND(TJ050*LA012,0)*-1 END AS SCOST,CASE WHEN TJ042<>? AND TJ041=? THEN (LA013-ROUND(TJ050*LA012,0))*-1 WHEN TJ042=? AND (TJ041=? or TJ041=?) THEN ? END AS TCOST,PROFIT=(TJ033-LA013)*-1,CASE WHEN TJ042=? AND (TJ041=? or TJ041=?) THEN (TJ033-LA013)*-1 WHEN TJ042<>? AND TJ041=? THEN (TJ033-ROUND(TJ050*LA012,0))*-1 END AS SPROFIT,TJ034,TJ001,TJ002,TJ003
+        FROM COPMA D,COPTI E,COPTJ H,INVMB K,INVLA L
         WHERE E.TI001=H.TJ001   
         AND E.TI002=H.TJ002
         AND H.TJ004=K.MB001
@@ -1151,12 +1187,15 @@ class ExcelController extends Controller
         AND D.MA001=E.TI004
         AND TJ024 = ?
         AND TJ030 = ?
+        AND TJ001=LA006
+        AND TJ002=LA007
+        AND TJ003=LA008
         AND left(TI003,6) = ?  
         AND MB001 <> ?
         ORDER BY MB006 DESC,TI004,TI003',
-        ['D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','01','TS6','02','ODM','OTHER','21','食品','22','化妝品','23','私密保養品','26','商品成品','OTHER','3','外銷','內銷','Y','2',$fin_chk,'9090']);
+        ['D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','01','TS6','02','ODM','OTHER','21','食品','22','化妝品','23','私密保養品','26','商品成品','OTHER','3','外銷','內銷','0','1','2','0','1','0','1','0','1','2','0','0','1','2','0','1','Y','2',$fin_chk,'9090']);
 
-        //客戶銷貨總額
+        //結帳後客戶銷貨總額
         $af_customers = DB::connection('sqlsrv_tensall')->select('SELECT TG004,TG007,SUM(TH037) AS SUMCUS,SUM(TH038) AS SUMTAX
         FROM COPMA D,COPTG E,COPTH H,INVMB K
         WHERE E.TG001=H.TH001   
@@ -1183,6 +1222,7 @@ class ExcelController extends Controller
         AND MB001 <> ? 
         GROUP BY TI004,TI021 ORDER BY TI004,TI021',
         ['Y',$fin_chk,'9090']);
+        $P = count($af_cusshipbacks);
 
         //銷退單單身銷退By客戶
         $af_cusbacks = DB::connection('sqlsrv_tensall')->select('SELECT TI004,TI021,SUM(TJ033) AS TJ033,SUM(TJ034) AS TJ034
@@ -1198,6 +1238,7 @@ class ExcelController extends Controller
         AND MB001 <> ? 
         GROUP BY TI004,TI021 ORDER BY TI004,TI021',
         ['Y','1',$fin_chk,'9090']);
+        $Q = count($af_cusbacks);
 
         //銷退單單身折讓By客戶
         $af_cusdiscs = DB::connection('sqlsrv_tensall')->select('SELECT TI004,TI021,SUM(TJ033) AS TJ033,SUM(TJ034) AS TJ034
@@ -1241,7 +1282,7 @@ class ExcelController extends Controller
         AND TH026 = ?
         AND left(TG003,6) BETWEEN ? AND ?
         AND MB001 <> ?) P
-        GROUP BY MB006 ORDER BY COST DESC',
+        GROUP BY MB006 ORDER BY MB006',
         ['21','食品','22','化妝品','23','私密保養品','26','商品成品','OTHER','Y',$fin_date,$fin_chk,'9090']);
 
         //單月品牌統計
@@ -1256,10 +1297,10 @@ class ExcelController extends Controller
         AND TH026 = ?
         AND left(TG003,6) = ?
         AND MB001 <> ?) P
-        GROUP BY MB008 ORDER BY COST DESC',
+        GROUP BY MB008 ORDER BY MB008',
         ['01','TS6','02','ODM','OTHER','Y',$fin_chk,'9090']);
 
-        //品牌年度累計
+        //品牌累計
         $af_sumbrands = DB::connection('sqlsrv_tensall')->select('SELECT CASE MB008 WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,SUM(TH037) AS COST FROM (
         SELECT MB008,TH037 
         FROM COPMA D,COPTG E,COPTH H,INVMB K
@@ -1271,34 +1312,8 @@ class ExcelController extends Controller
         AND TH026 = ?
         AND left(TG003,6) BETWEEN ? AND ?
         AND MB001 <> ?) P
-        GROUP BY MB008 ORDER BY COST DESC',
+        GROUP BY MB008 ORDER BY MB008',
         ['01','TS6','02','ODM','OTHER','Y',$fin_date,$fin_chk,'9090']);
-
-        //單月銷退單彙總合計
-        $af_returns = DB::connection('sqlsrv_tensall')->select('SELECT CASE WHEN SUM(TJ033) < ? THEN SUM(TJ033) ELSE SUM(TJ033) END AS COST 
-        FROM COPMA D,COPTI E,COPTJ H,INVMB K
-        WHERE E.TI001=H.TJ001   
-        AND E.TI002=H.TJ002 
-        AND H.TJ004=K.MB001
-        AND D.MA001=TI004
-        AND D.MA001=E.TI004
-        AND TJ024 = ?
-        AND left(TI003,6) = ?
-        AND MB001 <> ?',
-        ['0','Y',$fin_chk,'9090']);
-        
-        //累計銷退單彙總合計
-        $af_sumreturns = DB::connection('sqlsrv_tensall')->select('SELECT CASE WHEN SUM(TJ033) < ? THEN SUM(TJ033) ELSE SUM(TJ033) END AS COST 
-        FROM COPMA D,COPTI E,COPTJ H,INVMB K
-        WHERE E.TI001=H.TJ001   
-        AND E.TI002=H.TJ002 
-        AND H.TJ004=K.MB001
-        AND D.MA001=TI004
-        AND D.MA001=E.TI004
-        AND TJ024 = ?
-        AND left(TI003,6) BETWEEN ? AND ?
-        AND MB001 <> ?',
-        ['0','Y',$fin_date,$fin_chk,'9090']); 
 
         //單月折讓合計allowance '4172'=現金折扣
         $af_allowances = DB::connection('sqlsrv_tensall')->select('SELECT SUM(ML008) AS ML008 FROM ACTML 
@@ -1317,7 +1332,7 @@ class ExcelController extends Controller
         WHERE TC001=TD001
         AND TC002=TD002
         AND (TD008 = ? OR TD008 = ?) 
-        AND left(TC002,6) = ?',
+        AND left(TC003,6) = ?',
         ['4191','4172',$fin_chk]);
 
         //累計尾折 last discount
@@ -1325,15 +1340,29 @@ class ExcelController extends Controller
         WHERE TC001=TD001
         AND TC002=TD002
         AND (TD008 = ? OR TD008 = ?) 
-        AND left(TC002,6) BETWEEN ? AND ?',
+        AND left(TC003,6) BETWEEN ? AND ?',
         ['4191','4172',$fin_date,$fin_chk]);
 
+        //品號9090檢查
+        $af_9090chks = DB::connection('sqlsrv_tensall')->select('SELECT TG004,TG007,TG003,CASE TG005 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS TG005,CASE MB008 WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,CASE MB006 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB006,CASE MA038 WHEN ? THEN ? ELSE ? END AS MA038,TH005,QTY=TH008+TH024,TG012,TH037,LA013 = ?,SCOST = ?,TCOST = ?,PROFIT=TH037,SPROFIT=TH037,TH038,TH001,TH002,TH003
+        FROM COPMA D,COPTG E,COPTH H,INVMB K
+        WHERE E.TG001=H.TH001 
+        AND E.TG002=H.TH002
+        AND H.TH004=K.MB001
+        AND D.MA001=TG004
+        AND D.MA001=E.TG004
+        AND TH026 = ?
+        AND TH004 = ?
+        AND left(TG003,6) = ?',
+        ['D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','01','TS6','02','ODM','OTHER','21','食品','22','化妝品','23','私密保養品','26','商品成品','OTHER','3','外銷','內銷','0','0','0','Y','9090',$fin_chk]);
+
+        $ship_records = count($af_shipchks);
         //判斷是否有資料
         if (count($af_chks)<1) {
             $result = '查無資料，請檢查條件是否輸入正確!!';
             return view('nodata')->with('result', $result);
         }else{
-        //結帳前淨額
+        //結帳後銷貨淨額---含成本及毛利
         $spreadsheet = new Spreadsheet();  // 開新excel檔案
         $spreadsheet->setActiveSheetIndex(0);  //指定工作頁索引
         $worksheet = $spreadsheet->getActiveSheet(0)->setTitle('淨額明細'); //指定工作表明稱
@@ -1386,7 +1415,7 @@ class ExcelController extends Controller
             $worksheet->setCellValueByColumnAndRow(20, $j, $af_chk->TH003);
         }
 
-        //結帳前銷貨
+        //結帳後銷售額總毛利查詢-不含運輸費用
         //定義欄位 Sheet2
         $spreadsheet->createSheet(); //新增工作頁
         $spreadsheet->setActiveSheetIndex(1); //指定工作頁索引
@@ -1398,15 +1427,19 @@ class ExcelController extends Controller
         $worksheet->setCellValueByColumnAndRow(5, 1, '品牌');
         $worksheet->setCellValueByColumnAndRow(6, 1, '四大類');
         $worksheet->setCellValueByColumnAndRow(7, 1, '內外銷');
-        $worksheet->setCellValueByColumnAndRow(8, 1, '國家別');
-        $worksheet->setCellValueByColumnAndRow(9, 1, '品名');
-        $worksheet->setCellValueByColumnAndRow(10, 1, '數量');
-        $worksheet->setCellValueByColumnAndRow(11, 1, '匯率\單位');
-        $worksheet->setCellValueByColumnAndRow(12, 1, '未稅金額');
-        $worksheet->setCellValueByColumnAndRow(13, 1, '稅額');
-        $worksheet->setCellValueByColumnAndRow(14, 1, '單別');
-        $worksheet->setCellValueByColumnAndRow(15, 1, '單號');
-        $worksheet->setCellValueByColumnAndRow(16, 1, '序號');
+        $worksheet->setCellValueByColumnAndRow(8, 1, '品名');
+        $worksheet->setCellValueByColumnAndRow(9, 1, '數量');
+        $worksheet->setCellValueByColumnAndRow(10, 1, '匯率\單位');
+        $worksheet->setCellValueByColumnAndRow(11, 1, '未稅金額');
+        $worksheet->setCellValueByColumnAndRow(12, 1, '總成本');
+        $worksheet->setCellValueByColumnAndRow(13, 1, '銷貨成本');
+        $worksheet->setCellValueByColumnAndRow(14, 1, '贈品成本');
+        $worksheet->setCellValueByColumnAndRow(15, 1, '總毛利');
+        $worksheet->setCellValueByColumnAndRow(16, 1, '銷貨毛利');
+        $worksheet->setCellValueByColumnAndRow(17, 1, '稅額');
+        $worksheet->setCellValueByColumnAndRow(18, 1, '單別');
+        $worksheet->setCellValueByColumnAndRow(19, 1, '單號');
+        $worksheet->setCellValueByColumnAndRow(20, 1, '序號');
 
         $j = 1;
         foreach ($af_shipchks as $af_shipchk) {
@@ -1418,22 +1451,94 @@ class ExcelController extends Controller
             $worksheet->setCellValueByColumnAndRow(5, $j, $af_shipchk->MB008);
             $worksheet->setCellValueByColumnAndRow(6, $j, $af_shipchk->MB006);
             $worksheet->setCellValueByColumnAndRow(7, $j, $af_shipchk->MA038);
-            $worksheet->setCellValueByColumnAndRow(8, $j, $af_shipchk->MA019);
-            $worksheet->setCellValueByColumnAndRow(9, $j, $af_shipchk->TH005);
-            $worksheet->setCellValueByColumnAndRow(10, $j, $af_shipchk->QTY);
-            $worksheet->setCellValueByColumnAndRow(11, $j, $af_shipchk->TG012);
-            $worksheet->setCellValueByColumnAndRow(12, $j, $af_shipchk->TH037);
-            $worksheet->setCellValueByColumnAndRow(13, $j, $af_shipchk->TH038);
-            $worksheet->setCellValueByColumnAndRow(14, $j, $af_shipchk->TH001);
-            $worksheet->setCellValueByColumnAndRow(15, $j, $af_shipchk->TH002);
-            $worksheet->setCellValueByColumnAndRow(16, $j, $af_shipchk->TH003);
+            $worksheet->setCellValueByColumnAndRow(8, $j, $af_shipchk->TH005);
+            $worksheet->setCellValueByColumnAndRow(9, $j, $af_shipchk->QTY);
+            $worksheet->setCellValueByColumnAndRow(10, $j, $af_shipchk->TG012);
+            $worksheet->setCellValueByColumnAndRow(11, $j, $af_shipchk->TH037);
+            $worksheet->setCellValueByColumnAndRow(12, $j, $af_shipchk->LA013);
+            $worksheet->setCellValueByColumnAndRow(13, $j, $af_shipchk->SCOST);
+            $worksheet->setCellValueByColumnAndRow(14, $j, $af_shipchk->TCOST);
+            $worksheet->setCellValueByColumnAndRow(15, $j, $af_shipchk->PROFIT);
+            $worksheet->setCellValueByColumnAndRow(16, $j, $af_shipchk->SPROFIT);
+            $worksheet->setCellValueByColumnAndRow(17, $j, $af_shipchk->TH038);
+            $worksheet->setCellValueByColumnAndRow(18, $j, $af_shipchk->TH001);
+            $worksheet->setCellValueByColumnAndRow(19, $j, $af_shipchk->TH002);
+            $worksheet->setCellValueByColumnAndRow(20, $j, $af_shipchk->TH003);
         }
 
-        //結帳前銷退
+        //Sheet2補入四大類、品牌、銷退折讓等資訊
+        $L = $ship_records + 5;
+
+        $worksheet->setCellValueByColumnAndRow(1, $L, '四大類');
+        $worksheet->setCellValueByColumnAndRow(2, $L, '四大類單月未稅合計');
+        $worksheet->setCellValueByColumnAndRow(4, $L, '四大類');
+        $worksheet->setCellValueByColumnAndRow(5, $L, '四大類累計未稅合計');
+        $worksheet->setCellValueByColumnAndRow(1, $L + 9, '品牌');
+        $worksheet->setCellValueByColumnAndRow(2, $L + 9, '品牌單月未稅合計');
+        $worksheet->setCellValueByColumnAndRow(4, $L + 9, '品牌');
+        $worksheet->setCellValueByColumnAndRow(5, $L + 9, '品牌累計未稅合計');
+        $worksheet->setCellValueByColumnAndRow(1, $L + 15, '單月折扣合計');
+        $worksheet->setCellValueByColumnAndRow(2, $L + 15, '累計折扣合計');
+        $worksheet->setCellValueByColumnAndRow(1, $L + 19, '單月尾折合計');
+        $worksheet->setCellValueByColumnAndRow(2, $L + 19, '累計尾折合計');
+
+        $j = $L;
+        foreach ($af_items as $af_item) {
+            $j = $j + 1;
+            $worksheet->setCellValueByColumnAndRow(1, $j, $af_item->MB006);
+            $worksheet->setCellValueByColumnAndRow(2, $j, $af_item->COST);
+        }
+
+        $j = $L;
+        foreach ($af_sumitems as $af_sumitem) {
+            $j = $j + 1;
+            $worksheet->setCellValueByColumnAndRow(4, $j, $af_sumitem->MB006);
+            $worksheet->setCellValueByColumnAndRow(5, $j, $af_sumitem->COST);
+        }
+
+        $j = $L+9;
+        foreach ($af_brands as $af_brand) {
+            $j = $j + 1;
+            $worksheet->setCellValueByColumnAndRow(1, $j, $af_brand->MB008);
+            $worksheet->setCellValueByColumnAndRow(2, $j, $af_brand->COST);
+        }
+
+        $j = $L+9;
+        foreach ($af_sumbrands as $af_sumbrand) {
+            $j = $j + 1;
+            $worksheet->setCellValueByColumnAndRow(4, $j, $af_sumbrand->MB008);
+            $worksheet->setCellValueByColumnAndRow(5, $j, $af_sumbrand->COST);
+        }
+
+        $j = $L+15;
+        foreach ($af_allowances as $af_allowance) {
+            $j = $j + 1;
+            $worksheet->setCellValueByColumnAndRow(1, $j, $af_allowance->ML008);
+        }
+
+        $j = $L+15;
+        foreach ($af_sumallowances as $af_sumallowance) {
+            $j = $j + 1;
+            $worksheet->setCellValueByColumnAndRow(2, $j, $af_sumallowance->ML008);
+        }
+
+        $j = $L+19;
+        foreach ($af_discounts as $af_discount) {
+            $j = $j + 1;
+            $worksheet->setCellValueByColumnAndRow(1, $j, $af_discount->TD015);
+        }
+
+        $j = $L+19;
+        foreach ($af_sumdiscounts as $af_sumdiscount) {
+            $j = $j + 1;
+            $worksheet->setCellValueByColumnAndRow(2, $j, $af_sumdiscount->TD015);
+        }
+
+        //結帳後銷退及折讓
         //定義欄位 Sheet3
         $spreadsheet->createSheet(); //新增工作頁
         $spreadsheet->setActiveSheetIndex(2); //指定工作頁索引
-        $worksheet = $spreadsheet->getActiveSheet(2)->setTitle('銷退明細'); //指定工作表名稱
+        $worksheet = $spreadsheet->getActiveSheet(2)->setTitle('銷退及折讓'); //指定工作表名稱
         $worksheet->setCellValueByColumnAndRow(1, 1, '客戶代碼');
         $worksheet->setCellValueByColumnAndRow(2, 1, '客戶全名');
         $worksheet->setCellValueByColumnAndRow(3, 1, '銷貨日期');
@@ -1441,15 +1546,70 @@ class ExcelController extends Controller
         $worksheet->setCellValueByColumnAndRow(5, 1, '品牌');
         $worksheet->setCellValueByColumnAndRow(6, 1, '四大類');
         $worksheet->setCellValueByColumnAndRow(7, 1, '內外銷');
-        $worksheet->setCellValueByColumnAndRow(8, 1, '國家別');
-        $worksheet->setCellValueByColumnAndRow(9, 1, '品名');
-        $worksheet->setCellValueByColumnAndRow(10, 1, '數量');
-        $worksheet->setCellValueByColumnAndRow(11, 1, '匯率\單位');
-        $worksheet->setCellValueByColumnAndRow(12, 1, '未稅金額');
-        $worksheet->setCellValueByColumnAndRow(13, 1, '稅額');
-        $worksheet->setCellValueByColumnAndRow(14, 1, '單別');
-        $worksheet->setCellValueByColumnAndRow(15, 1, '單號');
-        $worksheet->setCellValueByColumnAndRow(16, 1, '序號');
+        $worksheet->setCellValueByColumnAndRow(8, 1, '品名');
+        $worksheet->setCellValueByColumnAndRow(9, 1, '數量');
+        $worksheet->setCellValueByColumnAndRow(10, 1, '匯率\單位');
+        $worksheet->setCellValueByColumnAndRow(11, 1, '未稅金額');
+        $worksheet->setCellValueByColumnAndRow(12, 1, '總成本');
+        $worksheet->setCellValueByColumnAndRow(13, 1, '銷退成本');
+        $worksheet->setCellValueByColumnAndRow(14, 1, '贈品成本');
+        $worksheet->setCellValueByColumnAndRow(15, 1, '總毛利');
+        $worksheet->setCellValueByColumnAndRow(16, 1, '銷貨毛利');
+        $worksheet->setCellValueByColumnAndRow(17, 1, '稅額');
+        $worksheet->setCellValueByColumnAndRow(18, 1, '單別');
+        $worksheet->setCellValueByColumnAndRow(19, 1, '單號');
+        $worksheet->setCellValueByColumnAndRow(20, 1, '序號');
+
+        $j = 1;
+        foreach ($af_allshipbacks as $af_allshipback) {
+            $j = $j + 1;
+            $worksheet->setCellValueByColumnAndRow(1, $j, $af_allshipback->TI004);
+            $worksheet->setCellValueByColumnAndRow(2, $j, $af_allshipback->TI021);
+            $worksheet->setCellValueByColumnAndRow(3, $j, $af_allshipback->TI003);
+            $worksheet->setCellValueByColumnAndRow(4, $j, $af_allshipback->TG005);
+            $worksheet->setCellValueByColumnAndRow(5, $j, $af_allshipback->MB008);
+            $worksheet->setCellValueByColumnAndRow(6, $j, $af_allshipback->MB006);
+            $worksheet->setCellValueByColumnAndRow(7, $j, $af_allshipback->MA038);
+            $worksheet->setCellValueByColumnAndRow(8, $j, $af_allshipback->TJ005);
+            $worksheet->setCellValueByColumnAndRow(9, $j, $af_allshipback->QTY);
+            $worksheet->setCellValueByColumnAndRow(10, $j, $af_allshipback->TI009);
+            $worksheet->setCellValueByColumnAndRow(11, $j, $af_allshipback->TJ033);
+            $worksheet->setCellValueByColumnAndRow(12, $j, $af_allshipback->LA013);
+            $worksheet->setCellValueByColumnAndRow(13, $j, $af_allshipback->SCOST);
+            $worksheet->setCellValueByColumnAndRow(14, $j, $af_allshipback->TCOST);
+            $worksheet->setCellValueByColumnAndRow(15, $j, $af_allshipback->PROFIT);
+            $worksheet->setCellValueByColumnAndRow(16, $j, $af_allshipback->SPROFIT);
+            $worksheet->setCellValueByColumnAndRow(17, $j, $af_allshipback->TJ034);
+            $worksheet->setCellValueByColumnAndRow(18, $j, $af_allshipback->TJ001);
+            $worksheet->setCellValueByColumnAndRow(19, $j, $af_allshipback->TJ002);
+            $worksheet->setCellValueByColumnAndRow(20, $j, $af_allshipback->TJ003);
+        }
+
+        //結帳後銷退
+        //定義欄位 Sheet4
+        $spreadsheet->createSheet(); //新增工作頁
+        $spreadsheet->setActiveSheetIndex(3); //指定工作頁索引
+        $worksheet = $spreadsheet->getActiveSheet(3)->setTitle('銷退明細'); //指定工作表名稱
+        $worksheet->setCellValueByColumnAndRow(1, 1, '客戶代碼');
+        $worksheet->setCellValueByColumnAndRow(2, 1, '客戶全名');
+        $worksheet->setCellValueByColumnAndRow(3, 1, '銷貨日期');
+        $worksheet->setCellValueByColumnAndRow(4, 1, '部門');
+        $worksheet->setCellValueByColumnAndRow(5, 1, '品牌');
+        $worksheet->setCellValueByColumnAndRow(6, 1, '四大類');
+        $worksheet->setCellValueByColumnAndRow(7, 1, '內外銷');
+        $worksheet->setCellValueByColumnAndRow(8, 1, '品名');
+        $worksheet->setCellValueByColumnAndRow(9, 1, '數量');
+        $worksheet->setCellValueByColumnAndRow(10, 1, '匯率\單位');
+        $worksheet->setCellValueByColumnAndRow(11, 1, '未稅金額');
+        $worksheet->setCellValueByColumnAndRow(12, 1, '總成本');
+        $worksheet->setCellValueByColumnAndRow(13, 1, '銷退成本');
+        $worksheet->setCellValueByColumnAndRow(14, 1, '贈品成本');
+        $worksheet->setCellValueByColumnAndRow(15, 1, '總毛利');
+        $worksheet->setCellValueByColumnAndRow(16, 1, '銷貨毛利');
+        $worksheet->setCellValueByColumnAndRow(17, 1, '稅額');
+        $worksheet->setCellValueByColumnAndRow(18, 1, '單別');
+        $worksheet->setCellValueByColumnAndRow(19, 1, '單號');
+        $worksheet->setCellValueByColumnAndRow(20, 1, '序號');
 
         $j = 1;
         foreach ($af_shipbacks as $af_shipback) {
@@ -1461,22 +1621,26 @@ class ExcelController extends Controller
             $worksheet->setCellValueByColumnAndRow(5, $j, $af_shipback->MB008);
             $worksheet->setCellValueByColumnAndRow(6, $j, $af_shipback->MB006);
             $worksheet->setCellValueByColumnAndRow(7, $j, $af_shipback->MA038);
-            $worksheet->setCellValueByColumnAndRow(8, $j, $af_shipback->MA019);
-            $worksheet->setCellValueByColumnAndRow(9, $j, $af_shipback->TJ005);
-            $worksheet->setCellValueByColumnAndRow(10, $j, $af_shipback->QTY);
-            $worksheet->setCellValueByColumnAndRow(11, $j, $af_shipback->TI009);
-            $worksheet->setCellValueByColumnAndRow(12, $j, $af_shipback->TJ033);
-            $worksheet->setCellValueByColumnAndRow(13, $j, $af_shipback->TJ034);
-            $worksheet->setCellValueByColumnAndRow(14, $j, $af_shipback->TJ001);
-            $worksheet->setCellValueByColumnAndRow(15, $j, $af_shipback->TJ002);
-            $worksheet->setCellValueByColumnAndRow(16, $j, $af_shipback->TJ003);
+            $worksheet->setCellValueByColumnAndRow(8, $j, $af_shipback->TJ005);
+            $worksheet->setCellValueByColumnAndRow(9, $j, $af_shipback->QTY);
+            $worksheet->setCellValueByColumnAndRow(10, $j, $af_shipback->TI009);
+            $worksheet->setCellValueByColumnAndRow(11, $j, $af_shipback->TJ033);
+            $worksheet->setCellValueByColumnAndRow(12, $j, $af_shipback->LA013);
+            $worksheet->setCellValueByColumnAndRow(13, $j, $af_shipback->SCOST);
+            $worksheet->setCellValueByColumnAndRow(14, $j, $af_shipback->TCOST);
+            $worksheet->setCellValueByColumnAndRow(15, $j, $af_shipback->PROFIT);
+            $worksheet->setCellValueByColumnAndRow(16, $j, $af_shipback->SPROFIT);
+            $worksheet->setCellValueByColumnAndRow(17, $j, $af_shipback->TJ034);
+            $worksheet->setCellValueByColumnAndRow(18, $j, $af_shipback->TJ001);
+            $worksheet->setCellValueByColumnAndRow(19, $j, $af_shipback->TJ002);
+            $worksheet->setCellValueByColumnAndRow(20, $j, $af_shipback->TJ003);
         }
 
-        //結帳前折讓
-        //定義欄位 Sheet4
+        //結帳後折讓
+        //定義欄位 Sheet5
         $spreadsheet->createSheet(); //新增工作頁
-        $spreadsheet->setActiveSheetIndex(3); //指定工作頁索引
-        $worksheet = $spreadsheet->getActiveSheet(3)->setTitle('折讓明細'); //指定工作表名稱
+        $spreadsheet->setActiveSheetIndex(4); //指定工作頁索引
+        $worksheet = $spreadsheet->getActiveSheet(4)->setTitle('折讓明細'); //指定工作表名稱
         $worksheet->setCellValueByColumnAndRow(1, 1, '客戶代碼');
         $worksheet->setCellValueByColumnAndRow(2, 1, '客戶全名');
         $worksheet->setCellValueByColumnAndRow(3, 1, '銷貨日期');
@@ -1484,15 +1648,19 @@ class ExcelController extends Controller
         $worksheet->setCellValueByColumnAndRow(5, 1, '品牌');
         $worksheet->setCellValueByColumnAndRow(6, 1, '四大類');
         $worksheet->setCellValueByColumnAndRow(7, 1, '內外銷');
-        $worksheet->setCellValueByColumnAndRow(8, 1, '國家別');
-        $worksheet->setCellValueByColumnAndRow(9, 1, '品名');
-        $worksheet->setCellValueByColumnAndRow(10, 1, '數量');
-        $worksheet->setCellValueByColumnAndRow(11, 1, '匯率\單位');
-        $worksheet->setCellValueByColumnAndRow(12, 1, '未稅金額');
-        $worksheet->setCellValueByColumnAndRow(13, 1, '稅額');
-        $worksheet->setCellValueByColumnAndRow(14, 1, '單別');
-        $worksheet->setCellValueByColumnAndRow(15, 1, '單號');
-        $worksheet->setCellValueByColumnAndRow(16, 1, '序號');
+        $worksheet->setCellValueByColumnAndRow(8, 1, '品名');
+        $worksheet->setCellValueByColumnAndRow(9, 1, '數量');
+        $worksheet->setCellValueByColumnAndRow(10, 1, '匯率\單位');
+        $worksheet->setCellValueByColumnAndRow(11, 1, '未稅金額');
+        $worksheet->setCellValueByColumnAndRow(12, 1, '總成本');
+        $worksheet->setCellValueByColumnAndRow(13, 1, '銷退成本');
+        $worksheet->setCellValueByColumnAndRow(14, 1, '贈品成本');
+        $worksheet->setCellValueByColumnAndRow(15, 1, '總毛利');
+        $worksheet->setCellValueByColumnAndRow(16, 1, '銷貨毛利');
+        $worksheet->setCellValueByColumnAndRow(17, 1, '稅額');
+        $worksheet->setCellValueByColumnAndRow(18, 1, '單別');
+        $worksheet->setCellValueByColumnAndRow(19, 1, '單號');
+        $worksheet->setCellValueByColumnAndRow(20, 1, '序號');
 
         $j = 1;
         foreach ($af_shipdiscs as $af_shipdisc) {
@@ -1504,22 +1672,26 @@ class ExcelController extends Controller
             $worksheet->setCellValueByColumnAndRow(5, $j, $af_shipdisc->MB008);
             $worksheet->setCellValueByColumnAndRow(6, $j, $af_shipdisc->MB006);
             $worksheet->setCellValueByColumnAndRow(7, $j, $af_shipdisc->MA038);
-            $worksheet->setCellValueByColumnAndRow(8, $j, $af_shipdisc->MA019);
-            $worksheet->setCellValueByColumnAndRow(9, $j, $af_shipdisc->TJ005);
-            $worksheet->setCellValueByColumnAndRow(10, $j, $af_shipdisc->QTY);
-            $worksheet->setCellValueByColumnAndRow(11, $j, $af_shipdisc->TI009);
-            $worksheet->setCellValueByColumnAndRow(12, $j, $af_shipdisc->TJ033);
-            $worksheet->setCellValueByColumnAndRow(13, $j, $af_shipdisc->TJ034);
-            $worksheet->setCellValueByColumnAndRow(14, $j, $af_shipdisc->TJ001);
-            $worksheet->setCellValueByColumnAndRow(15, $j, $af_shipdisc->TJ002);
-            $worksheet->setCellValueByColumnAndRow(16, $j, $af_shipdisc->TJ003);
+            $worksheet->setCellValueByColumnAndRow(8, $j, $af_shipdisc->TJ005);
+            $worksheet->setCellValueByColumnAndRow(9, $j, $af_shipdisc->QTY);
+            $worksheet->setCellValueByColumnAndRow(10, $j, $af_shipdisc->TI009);
+            $worksheet->setCellValueByColumnAndRow(11, $j, $af_shipdisc->TJ033);
+            $worksheet->setCellValueByColumnAndRow(12, $j, $af_shipdisc->LA013);
+            $worksheet->setCellValueByColumnAndRow(13, $j, $af_shipdisc->SCOST);
+            $worksheet->setCellValueByColumnAndRow(14, $j, $af_shipdisc->TCOST);
+            $worksheet->setCellValueByColumnAndRow(15, $j, $af_shipdisc->PROFIT);
+            $worksheet->setCellValueByColumnAndRow(16, $j, $af_shipdisc->SPROFIT);
+            $worksheet->setCellValueByColumnAndRow(17, $j, $af_shipdisc->TJ034);
+            $worksheet->setCellValueByColumnAndRow(18, $j, $af_shipdisc->TJ001);
+            $worksheet->setCellValueByColumnAndRow(19, $j, $af_shipdisc->TJ002);
+            $worksheet->setCellValueByColumnAndRow(20, $j, $af_shipdisc->TJ003);
         }
 
-        //結帳前客戶總額
-        //定義欄位 Sheet5
+        //結帳後客戶總額
+        //定義欄位 Sheet6
         $spreadsheet->createSheet(); //新增工作頁
-        $spreadsheet->setActiveSheetIndex(4); //指定工作頁索引
-        $worksheet = $spreadsheet->getActiveSheet(4)->setTitle('客戶總額'); //指定工作表名稱
+        $spreadsheet->setActiveSheetIndex(5); //指定工作頁索引
+        $worksheet = $spreadsheet->getActiveSheet(5)->setTitle('客戶總額'); //指定工作表名稱
         $worksheet->setCellValueByColumnAndRow(1, 1, '客戶代碼');
         $worksheet->setCellValueByColumnAndRow(2, 1, '客戶全名');
         $worksheet->setCellValueByColumnAndRow(3, 1, '未稅總金額');
@@ -1534,133 +1706,97 @@ class ExcelController extends Controller
             $worksheet->setCellValueByColumnAndRow(4, $j, $af_customer->SUMTAX);
         }
 
-        //結帳前客戶銷退折讓總額
-        //定義欄位 Sheet6
-        $spreadsheet->createSheet(); //新增工作頁
-        $spreadsheet->setActiveSheetIndex(5); //指定工作頁索引
-        $worksheet = $spreadsheet->getActiveSheet(5)->setTitle('客戶銷退折讓'); //指定工作表名稱
-        $worksheet->setCellValueByColumnAndRow(1, 1, '客戶代碼');
-        $worksheet->setCellValueByColumnAndRow(2, 1, '客戶全名');
-        $worksheet->setCellValueByColumnAndRow(3, 1, '銷退未稅總金額');
-        $worksheet->setCellValueByColumnAndRow(4, 1, '銷退稅額總額');
+        //結帳後客戶銷退折讓總額
+        $R = $P + 5;
+        $T = $R + $Q + 5;
         $worksheet->setCellValueByColumnAndRow(6, 1, '客戶代碼');
         $worksheet->setCellValueByColumnAndRow(7, 1, '客戶全名');
-        $worksheet->setCellValueByColumnAndRow(8, 1, '單身銷退未稅總金額');
-        $worksheet->setCellValueByColumnAndRow(9, 1, '單身銷退稅額總額');
-        $worksheet->setCellValueByColumnAndRow(11, 1, '客戶代碼');
-        $worksheet->setCellValueByColumnAndRow(12, 1, '客戶全名');
-        $worksheet->setCellValueByColumnAndRow(13, 1, '單身折讓未稅總金額');
-        $worksheet->setCellValueByColumnAndRow(14, 1, '單身折讓稅額總額');
+        $worksheet->setCellValueByColumnAndRow(8, 1, '銷退未稅總金額');
+        $worksheet->setCellValueByColumnAndRow(9, 1, '銷退稅額總額');
+        $worksheet->setCellValueByColumnAndRow(6, $R, '客戶代碼');
+        $worksheet->setCellValueByColumnAndRow(7, $R, '客戶全名');
+        $worksheet->setCellValueByColumnAndRow(8, $R, '單身銷退未稅總金額');
+        $worksheet->setCellValueByColumnAndRow(9, $R, '單身銷退稅額總額');
+        $worksheet->setCellValueByColumnAndRow(6, $T, '客戶代碼');
+        $worksheet->setCellValueByColumnAndRow(7, $T, '客戶全名');
+        $worksheet->setCellValueByColumnAndRow(8, $T, '單身折讓未稅總金額');
+        $worksheet->setCellValueByColumnAndRow(9, $T, '單身折讓稅額總額');
 
         $j = 1;
         foreach ($af_cusshipbacks as $af_cusshipback) {
             $j = $j + 1;
-            $worksheet->setCellValueByColumnAndRow(1, $j, $af_cusshipback->TI004);
-            $worksheet->setCellValueByColumnAndRow(2, $j, $af_cusshipback->TI021);
-            $worksheet->setCellValueByColumnAndRow(3, $j, $af_cusshipback->TJ033);
-            $worksheet->setCellValueByColumnAndRow(4, $j, $af_cusshipback->TJ034);
+            $worksheet->setCellValueByColumnAndRow(6, $j, $af_cusshipback->TI004);
+            $worksheet->setCellValueByColumnAndRow(7, $j, $af_cusshipback->TI021);
+            $worksheet->setCellValueByColumnAndRow(8, $j, $af_cusshipback->TJ033);
+            $worksheet->setCellValueByColumnAndRow(9, $j, $af_cusshipback->TJ034);
         }
 
-        $j = 1;
+        //$j = $R + 1;
         foreach ($af_cusbacks as $af_cusback) {
-            $j = $j + 1;
-            $worksheet->setCellValueByColumnAndRow(6, $j, $af_cusback->TI004);
-            $worksheet->setCellValueByColumnAndRow(7, $j, $af_cusback->TI021);
-            $worksheet->setCellValueByColumnAndRow(8, $j, $af_cusback->TJ033);
-            $worksheet->setCellValueByColumnAndRow(9, $j, $af_cusback->TJ034);
+            $R = $R + 1;
+            $worksheet->setCellValueByColumnAndRow(6, $R, $af_cusback->TI004);
+            $worksheet->setCellValueByColumnAndRow(7, $R, $af_cusback->TI021);
+            $worksheet->setCellValueByColumnAndRow(8, $R, $af_cusback->TJ033);
+            $worksheet->setCellValueByColumnAndRow(9, $R, $af_cusback->TJ034);
         }
 
-        $j = 1;
+        //$j = $T + 1;
         foreach ($af_cusdiscs as $af_cusdisc) {
-            $j = $j + 1;
-            $worksheet->setCellValueByColumnAndRow(11, $j, $af_cusdisc->TI004);
-            $worksheet->setCellValueByColumnAndRow(12, $j, $af_cusdisc->TI021);
-            $worksheet->setCellValueByColumnAndRow(13, $j, $af_cusdisc->TJ033);
-            $worksheet->setCellValueByColumnAndRow(14, $j, $af_cusdisc->TJ034);
+            $T = $T + 1;
+            $worksheet->setCellValueByColumnAndRow(6, $T, $af_cusdisc->TI004);
+            $worksheet->setCellValueByColumnAndRow(7, $T, $af_cusdisc->TI021);
+            $worksheet->setCellValueByColumnAndRow(8, $T, $af_cusdisc->TJ033);
+            $worksheet->setCellValueByColumnAndRow(9, $T, $af_cusdisc->TJ034);
         }
 
-        //結帳前四大類、品牌合計
-        //定義欄位 Sheet6
+        //定義欄位 Sheet7
         $spreadsheet->createSheet(); //新增工作頁
         $spreadsheet->setActiveSheetIndex(6); //指定工作頁索引
-        $worksheet = $spreadsheet->getActiveSheet(6)->setTitle('類別品牌合計'); //指定工作表名稱
-        $worksheet->setCellValueByColumnAndRow(1, 1, '四大類');
-        $worksheet->setCellValueByColumnAndRow(2, 1, '四大類單月未稅合計');
-        $worksheet->setCellValueByColumnAndRow(3, 1, '四大類');
-        $worksheet->setCellValueByColumnAndRow(4, 1, '四大類累計未稅合計');
-        $worksheet->setCellValueByColumnAndRow(7, 1, '品牌');
-        $worksheet->setCellValueByColumnAndRow(8, 1, '品牌單月未稅合計');
-        $worksheet->setCellValueByColumnAndRow(9, 1, '品牌');
-        $worksheet->setCellValueByColumnAndRow(10, 1, '品牌累計未稅合計');
-        $worksheet->setCellValueByColumnAndRow(1, 11, '單月銷退未稅合計');
-        $worksheet->setCellValueByColumnAndRow(2, 11, '累計銷退未稅合計');
-        $worksheet->setCellValueByColumnAndRow(1, 15, '單月折讓未稅合計');
-        $worksheet->setCellValueByColumnAndRow(2, 15, '累計折讓未稅合計');
-        $worksheet->setCellValueByColumnAndRow(1, 19, '單月尾折未稅合計');
-        $worksheet->setCellValueByColumnAndRow(2, 19, '累計尾折未稅合計');
+        $worksheet = $spreadsheet->getActiveSheet(6)->setTitle('品號9090'); //指定工作表名稱
+        $worksheet->setCellValueByColumnAndRow(1, 1, '客戶代碼');
+        $worksheet->setCellValueByColumnAndRow(2, 1, '客戶全名');
+        $worksheet->setCellValueByColumnAndRow(3, 1, '銷貨日期');
+        $worksheet->setCellValueByColumnAndRow(4, 1, '部門');
+        $worksheet->setCellValueByColumnAndRow(5, 1, '品牌');
+        $worksheet->setCellValueByColumnAndRow(6, 1, '四大類');
+        $worksheet->setCellValueByColumnAndRow(7, 1, '內外銷');
+        $worksheet->setCellValueByColumnAndRow(8, 1, '品名');
+        $worksheet->setCellValueByColumnAndRow(9, 1, '數量');
+        $worksheet->setCellValueByColumnAndRow(10, 1, '匯率\單位');
+        $worksheet->setCellValueByColumnAndRow(11, 1, '未稅金額');
+        $worksheet->setCellValueByColumnAndRow(12, 1, '總成本');
+        $worksheet->setCellValueByColumnAndRow(13, 1, '銷貨成本');
+        $worksheet->setCellValueByColumnAndRow(14, 1, '贈品成本');
+        $worksheet->setCellValueByColumnAndRow(15, 1, '總毛利');
+        $worksheet->setCellValueByColumnAndRow(16, 1, '銷貨毛利');
+        $worksheet->setCellValueByColumnAndRow(17, 1, '稅額');
+        $worksheet->setCellValueByColumnAndRow(18, 1, '單別');
+        $worksheet->setCellValueByColumnAndRow(19, 1, '單號');
+        $worksheet->setCellValueByColumnAndRow(20, 1, '序號');
 
         $j = 1;
-        foreach ($af_items as $af_item) {
+        foreach ($af_9090chks as $af_9090chk) {
             $j = $j + 1;
-            $worksheet->setCellValueByColumnAndRow(1, $j, $af_item->MB006);
-            $worksheet->setCellValueByColumnAndRow(2, $j, $af_item->COST);
-        }
-
-        $j = 1;
-        foreach ($af_sumitems as $af_sumitem) {
-            $j = $j + 1;
-            $worksheet->setCellValueByColumnAndRow(3, $j, $af_sumitem->MB006);
-            $worksheet->setCellValueByColumnAndRow(4, $j, $af_sumitem->COST);
-        }
-
-        $j = 1;
-        foreach ($af_brands as $af_brand) {
-            $j = $j + 1;
-            $worksheet->setCellValueByColumnAndRow(7, $j, $af_brand->MB008);
-            $worksheet->setCellValueByColumnAndRow(8, $j, $af_brand->COST);
-        }
-
-        $j = 1;
-        foreach ($af_sumbrands as $af_sumbrand) {
-            $j = $j + 1;
-            $worksheet->setCellValueByColumnAndRow(9, $j, $af_sumbrand->MB008);
-            $worksheet->setCellValueByColumnAndRow(10, $j, $af_sumbrand->COST);
-        }
-
-        $j = 11;
-        foreach ($af_returns as $af_return) {
-            $j = $j + 1;
-            $worksheet->setCellValueByColumnAndRow(1, $j, $af_return->COST);
-        }
-
-        $j = 11;
-        foreach ($af_sumreturns as $af_sumreturn) {
-            $j = $j + 1;
-            $worksheet->setCellValueByColumnAndRow(2, $j, $af_sumreturn->COST);
-        }
-
-        $j = 15;
-        foreach ($af_allowances as $af_allowance) {
-            $j = $j + 1;
-            $worksheet->setCellValueByColumnAndRow(1, $j, $af_allowance->ML008);
-        }
-
-        $j = 15;
-        foreach ($af_sumallowances as $af_sumallowance) {
-            $j = $j + 1;
-            $worksheet->setCellValueByColumnAndRow(2, $j, $af_sumallowance->ML008);
-        }
-
-        $j = 19;
-        foreach ($af_discounts as $af_discount) {
-            $j = $j + 1;
-            $worksheet->setCellValueByColumnAndRow(1, $j, $af_discount->TD015);
-        }
-
-        $j = 19;
-        foreach ($af_sumdiscounts as $af_sumdiscount) {
-            $j = $j + 1;
-            $worksheet->setCellValueByColumnAndRow(2, $j, $af_sumdiscount->TD015);
+            $worksheet->setCellValueByColumnAndRow(1, $j, $af_9090chk->TG004);
+            $worksheet->setCellValueByColumnAndRow(2, $j, $af_9090chk->TG007);
+            $worksheet->setCellValueByColumnAndRow(3, $j, $af_9090chk->TG003);
+            $worksheet->setCellValueByColumnAndRow(4, $j, $af_9090chk->TG005);
+            $worksheet->setCellValueByColumnAndRow(5, $j, $af_9090chk->MB008);
+            $worksheet->setCellValueByColumnAndRow(6, $j, $af_9090chk->MB006);
+            $worksheet->setCellValueByColumnAndRow(7, $j, $af_9090chk->MA038);
+            $worksheet->setCellValueByColumnAndRow(8, $j, $af_9090chk->TH005);
+            $worksheet->setCellValueByColumnAndRow(9, $j, $af_9090chk->QTY);
+            $worksheet->setCellValueByColumnAndRow(10, $j, $af_9090chk->TG012);
+            $worksheet->setCellValueByColumnAndRow(11, $j, $af_9090chk->TH037);
+            $worksheet->setCellValueByColumnAndRow(12, $j, $af_9090chk->LA013);
+            $worksheet->setCellValueByColumnAndRow(13, $j, $af_9090chk->SCOST);
+            $worksheet->setCellValueByColumnAndRow(14, $j, $af_9090chk->TCOST);
+            $worksheet->setCellValueByColumnAndRow(15, $j, $af_9090chk->PROFIT);
+            $worksheet->setCellValueByColumnAndRow(16, $j, $af_9090chk->SPROFIT);
+            $worksheet->setCellValueByColumnAndRow(17, $j, $af_9090chk->TH038);
+            $worksheet->setCellValueByColumnAndRow(18, $j, $af_9090chk->TH001);
+            $worksheet->setCellValueByColumnAndRow(19, $j, $af_9090chk->TH002);
+            $worksheet->setCellValueByColumnAndRow(20, $j, $af_9090chk->TH003);
         }
 
         $spreadsheet->setActiveSheetIndex(0); //最後指定回第一頁MS Excel開啟顯示
@@ -1681,5 +1817,68 @@ class ExcelController extends Controller
         }
     }
 
+    //結帳單銷貨暫出對照明細
+    public function ACRTB_Ship_Export(Request $request) 
+    {
+        $ACR_TB001 = $request->input('TB001');
+        $ACR_TB002 = $request->input('TB002');
+        $ACRTB_lists = DB::connection('sqlsrv_tensall')->select('Select TB001,TB002,TB003,TB005,TB006,TB007,TB019,TB020,TH032,TH033,TH034
+        From ACRTB A
+        LEFT JOIN COPTH B 
+        ON A.TB005=B.TH001 AND A.TB006=B.TH002 AND A.TB007=B.TH003
+        WHERE A.TB001 = ? AND A.TB002 = ?
+        ORDER BY A.TB003',
+        [$ACR_TB001,$ACR_TB002]);
+ 
+        if (count($ACRTB_lists)<1) {
+            $result = '查無資料，請檢查條件是否輸入正確!!';
+            return View('nodata')->with('result', $result);
+        }else{
+            //$result = 'Good Job!';
+            //return View('nodata')->with('result', $result);
+        
+        $spreadsheet = new Spreadsheet();  // 開新excel檔案
+        $worksheet = $spreadsheet->getActiveSheet(); 
+        $worksheet->setTitle('銷貨暫出對照表');
+        //定義欄位
+        $worksheet->setCellValueByColumnAndRow(1, 1, '結帳單別');
+        $worksheet->setCellValueByColumnAndRow(2, 1, '結帳單號');
+        $worksheet->setCellValueByColumnAndRow(3, 1, '結帳序號');
+        $worksheet->setCellValueByColumnAndRow(4, 1, '銷貨單別');
+        $worksheet->setCellValueByColumnAndRow(5, 1, '銷貨單號');
+        $worksheet->setCellValueByColumnAndRow(6, 1, '銷貨序號');
+        $worksheet->setCellValueByColumnAndRow(7, 1, '本幣未稅金額');
+        $worksheet->setCellValueByColumnAndRow(8, 1, '本幣稅額');
+        $worksheet->setCellValueByColumnAndRow(9, 1, '暫出單別');
+        $worksheet->setCellValueByColumnAndRow(10, 1, '暫出單號');
+        $worksheet->setCellValueByColumnAndRow(11, 1, '暫出序號');
+
+        $j = 1;
+        foreach ($ACRTB_lists as $ACRTB_list) {
+            $j = $j + 1;
+            $worksheet->setCellValueByColumnAndRow(1, $j, $ACRTB_list->TB001);
+            $worksheet->setCellValueByColumnAndRow(2, $j, $ACRTB_list->TB002);
+            $worksheet->setCellValueByColumnAndRow(3, $j, $ACRTB_list->TB003);
+            $worksheet->setCellValueByColumnAndRow(4, $j, $ACRTB_list->TB005);
+            $worksheet->setCellValueByColumnAndRow(5, $j, $ACRTB_list->TB006);
+            $worksheet->setCellValueByColumnAndRow(6, $j, $ACRTB_list->TB007);
+            $worksheet->setCellValueByColumnAndRow(7, $j, $ACRTB_list->TB019);
+            $worksheet->setCellValueByColumnAndRow(8, $j, $ACRTB_list->TB020);
+            $worksheet->setCellValueByColumnAndRow(9, $j, $ACRTB_list->TH032);
+            $worksheet->setCellValueByColumnAndRow(10, $j, $ACRTB_list->TH033);
+            $worksheet->setCellValueByColumnAndRow(11, $j, $ACRTB_list->TH034);
+        }
+
+        // 下载
+        $filename = $ACR_TB001.'-'.$ACR_TB002.'_結帳銷貨暫出對照.xlsx';
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="'.$filename.'"');
+        header('Cache-Control: max-age=0');
+
+        $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
+        $writer->save('php://output'); 
+        
+        }
+    }
 
 }

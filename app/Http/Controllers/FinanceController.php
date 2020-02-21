@@ -869,7 +869,7 @@ class FinanceController extends Controller
         $fin_strnum = substr($fin_chk,2,4).'0001'; //查詢9090起始單號
         $fin_endnum = substr($fin_chk,2,4).'9999'; //查詢9090結束單號
         //9090檢查
-        $af_9090chk = DB::connection('sqlsrv_tensall')->select('SELECT TG004,TG007,TG003,CASE TG005 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS TG005,CASE MB008 WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,CASE MB006 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB006,CASE MA038 WHEN ? THEN ? ELSE ? END AS MA038,TH005,QTY=TH008+TH024,TG012,TH037,TH038,TH001,TH002,TH003 
+        $af_9090chks = DB::connection('sqlsrv_tensall')->select('SELECT TG004,TG007,TG003,CASE TG005 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS TG005,CASE MB008 WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,CASE MB006 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB006,CASE MA038 WHEN ? THEN ? ELSE ? END AS MA038,TH005,QTY=TH008+TH024,TG012,TH037,TH038,TH001,TH002,TH003 
         FROM COPMA D,COPTG E,COPTH H,INVMB K
         WHERE E.TG001=H.TH001 
         AND E.TG002=H.TH002
@@ -879,7 +879,8 @@ class FinanceController extends Controller
         AND TH026 = ?
         AND (TH004 = ?)
         AND TH028 >= ? AND TH028 <= ?',
-        ['D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','01','TS6','02','ODM','OTHER','21','食品','22','化妝品','23','私密保養品','26','商品成品','OTHER','3','外銷','內銷','Y','9090','$fin_strnum','$fin_endnum']);
+        ['D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','01','TS6','02','ODM','OTHER','21','食品','22','化妝品','23','私密保養品','26','商品成品','OTHER','3','外銷','內銷','Y','9090',$fin_strnum,$fin_endnum]);
+        
 
         //淨額合計
         $af_checks = DB::connection('sqlsrv_tensall')->select('SELECT SUM(TH037) AS SUMCOST,SUM(TH038) AS SUMTAX FROM (SELECT TG004,TG007,TG003,CASE TG005 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END as TG005,MB008,MB006,MA038,MA019,TH005,QTY=TH008+TH024,TG012,TH037,TH038,TH001,TH002,TH003 
@@ -1062,7 +1063,7 @@ class FinanceController extends Controller
         WHERE TC001=TD001
         AND TC002=TD002
         AND (TD008 = ? OR TD008 = ?) 
-        AND left(TC002,6) = ?',
+        AND left(TC003,6) = ?',
         ['4191','4172',$fin_chk]);
 
         //累計尾折 last discount
@@ -1070,15 +1071,16 @@ class FinanceController extends Controller
         WHERE TC001=TD001
         AND TC002=TD002
         AND (TD008 = ? OR TD008 = ?) 
-        AND left(TC002,6) BETWEEN ? AND ?',
+        AND left(TC003,6) BETWEEN ? AND ?',
         ['4191','4172',$fin_date,$fin_chk]);
 
         $data_records = count($af_checks);
+        $af90_records = count($af_9090chks);
         if (count($af_items) < 1) {
             $result = '查無資料，請檢查條件是否輸入正確!!';
             return View('nodata')->with('result', $result);
         }else{
-            return view('finance.fin_afcheck', compact('fin_chk','fin_date','af_9090chk','af_checks','af_shipchecks','af_sumbacks','af_sumdiscs','af_items','af_sumitems','af_brands','af_sumbrands','af_customers','af_returns','af_sumreturns','af_allowances','af_sumallowances','af_discounts','af_sumdiscounts'));
+            return view('finance.fin_afcheck', compact('fin_chk','fin_date','af_checks','af_shipchecks','af_sumbacks','af_sumdiscs','af_items','af_sumitems','af_brands','af_sumbrands','af_customers','af_returns','af_sumreturns','af_allowances','af_sumallowances','af_discounts','af_sumdiscounts','af90_records'));
         }
     }
     
