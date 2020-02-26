@@ -135,7 +135,7 @@ class UsersProFileController extends Controller
         DB::update('update users set password=?,updated_at=? where username=?', 
         [$att['password'],$att['updated_at'],$username]);
 
-        return redirect()->route('UsersProfile.UsersIndex'); 
+        return redirect()->route('UsersProfile.UsersIndex');
     }
 
 
