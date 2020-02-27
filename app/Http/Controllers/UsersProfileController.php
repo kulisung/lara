@@ -135,7 +135,13 @@ class UsersProFileController extends Controller
         DB::update('update users set password=?,updated_at=? where username=?', 
         [$att['password'],$att['updated_at'],$username]);
 
-        return redirect()->route('UsersProfile.UsersIndex');
+        $user_lv = DB::select('SELECT user_level from users where username = ?',[$username]);
+        if (auth()->user()->user_level==9) {
+            return redirect()->route('UsersProfile.UsersIndex');
+        }else{
+            $result = '密碼已更新!!';
+            return View('nodata')->with('result', $result);
+        }
     }
 
 
