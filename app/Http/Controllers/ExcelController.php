@@ -1822,10 +1822,10 @@ class ExcelController extends Controller
     {
         $ACR_TB001 = $request->input('TB001');
         $ACR_TB002 = $request->input('TB002');
-        $ACRTB_lists = DB::connection('sqlsrv_tensall')->select('Select TB001,TB002,TB003,TB005,TB006,TB007,TB019,TB020,TH032,TH033,TH034
+        $ACRTB_lists = DB::connection('sqlsrv_tensall')->select('Select distinct TB001,TB002,TB003,TB005,TB006,TB007,TB019,TB020,TH032,TH033,TH034
         From ACRTB A
         LEFT JOIN COPTH B 
-        ON A.TB005=B.TH001 AND A.TB006=B.TH002 AND A.TB007=B.TH003
+        ON A.TB005=B.TH001 AND A.TB006=B.TH002
         WHERE A.TB001 = ? AND A.TB002 = ?
         ORDER BY A.TB003',
         [$ACR_TB001,$ACR_TB002]);
