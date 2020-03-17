@@ -1818,11 +1818,12 @@ class ExcelController extends Controller
     }
 
     //結帳單銷貨暫出對照明細
+    //20200317_移除TB007&TH034拿掉憑證序號&暫出單序號，僅對照單別單號即可
     public function ACRTB_Ship_Export(Request $request) 
     {
         $ACR_TB001 = $request->input('TB001');
         $ACR_TB002 = $request->input('TB002');
-        $ACRTB_lists = DB::connection('sqlsrv_tensall')->select('Select distinct TB001,TB002,TB003,TB005,TB006,TB007,TB019,TB020,TH032,TH033,TH034
+        $ACRTB_lists = DB::connection('sqlsrv_tensall')->select('Select distinct TB001,TB002,TB003,TB005,TB006,TB019,TB020,TH032,TH033
         From ACRTB A
         LEFT JOIN COPTH B 
         ON A.TB005=B.TH001 AND A.TB006=B.TH002
@@ -1846,12 +1847,12 @@ class ExcelController extends Controller
         $worksheet->setCellValueByColumnAndRow(3, 1, '結帳序號');
         $worksheet->setCellValueByColumnAndRow(4, 1, '銷貨單別');
         $worksheet->setCellValueByColumnAndRow(5, 1, '銷貨單號');
-        $worksheet->setCellValueByColumnAndRow(6, 1, '銷貨序號');
-        $worksheet->setCellValueByColumnAndRow(7, 1, '本幣未稅金額');
-        $worksheet->setCellValueByColumnAndRow(8, 1, '本幣稅額');
-        $worksheet->setCellValueByColumnAndRow(9, 1, '暫出單別');
-        $worksheet->setCellValueByColumnAndRow(10, 1, '暫出單號');
-        $worksheet->setCellValueByColumnAndRow(11, 1, '暫出序號');
+        //$worksheet->setCellValueByColumnAndRow(6, 1, '銷貨序號');
+        $worksheet->setCellValueByColumnAndRow(6, 1, '本幣未稅金額');
+        $worksheet->setCellValueByColumnAndRow(7, 1, '本幣稅額');
+        $worksheet->setCellValueByColumnAndRow(8, 1, '暫出單別');
+        $worksheet->setCellValueByColumnAndRow(9, 1, '暫出單號');
+        //$worksheet->setCellValueByColumnAndRow(11, 1, '暫出序號');
 
         $j = 1;
         foreach ($ACRTB_lists as $ACRTB_list) {
@@ -1861,12 +1862,12 @@ class ExcelController extends Controller
             $worksheet->setCellValueByColumnAndRow(3, $j, $ACRTB_list->TB003);
             $worksheet->setCellValueByColumnAndRow(4, $j, $ACRTB_list->TB005);
             $worksheet->setCellValueByColumnAndRow(5, $j, $ACRTB_list->TB006);
-            $worksheet->setCellValueByColumnAndRow(6, $j, $ACRTB_list->TB007);
-            $worksheet->setCellValueByColumnAndRow(7, $j, $ACRTB_list->TB019);
-            $worksheet->setCellValueByColumnAndRow(8, $j, $ACRTB_list->TB020);
-            $worksheet->setCellValueByColumnAndRow(9, $j, $ACRTB_list->TH032);
-            $worksheet->setCellValueByColumnAndRow(10, $j, $ACRTB_list->TH033);
-            $worksheet->setCellValueByColumnAndRow(11, $j, $ACRTB_list->TH034);
+            //$worksheet->setCellValueByColumnAndRow(6, $j, $ACRTB_list->TB007);
+            $worksheet->setCellValueByColumnAndRow(6, $j, $ACRTB_list->TB019);
+            $worksheet->setCellValueByColumnAndRow(7, $j, $ACRTB_list->TB020);
+            $worksheet->setCellValueByColumnAndRow(8, $j, $ACRTB_list->TH032);
+            $worksheet->setCellValueByColumnAndRow(9, $j, $ACRTB_list->TH033);
+            //$worksheet->setCellValueByColumnAndRow(11, $j, $ACRTB_list->TH034);
         }
 
         // 下载
