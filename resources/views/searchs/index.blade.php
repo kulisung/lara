@@ -15,6 +15,17 @@
                     <button type="submit" class="btn btn-info btn-sm" style="font-size:16px" formaction={{ route('WorkingTimeExport') }} onclick="return confirm('確認是否匯出Excel?');">匯出Excel</button>
             </div>
             </form>
+            <span style="color:blue;"><h6>#暫出單查詢客戶單號匯出(ForVicky用)</h6></span>
+            <form method="post" action={{ route('INVTG_1300_Export') }}>
+            @csrf
+            <div class="form-group">
+                    <label style="font-size:16px">輸入暫出單別：</label>
+                    <input type="text" name="TG001"><br>
+                    <label style="font-size:16px">輸入暫出單號前四碼(EX:2003)：</label>
+                    <input type="text" name="TG002">                    
+                    <button type="submit" class="btn btn-info btn-sm" style="font-size:16px" onclick="return confirm('確認是否匯出Excel?');">匯出Excel</button>
+            </div>        
+            </form>
         </div>
     </div>
 </div> 

@@ -1882,4 +1882,52 @@ class ExcelController extends Controller
         }
     }
 
+    //暫出單查詢客戶單號匯出_20200318
+    public function INVTG_1300_Export(Request $request) 
+    {
+        $INV_TG001 = $request->input('TG001');
+        $INV_TG002 = $request->input('TG002').'%';
+        $INVTG_lists = DB::connection('sqlsrv_tensall')->select('Select distinct TG200,TG001,TG002 
+        From INVTG 
+        WHERE TG001 = ? 
+        AND TG002 like ? 
+        AND TG200 like ?
+        ORDER BY TG200,TG001,TG002',
+        [$INV_TG001,$INV_TG002,'T%']);
+ 
+        if (count($INVTG_lists)<1) {
+            $result = '查無資料，請檢查條件是否輸入正確!!';
+            return View('nodata')->with('result', $result);
+        }else{
+            //$result = 'Good Job!';
+            //return View('nodata')->with('result', $result);
+        
+        $spreadsheet = new Spreadsheet();  // 開新excel檔案
+        $worksheet = $spreadsheet->getActiveSheet(); 
+        $worksheet->setTitle('List');
+        //定義欄位
+        $worksheet->setCellValueByColumnAndRow(1, 1, '客戶單號');
+        $worksheet->setCellValueByColumnAndRow(2, 1, '暫出單別');
+        $worksheet->setCellValueByColumnAndRow(3, 1, '暫出單號');
+
+        $j = 1;
+        foreach ($INVTG_lists as $INVTG_list) {
+            $j = $j + 1;
+            $worksheet->setCellValueByColumnAndRow(1, $j, $INVTG_list->TG200);
+            $worksheet->setCellValueByColumnAndRow(2, $j, $INVTG_list->TG001);
+            $worksheet->setCellValueByColumnAndRow(3, $j, $INVTG_list->TG002);
+        }
+
+        // 下载
+        $filename = '暫出單客戶單號查詢.xlsx';
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="'.$filename.'"');
+        header('Cache-Control: max-age=0');
+
+        $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
+        $writer->save('php://output'); 
+        
+        }
+    }
+
 }
