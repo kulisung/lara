@@ -22,16 +22,16 @@
                 </li>
                 @if (auth()->user()->user_level==9 or auth()->user()->user_level==2)
                 <li class="nav-item dropdown">
-                    <a class="nav-link font-weight-bold dropdown-toggle" style="font-size:16px" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">業務專用</a>
+                    <a class="nav-link font-weight-bold dropdown-toggle" style="font-size:16px" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">業務用</a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item font-weight-bold" style="font-size:16px" id='fsearch1' href={{ route('sales.ts6index')}}>TS6會員資料查詢</a>
+                        <a class="dropdown-item font-weight-bold" style="font-size:16px" id='fsearch1' href={{ route('sales.ts6index')}}>TS6會員訂單資料分析查詢</a>
                         <a class="dropdown-item font-weight-bold" style="font-size:16px" id='fsearch2' href=#>其他</a>
                     </div>
                 </li>
                 @endif
                 @if (auth()->user()->user_level==9 or auth()->user()->user_level==5)
                 <li class="nav-item dropdown">
-                    <a class="nav-link font-weight-bold dropdown-toggle" style="font-size:16px" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">財務專用</a>
+                    <a class="nav-link font-weight-bold dropdown-toggle" style="font-size:16px" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">財務用</a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item font-weight-bold" style="font-size:16px" id='fsearch1' href={{ route('finance.fsearch1')}}>結帳&銷貨相關查詢</a>
                         <a class="dropdown-item font-weight-bold" style="font-size:16px" id='fsearch2' href={{ route('finance.fsearch2')}}>結帳資料檢查</a>
@@ -40,7 +40,7 @@
                 @endif
                 @if (auth()->user()->user_level==9)
                 <li class="nav-item">
-                    <a class="nav-link font-weight-bold" style="font-size:16px" href={{ route('AllUserExport')}}>資料匯入</a>
+                    <a class="nav-link font-weight-bold" style="font-size:16px" href={{ route('AllUserExport')}}>資料管理</a>
                 </li>
                 @endif
                 @endauth

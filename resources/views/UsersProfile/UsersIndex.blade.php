@@ -7,7 +7,8 @@
     <div class="row">
         <div class="col-12">
             <br>
-            <span style="color:blue;"><h6>使用者列表</h6></span>
+            <h6><span style="color:blue;">使用者列表 <a href="/admin/users/create" style="font-size:14px" class="btn btn-primary btn-sm">後台新增使用者</a>
+            </span></h6>
         </div>
         <br>
         <div class="col-12 table-cont" id="table-cont">
