@@ -19,7 +19,7 @@
             <form method="post" action={{ route('INVTG_1300_Export') }}>
             @csrf
             <div class="form-group">
-                    <label style="font-size:16px">輸入暫出單別：</label>
+                    <label style="font-size:16px">輸入暫出單別(EX:1300)：</label>
                     <input type="text" name="TG001"><br>
                     <label style="font-size:16px">輸入暫出單號前四碼(EX:2003)：</label>
                     <input type="text" name="TG002">                    
