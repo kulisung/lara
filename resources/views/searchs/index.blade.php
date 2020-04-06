@@ -26,6 +26,25 @@
                     <button type="submit" class="btn btn-info btn-sm" style="font-size:16px" onclick="return confirm('確認是否匯出Excel?');">匯出Excel</button>
             </div>        
             </form>
+            </form>
+            <span style="color:blue;"><h6>#銷貨單暫出單查詢匯出(ForVicky用)</h6></span>
+            <form method="post" action={{ route('COPTH_Export') }}>
+            @csrf
+            <div class="form-group">
+                    <label style="font-size:16px">輸入銷貨單別(EX:2301)：</label>
+                    <input type="text" name="TH001"><br>
+                    <label style="font-size:16px">輸入起始銷貨單號(EX:20030001)：</label>
+                    <input type="text" name="TH002S"><br>
+                    <label style="font-size:16px">輸入結束銷貨單號(EX:20030050)：</label>
+                    <input type="text" name="TH002E"><br>
+                    <label style="font-size:16px">銷貨單確認狀態：</label>
+                    <select name="STATUS">
+                        <option value='Y'>已確認</option>
+                        <option value='N'>未確認</option>
+                    </select>
+                    <button type="submit" class="btn btn-info btn-sm" style="font-size:16px" onclick="return confirm('確認是否匯出Excel?');">匯出Excel</button>
+            </div>        
+            </form>
         </div>
     </div>
 </div> 

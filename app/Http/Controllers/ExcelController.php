@@ -1892,8 +1892,9 @@ class ExcelController extends Controller
         WHERE TG001 = ? 
         AND TG002 like ? 
         AND TG200 like ?
+        AND TG022 = ?
         ORDER BY TG200,TG001,TG002',
-        [$INV_TG001,$INV_TG002,'T%']);
+        [$INV_TG001,$INV_TG002,'T%','Y']);
  
         if (count($INVTG_lists)<1) {
             $result = '查無資料，請檢查條件是否輸入正確!!';
@@ -1929,5 +1930,71 @@ class ExcelController extends Controller
         
         }
     }
+
+    //銷貨單&訂單&暫出單&客戶單號查詢匯出_20200401
+    public function COPTH_Export(Request $request) 
+    {
+        $COP_TH001 = $request->input('TH001');
+        $COP_TH002S = $request->input('TH002S');
+        $COP_TH002E = $request->input('TH002E');
+        $COP_STATUS = $request->input('STATUS');
+        $COPTH_lists = DB::connection('sqlsrv_tensall')->select('Select TH001,TH002,TH014,TH015,TH032,TH033,SUM(TH037) AS COST,SUM(TH038) AS TAX,TC012 
+        From COPTH A, COPTC B 
+        WHERE A.TH014 = B.TC001 AND A.TH015 = B.TC002 
+        AND TH001 = ?
+        AND TH002 >= ? and TH002 <= ? 
+        AND TH020 = ?
+        AND TC012 like ?
+        GROUP BY TH001,TH002,TH014,TH015,TH032,TH033,TC012
+        ORDER BY TH001,TH002',
+        [$COP_TH001,$COP_TH002S,$COP_TH002E,$COP_STATUS,'T%']);
+ 
+        if (count($COPTH_lists)<1) {
+            $result = '查無資料，請檢查條件是否輸入正確!!';
+            return View('nodata')->with('result', $result);
+        }else{
+            //$result = 'Good Job!';
+            //return View('nodata')->with('result', $result);
+        
+        $spreadsheet = new Spreadsheet();  // 開新excel檔案
+        $worksheet = $spreadsheet->getActiveSheet(); 
+        $worksheet->setTitle('All_List');
+        //定義欄位
+        $worksheet->setCellValueByColumnAndRow(1, 1, '銷貨單別');
+        $worksheet->setCellValueByColumnAndRow(2, 1, '銷貨單號');
+        $worksheet->setCellValueByColumnAndRow(3, 1, '訂單單別');
+        $worksheet->setCellValueByColumnAndRow(4, 1, '訂單單號');
+        $worksheet->setCellValueByColumnAndRow(5, 1, '暫出單別');
+        $worksheet->setCellValueByColumnAndRow(6, 1, '暫出單號');
+        $worksheet->setCellValueByColumnAndRow(7, 1, '本幣未稅金額');
+        $worksheet->setCellValueByColumnAndRow(8, 1, '稅額');
+        $worksheet->setCellValueByColumnAndRow(9, 1, '客戶單號');
+
+        $j = 1;
+        foreach ($COPTH_lists as $COPTH_list) {
+            $j = $j + 1;
+            $worksheet->setCellValueByColumnAndRow(1, $j, $COPTH_list->TH001);
+            $worksheet->setCellValueByColumnAndRow(2, $j, $COPTH_list->TH002);
+            $worksheet->setCellValueByColumnAndRow(3, $j, $COPTH_list->TH014);
+            $worksheet->setCellValueByColumnAndRow(4, $j, $COPTH_list->TH015);
+            $worksheet->setCellValueByColumnAndRow(5, $j, $COPTH_list->TH032);
+            $worksheet->setCellValueByColumnAndRow(6, $j, $COPTH_list->TH033);
+            $worksheet->setCellValueByColumnAndRow(7, $j, $COPTH_list->COST);
+            $worksheet->setCellValueByColumnAndRow(8, $j, $COPTH_list->TAX);
+            $worksheet->setCellValueByColumnAndRow(9, $j, $COPTH_list->TC012);
+        }
+
+        // 下载
+        $filename = '銷貨單暫出單對照表.xlsx';
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="'.$filename.'"');
+        header('Cache-Control: max-age=0');
+
+        $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
+        $writer->save('php://output'); 
+        
+        }
+    }
+
 
 }
