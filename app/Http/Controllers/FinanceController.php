@@ -866,8 +866,8 @@ class FinanceController extends Controller
     {
         $fin_chk = $request->input('fin_afdate');
         $fin_date = substr($fin_chk,0,4).'01';  //累計由該年度一月開始計算
-        $fin_strnum = substr($fin_chk,2,4).'0001'; //查詢9090起始單號
-        $fin_endnum = substr($fin_chk,2,4).'9999'; //查詢9090結束單號
+        //$fin_strnum = substr($fin_chk,2,4).'0001'; //查詢9090起始單號,20200406改由日期判斷
+        //$fin_endnum = substr($fin_chk,2,4).'9999'; //查詢9090結束單號,20200406改由日期判斷
         //9090檢查
         $af_9090chks = DB::connection('sqlsrv_tensall')->select('SELECT TG004,TG007,TG003,CASE TG005 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS TG005,CASE MB008 WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,CASE MB006 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB006,CASE MA038 WHEN ? THEN ? ELSE ? END AS MA038,TH005,QTY=TH008+TH024,TG012,TH037,TH038,TH001,TH002,TH003 
         FROM COPMA D,COPTG E,COPTH H,INVMB K
@@ -878,8 +878,8 @@ class FinanceController extends Controller
         AND D.MA001=E.TG004
         AND TH026 = ?
         AND (TH004 = ?)
-        AND TH028 >= ? AND TH028 <= ?',
-        ['D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','01','TS6','02','ODM','OTHER','21','食品','22','化妝品','23','私密保養品','26','商品成品','OTHER','3','外銷','內銷','Y','9090',$fin_strnum,$fin_endnum]);
+        AND left(TG003,6) = ?',
+        ['D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','01','TS6','02','ODM','OTHER','21','食品','22','化妝品','23','私密保養品','26','商品成品','OTHER','3','外銷','內銷','Y','9090',$fin_chk]);
         
 
         //淨額合計
