@@ -38,9 +38,9 @@
                     <label style="font-size:16px">輸入結束銷貨單號(EX:20030050)：</label>
                     <input type="text" name="TH002E"><br>
                     <label style="font-size:16px">銷貨單確認狀態：</label>
-                    <select name="STATUS">
-                        <option value='Y'>已確認</option>
-                        <option value='N'>未確認</option>
+                    <select name="STATUS" style="font-size:16px">
+                        <option value='Y' style="font-size:14px">已確認</option>
+                        <option value='N' style="font-size:14px">未確認</option>
                     </select>
                     <button type="submit" class="btn btn-info btn-sm" style="font-size:16px" onclick="return confirm('確認是否匯出Excel?');">匯出Excel</button>
             </div>        
