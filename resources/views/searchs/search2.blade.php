@@ -6,6 +6,7 @@
     <div class="row">
         <div class="col-12">
             <span style="color:blue;"><h6>#展場資料代號更新</h6></span>
+            <span style="color:red;">請務必先確認POS機資料已上傳並轉入ERP，再執行此更新作業!</span>
             <form method="post" action={{ route('searchs.pos_chk') }}>
             @csrf
             <div class="form-group">
