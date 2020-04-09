@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title','資料查詢系統')
+@section('title','展場資料查詢')
 @section('content')
 @auth
 <div class="container" style="background-color:#DEFFFF;">

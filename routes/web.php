@@ -102,7 +102,7 @@ Route::get('searchs', 'SearchsController@index')->name('searchs.index'); //查�
 Route::get('searchs/search1', 'SearchsController@search1')->name('searchs.search1');
 //展場庫存查詢
 Route::get('searchs/search2', 'SearchsController@search2')->name('searchs.search2');
-//Route::get('searchs/search3', 'SearchsController@search3')->name('searchs.search3');
+Route::get('searchs/search3', 'SearchsController@search3')->name('searchs.search3');
 //Route::get('searchs/search4', 'SearchsController@search4')->name('searchs.search4');
 Route::post('searchs/store', 'SearchsController@store')->name('searchs.store');
 Route::post('searchs/result01', 'SearchsController@result01')->name('searchs.result01');
@@ -111,6 +111,7 @@ Route::post('searchs/pos_chk', 'SearchsController@pos_chk')->name('searchs.pos_c
 Route::post('searchs/pos_inv', 'SearchsController@pos_inv')->name('searchs.pos_inv');
 Route::post('searchs/pos_stocks', 'SearchsController@pos_stocks')->name('searchs.pos_stocks');
 Route::post('searchs/WorkingTime', 'SearchsController@WorkingTime')->name('searchs.WorkingTime');
+Route::post('searchs/ATW0031_Query', 'SearchsController@ATW0031_Query')->name('searchs.ATW0031_Query');
 
 
 //UserProfileEdit

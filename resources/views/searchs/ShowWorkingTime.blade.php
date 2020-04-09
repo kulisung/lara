@@ -1,12 +1,12 @@
 @extends('layouts.master')
-@section('title','查詢系統')
+@section('title','製令工時查詢')
 @section('content')
 <div class="container">
     <div class="row">
         <div class="col-12">
             <br>
             <h6>查詢結果</h6>
-        <p><a href={{ route('searchs.index') }} class="btn btn-success btn-sm" style="font-size:16px">返回</a></p>
+        <p><a href={{ route('searchs.search3') }} class="btn btn-success btn-sm" style="font-size:16px">返回</a></p>
         </div>
         <div class="col-12 table-cont" id="table-cont">
             <table class="table table-hover table-striped">

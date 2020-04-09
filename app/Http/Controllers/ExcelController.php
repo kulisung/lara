@@ -1967,7 +1967,7 @@ class ExcelController extends Controller
         $worksheet->setCellValueByColumnAndRow(5, 1, '暫出單別');
         $worksheet->setCellValueByColumnAndRow(6, 1, '暫出單號');
         $worksheet->setCellValueByColumnAndRow(7, 1, '本幣未稅金額');
-        $worksheet->setCellValueByColumnAndRow(8, 1, '稅額');
+        $worksheet->setCellValueByColumnAndRow(8, 1, '本幣稅額');
         $worksheet->setCellValueByColumnAndRow(9, 1, '客戶單號');
 
         $j = 1;

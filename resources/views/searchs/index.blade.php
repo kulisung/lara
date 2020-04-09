@@ -1,20 +1,10 @@
 @extends('layouts.master')
-@section('title','資料查詢系統')
+@section('title','其他資料查詢')
 @section('content')
 @auth
 <div class="container" style="background-color:#DEFFFF;">
     <div class="row">
         <div class="col-12">
-            <span style="color:blue;"><h6>##起始品號A or B製令工時查詢(不包含'A-'與'B-'起始品號)</h6></span>
-            <form method="post" action={{ route('searchs.WorkingTime') }}>
-            @csrf
-            <div class="form-group">
-                    <label style="font-size:16px">輸入製令工時年月(輸入格式為ex:201908)</label>
-                    <input type="text" name="workdate">
-                    <button type="submit" class="btn btn-primary btn-sm" style="font-size:16px">查詢</button>
-                    <button type="submit" class="btn btn-info btn-sm" style="font-size:16px" formaction={{ route('WorkingTimeExport') }} onclick="return confirm('確認是否匯出Excel?');">匯出Excel</button>
-            </div>
-            </form>
             <span style="color:blue;"><h6>#暫出單查詢客戶單號匯出(ForVicky用)</h6></span>
             <form method="post" action={{ route('INVTG_1300_Export') }}>
             @csrf
@@ -28,7 +18,7 @@
             </form>
             </form>
             <span style="color:blue;"><h6>#銷貨單暫出單查詢匯出(ForVicky用)</h6></span>
-            <form method="post" action={{ route('COPTH_Export') }}>
+            <form method="post" action={{ route('searchs.ATW0031_Query') }}>
             @csrf
             <div class="form-group">
                     <label style="font-size:16px">輸入銷貨單別(EX:2301)：</label>
@@ -42,7 +32,8 @@
                         <option value='Y' style="font-size:14px">已確認</option>
                         <option value='N' style="font-size:14px">未確認</option>
                     </select>
-                    <button type="submit" class="btn btn-info btn-sm" style="font-size:16px" onclick="return confirm('確認是否匯出Excel?');">匯出Excel</button>
+                    <button type="submit" class="btn btn-primary btn-sm" style="font-size:16px">資料查詢</button>
+                    <button type="submit" class="btn btn-info btn-sm" style="font-size:16px" formaction={{ route('COPTH_Export') }} onclick="return confirm('確認是否匯出Excel?');">匯出Excel</button>
             </div>        
             </form>
         </div>

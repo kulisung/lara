@@ -161,6 +161,39 @@ class SearchsController extends Controller
         return view('searchs.ShowWorkingTime', $data);
     }
 
+    
+    //Vicky用，銷貨單查詢暫出單客戶單號
+    public function ATW0031_Query(Request $request)
+    {
+        $COP_TH001 = $request->input('TH001');
+        $COP_TH002S = $request->input('TH002S');
+        $COP_TH002E = $request->input('TH002E');
+        $COP_STATUS = $request->input('STATUS');
+        $COPTH_lists = DB::connection('sqlsrv_tensall')->select('Select TH001,TH002,TH014,TH015,TH032,TH033,SUM(TH037) AS COST,SUM(TH038) AS TAX,TC012 
+        From COPTH A, COPTC B 
+        WHERE A.TH014 = B.TC001 AND A.TH015 = B.TC002 
+        AND TH001 = ?
+        AND TH002 >= ? and TH002 <= ? 
+        AND TH020 = ?
+        AND TC012 like ?
+        GROUP BY TH001,TH002,TH014,TH015,TH032,TH033,TC012
+        ORDER BY TH001,TH002',
+        [$COP_TH001,$COP_TH002S,$COP_TH002E,$COP_STATUS,'T%']);
+
+        $COPTH_lists_count = count($COPTH_lists);
+        if ($COPTH_lists_count < 1) {
+            $result = '查無資料，請檢查條件是否輸入正確!!';
+            return View('nodata')->with('result', $result);
+        }else{
+        return view('searchs.ShowATW0031', compact('COPTH_lists'));
+        }
+
+    }
+    
+
+
+
+
     /**
      * Display the specified resource.
      *
