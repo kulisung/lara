@@ -1934,20 +1934,19 @@ class ExcelController extends Controller
     //銷貨單&訂單&暫出單&客戶單號查詢匯出_20200401
     public function COPTH_Export(Request $request) 
     {
-        $COP_TH001 = $request->input('TH001');
-        $COP_TH002S = $request->input('TH002S');
-        $COP_TH002E = $request->input('TH002E');
-        $COP_STATUS = $request->input('STATUS');
+        $COP_TH001 = $request->input('TH001'); //銷貨單別
+        $COP_TH002S = $request->input('TH002S'); //銷貨單號起
+        $COP_TH002E = $request->input('TH002E'); //銷貨單號迄
+        $COP_TH020 = $request->input('STATUS'); //確認碼
         $COPTH_lists = DB::connection('sqlsrv_tensall')->select('Select TH001,TH002,TH014,TH015,TH032,TH033,SUM(TH037) AS COST,SUM(TH038) AS TAX,TC012 
         From COPTH A, COPTC B 
         WHERE A.TH014 = B.TC001 AND A.TH015 = B.TC002 
         AND TH001 = ?
         AND TH002 >= ? and TH002 <= ? 
         AND TH020 = ?
-        AND TC012 like ?
         GROUP BY TH001,TH002,TH014,TH015,TH032,TH033,TC012
         ORDER BY TH001,TH002',
-        [$COP_TH001,$COP_TH002S,$COP_TH002E,$COP_STATUS,'T%']);
+        [$COP_TH001,$COP_TH002S,$COP_TH002E,$COP_TH020]);
  
         if (count($COPTH_lists)<1) {
             $result = '查無資料，請檢查條件是否輸入正確!!';
@@ -1996,5 +1995,61 @@ class ExcelController extends Controller
         }
     }
 
+    //銷貨單查詢客戶單號匯出_2020413
+    public function COPTG_Export(Request $request) 
+    {
+        $COP_TG001 = $request->input('TG001'); //銷貨單別
+        $COP_TG003 = $request->input('TG003').'%'; //銷貨日期
+        $COP_TG004 = $request->input('TG004'); //客戶代號
+        $COP_TG023 = $request->input('STATUS'); //確認碼
+        $COPTG_lists = DB::connection('sqlsrv_tensall')->select('Select TC012,TG001,TG002,TG003,TG004 
+        From(Select distinct TG001,TG002,TG003,TG004,TH014,TH015,TG023 from COPTG A,COPTH B where A.TG001=B.TH001 AND A.TG002=B.TH002) C
+        LEFT JOIN COPTC D
+        ON C.TH014=D.TC001 and C.TH015=D.TC002 
+        Where TG001 = ? 
+        AND TG003 like ?
+        AND TG004 = ? 
+        AND TG023 = ?
+        ORDER BY TC012,TG001,TG002,TG003,TG004',
+        [$COP_TG001,$COP_TG003,$COP_TG004,$COP_TG023]);
+ 
+        if (count($COPTG_lists)<1) {
+            $result = '查無資料，請檢查條件是否輸入正確!!';
+            return View('nodata')->with('result', $result);
+        }else{
+            //$result = 'Good Job!';
+            //return View('nodata')->with('result', $result);
+        
+        $spreadsheet = new Spreadsheet();  // 開新excel檔案
+        $worksheet = $spreadsheet->getActiveSheet(); 
+        $worksheet->setTitle('List');
+        //定義欄位
+        $worksheet->setCellValueByColumnAndRow(1, 1, '客戶單號');
+        $worksheet->setCellValueByColumnAndRow(2, 1, '銷貨單別');
+        $worksheet->setCellValueByColumnAndRow(3, 1, '銷貨單號');
+        $worksheet->setCellValueByColumnAndRow(4, 1, '銷貨日期');
+        $worksheet->setCellValueByColumnAndRow(5, 1, '客戶代號');
+
+        $j = 1;
+        foreach ($COPTG_lists as $COPTG_list) {
+            $j = $j + 1;
+            $worksheet->setCellValueByColumnAndRow(1, $j, $COPTG_list->TC012);
+            $worksheet->setCellValueByColumnAndRow(2, $j, $COPTG_list->TG001);
+            $worksheet->setCellValueByColumnAndRow(3, $j, $COPTG_list->TG002);
+            $worksheet->setCellValueByColumnAndRow(4, $j, $COPTG_list->TG003);
+            $worksheet->setCellValueByColumnAndRow(5, $j, $COPTG_list->TG004);
+        }
+
+        // 下载
+        $filename = '銷貨單客戶單號查詢.xlsx';
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="'.$filename.'"');
+        header('Cache-Control: max-age=0');
+
+        $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
+        $writer->save('php://output'); 
+        
+        }
+    }
 
 }

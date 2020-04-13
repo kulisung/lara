@@ -90,6 +90,8 @@ Route::get('fin_af_export/{fin_chk}','ExcelController@fin_af_export')->name('fin
 Route::post('ACRTB_Ship_Export','ExcelController@ACRTB_Ship_Export')->name('ACRTB_Ship_Export');
 //暫出單查詢客戶單號匯出
 Route::post('INVTG_1300_Export','ExcelController@INVTG_1300_Export')->name('INVTG_1300_Export');
+//銷貨單查詢客戶單號匯出
+Route::post('COPTG_Export','ExcelController@COPTG_Export')->name('COPTG_Export');
 //銷貨單&訂單&暫出單&客戶單號查詢匯出
 Route::post('COPTH_Export','ExcelController@COPTH_Export')->name('COPTH_Export');
 
@@ -111,7 +113,8 @@ Route::post('searchs/pos_chk', 'SearchsController@pos_chk')->name('searchs.pos_c
 Route::post('searchs/pos_inv', 'SearchsController@pos_inv')->name('searchs.pos_inv');
 Route::post('searchs/pos_stocks', 'SearchsController@pos_stocks')->name('searchs.pos_stocks');
 Route::post('searchs/WorkingTime', 'SearchsController@WorkingTime')->name('searchs.WorkingTime');
-Route::post('searchs/ATW0031_Query', 'SearchsController@ATW0031_Query')->name('searchs.ATW0031_Query');
+//Route::post('searchs/ATW0031_Query', 'SearchsController@ATW0031_Query')->name('searchs.ATW0031_Query');
+Route::post('searchs/COPINV_Query', 'SearchsController@COPINV_Query')->name('searchs.COPINV_Query');
 
 
 //UserProfileEdit
