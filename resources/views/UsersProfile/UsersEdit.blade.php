@@ -30,7 +30,7 @@
                 </div>
                 @if (auth()->user()->user_level==9)
                 <div style="text-align:center">
-                    <label style="font-size:10px">## 註:User Level權限預設=0；1-行政；2-業務；3-生產；4-研發；5-財務；9系統管理員。 ##</label>
+                    <label style="font-size:10px">## 註:User Level權限預設=0；1->行政；2->業務；3->生產；4->研發；5->財務；9->系統管理員。 ##</label>
                 </div>
                 @endif
                 <div style="text-align:center">
