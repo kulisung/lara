@@ -75,7 +75,7 @@ Route::get('excel', 'Auth\VerificationController@excel')->name('excel');
 Route::get('userexport','ExcelController@userexport')->name('userexport');
 Route::post('userimport','ExcelController@userimport')->name('userimport');
 Route::get('AllUserExport','ExcelController@AllUserExport')->name('AllUserExport');
-//Route::post('export_xls','ExcelController@export_xls')->name('export_xls'); //20191031註記不使用
+
 //展場庫存匯出
 Route::post('pos_inv_export','ExcelController@pos_inv_export')->name('pos_inv_export');
 //銷貨對帳單匯出
