@@ -1,28 +1,41 @@
 @extends('layouts.master')
-@section('title','進退貨資料查詢')
+@section('title','銷退貨資料查詢')
 @section('content')
 @auth
 <div class="container" style="background-color:#DEFFFF;">
     <div class="row">
         <div class="col-12">
-            <span style="color:blue;"><h6>#天賜爾進貨單資料查詢(測試)</h6></span>
-            <form method="post" action={{ route('searchs.result01') }}>
+            <span style="color:blue;"><h6>#銷貨單彙總查詢</h6></span>
+            <form method="post" action={{ route('COPTG_SUM_Export') }}>
             @csrf
             <div class="form-group">
-                <label style="font-size:16px">進貨單別</label>
-                <input type="text" name="TH001" id="TH001">
-                <label style="font-size:16px">進貨單號</label>
-                <input type="text" name="TH002" id="TH002">                    
-                <button type="submit" class="btn btn-primary btn-sm" style="font-size:16px">查詢</button>
+                <label style="font-size:16px">輸入銷貨日期(EX:20200701)：</label>
+                <input type="text" name="TG003" id="TG003"><br>
+                <label style="font-size:16px">輸入ERP客戶代號：</label>
+                <input type="text" name="TG004" id="TG004"><br>
+                <label style="font-size:16px">銷貨單確認狀態：</label>
+                    <select name="TG023" style="font-size:16px">
+                        <option value='Y' style="font-size:14px">已確認</option>
+                        <option value='N' style="font-size:14px">未確認</option>
+                    </select>
+                    <button type="submit" class="btn btn-info btn-sm" style="font-size:16px" onclick="return confirm('確認是否匯出Excel?');">匯出Excel</button>
             </div>
             </form>
-            <span style="color:blue;"><h6>#賢齊進退貨資料查詢</h6></span>
-            <form method="post" action={{ route('searchs.purth_result') }}>
+
+            <span style="color:blue;"><h6>#銷退單彙總查詢</h6></span>
+            <form method="post" action={{ route('COPTI_SUM_Export') }}>
             @csrf
             <div class="form-group">
-                <label style="font-size:16px">By品號</label>
-                <input type="text" name="TH004" id="TH004">
-                <button type="submit" class="btn btn-primary btn-sm" style="font-size:16px">查詢</button>
+                <label style="font-size:16px">輸入銷退日期(EX:20200701)：</label>
+                <input type="text" name="TI003" id="TI003"><br>
+                <label style="font-size:16px">輸入ERP客戶代號：</label>
+                <input type="text" name="TI004" id="TI004"><br>
+                <label style="font-size:16px">銷退單確認狀態：</label>
+                    <select name="TI019" style="font-size:16px">
+                        <option value='Y' style="font-size:14px">已確認</option>
+                        <option value='N' style="font-size:14px">未確認</option>
+                    </select>
+                    <button type="submit" class="btn btn-info btn-sm" style="font-size:16px" onclick="return confirm('確認是否匯出Excel?');">匯出Excel</button>
             </div>
             </form>
          </div>

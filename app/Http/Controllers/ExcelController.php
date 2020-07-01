@@ -1918,4 +1918,131 @@ class ExcelController extends Controller
         }
     }
 
+    //銷貨單彙總查詢匯出_20200701
+    public function COPTG_SUM_Export(Request $request) 
+    {
+        $COP_TG003 = $request->input('TG003'); //銷貨日期
+        $COP_TG004 = $request->input('TG004'); //客戶代號
+        $COP_TG023 = $request->input('TG023'); //確認碼
+        $COPTG_SUMs = DB::connection('sqlsrv_tensall')->select('Select TG001,TG002,TG003,TG004,TH017,TH004,TH005,SUM(TH008) AS QTY,SUM(TH037) AS COST 
+        From COPTG A
+        LEFT JOIN COPTH B
+        ON A.TG001=B.TH001 AND A.TG002=B.TH002 
+        WHERE TG003 = ? AND TG004 = ? 
+        AND TG023 = ?
+        GROUP BY TG001,TG002,TG003,TG004,TH017,TH004,TH005
+        ORDER BY TG001,TG002',
+        [$COP_TG003,$COP_TG004,$COP_TG023]);
+ 
+        if (count($COPTG_SUMs)<1) {
+            $result = '查無資料，請檢查條件是否輸入正確!!';
+            return View('nodata')->with('result', $result);
+        }else{
+            //$result = 'Good Job!';
+            //return View('nodata')->with('result', $result);
+        
+        $spreadsheet = new Spreadsheet();  // 開新excel檔案
+        $worksheet = $spreadsheet->getActiveSheet(); 
+        $worksheet->setTitle('銷貨彙總');
+        //定義欄位
+        $worksheet->setCellValueByColumnAndRow(1, 1, '銷貨單別');
+        $worksheet->setCellValueByColumnAndRow(2, 1, '銷貨單號');
+        $worksheet->setCellValueByColumnAndRow(3, 1, '銷貨日期');
+        $worksheet->setCellValueByColumnAndRow(4, 1, '客戶代號');
+        $worksheet->setCellValueByColumnAndRow(5, 1, '批號');
+        $worksheet->setCellValueByColumnAndRow(6, 1, '品號');
+        $worksheet->setCellValueByColumnAndRow(7, 1, '品名');
+        $worksheet->setCellValueByColumnAndRow(8, 1, '銷貨數量彙總');
+        $worksheet->setCellValueByColumnAndRow(9, 1, '銷貨未稅金額彙總');
+
+        $j = 1;
+        foreach ($COPTG_SUMs as $COPTG_SUM) {
+            $j = $j + 1;
+            $worksheet->setCellValueByColumnAndRow(1, $j, $COPTG_SUM->TG001);
+            $worksheet->setCellValueByColumnAndRow(2, $j, $COPTG_SUM->TG002);
+            $worksheet->setCellValueByColumnAndRow(3, $j, $COPTG_SUM->TG003);
+            $worksheet->setCellValueByColumnAndRow(4, $j, $COPTG_SUM->TG004);
+            $worksheet->setCellValueByColumnAndRow(5, $j, $COPTG_SUM->TH017);
+            $worksheet->setCellValueByColumnAndRow(6, $j, $COPTG_SUM->TH004);
+            $worksheet->setCellValueByColumnAndRow(7, $j, $COPTG_SUM->TH005);
+            $worksheet->setCellValueByColumnAndRow(8, $j, $COPTG_SUM->QTY);
+            $worksheet->setCellValueByColumnAndRow(9, $j, $COPTG_SUM->COST);
+        }
+
+        // 下载
+        $filename = $COP_TG003.'_'.$COP_TG004.'_銷貨彙總.xlsx';
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="'.$filename.'"');
+        header('Cache-Control: max-age=0');
+
+        $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
+        $writer->save('php://output'); 
+        
+        }
+    }
+
+    //銷退單彙總查詢匯出_20200701
+    public function COPTI_SUM_Export(Request $request) 
+    {
+        $COP_TI003 = $request->input('TI003'); //銷貨日期
+        $COP_TI004 = $request->input('TI004'); //客戶代號
+        $COP_TI019 = $request->input('TI019'); //確認碼
+        $COPTI_SUMs = DB::connection('sqlsrv_tensall')->select('Select TI001,TI002,TI003,TI004,TJ014,TJ004,TJ005,SUM(TJ007) AS QTY,SUM(TJ012) AS COST 
+        From COPTI A
+        LEFT JOIN COPTJ B
+        ON A.TI001=B.TJ001 AND A.TI002=B.TJ002 
+        WHERE TI003 = ? AND TI004 = ? 
+        AND TI019 = ?
+        GROUP BY TI001,TI002,TI003,TI004,TJ014,TJ004,TJ005
+        ORDER BY TI001,TI002',
+        [$COP_TI003,$COP_TI004,$COP_TI019]);
+ 
+        if (count($COPTI_SUMs)<1) {
+            $result = '查無資料，請檢查條件是否輸入正確!!';
+            return View('nodata')->with('result', $result);
+        }else{
+            //$result = 'Good Job!';
+            //return View('nodata')->with('result', $result);
+        
+        $spreadsheet = new Spreadsheet();  // 開新excel檔案
+        $worksheet = $spreadsheet->getActiveSheet(); 
+        $worksheet->setTitle('銷退彙總');
+        //定義欄位
+        $worksheet->setCellValueByColumnAndRow(1, 1, '銷退單別');
+        $worksheet->setCellValueByColumnAndRow(2, 1, '銷退單號');
+        $worksheet->setCellValueByColumnAndRow(3, 1, '銷退日期');
+        $worksheet->setCellValueByColumnAndRow(4, 1, '客戶代號');
+        $worksheet->setCellValueByColumnAndRow(5, 1, '批號');
+        $worksheet->setCellValueByColumnAndRow(6, 1, '品號');
+        $worksheet->setCellValueByColumnAndRow(7, 1, '品名');
+        $worksheet->setCellValueByColumnAndRow(8, 1, '銷退數量彙總');
+        $worksheet->setCellValueByColumnAndRow(9, 1, '銷退未稅金額彙總');
+
+        $j = 1;
+        foreach ($COPTI_SUMs as $COPTI_SUM) {
+            $j = $j + 1;
+            $worksheet->setCellValueByColumnAndRow(1, $j, $COPTI_SUM->TI001);
+            $worksheet->setCellValueByColumnAndRow(2, $j, $COPTI_SUM->TI002);
+            $worksheet->setCellValueByColumnAndRow(3, $j, $COPTI_SUM->TI003);
+            $worksheet->setCellValueByColumnAndRow(4, $j, $COPTI_SUM->TI004);
+            $worksheet->setCellValueByColumnAndRow(5, $j, $COPTI_SUM->TJ014);
+            $worksheet->setCellValueByColumnAndRow(6, $j, $COPTI_SUM->TJ004);
+            $worksheet->setCellValueByColumnAndRow(7, $j, $COPTI_SUM->TJ005);
+            $worksheet->setCellValueByColumnAndRow(8, $j, $COPTI_SUM->QTY);
+            $worksheet->setCellValueByColumnAndRow(9, $j, $COPTI_SUM->COST);
+        }
+
+        // 下载
+        $filename = $COP_TI003.'_'.$COP_TI004.'_銷退彙總.xlsx';
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="'.$filename.'"');
+        header('Cache-Control: max-age=0');
+
+        $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
+        $writer->save('php://output'); 
+        
+        }
+    }
+
+
 }

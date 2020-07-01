@@ -15,7 +15,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link font-weight-bold dropdown-toggle" style="font-size:16px" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">資料查詢</a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item font-weight-bold" style="font-size:16px" id='search1' href={{ route('searchs.search1')}}>進退貨資訊查詢</a>
+                        <a class="dropdown-item font-weight-bold" style="font-size:16px" id='search1' href={{ route('searchs.search1')}}>銷退貨資訊查詢</a>
                         <a class="dropdown-item font-weight-bold" style="font-size:16px" id='search2' href={{ route('searchs.search2')}}>展場資料查詢</a>
                         <a class="dropdown-item font-weight-bold" style="font-size:16px" href={{ route('searchs.search3')}}>產線資料查詢</a>
                         <a class="dropdown-item font-weight-bold" style="font-size:16px" href={{ route('searchs.index')}}>其他資料查詢</a>

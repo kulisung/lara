@@ -94,6 +94,10 @@ Route::post('INVTG_1300_Export','ExcelController@INVTG_1300_Export')->name('INVT
 Route::post('COPTG_Export','ExcelController@COPTG_Export')->name('COPTG_Export');
 //銷貨單&訂單&暫出單&客戶單號查詢匯出
 Route::post('COPTH_Export','ExcelController@COPTH_Export')->name('COPTH_Export');
+//銷貨單彙總查詢匯出_20200701
+Route::post('COPTG_SUM_Export','ExcelController@COPTG_SUM_Export')->name('COPTG_SUM_Export');
+//銷退單彙總查詢匯出_20200701
+Route::post('COPTI_SUM_Export','ExcelController@COPTI_SUM_Export')->name('COPTI_SUM_Export');
 
 //檢查MS SQL連線結果
 //Route::get('dbresult', 'Auth\VerificationController@dbresult')->name('auth.dbresult');

@@ -25,7 +25,7 @@
                     <input type="text" name="TG001"><br>
                     <label style="font-size:16px">輸入銷貨月份(EX:202004)：</label>
                     <input type="text" name="TG003"><br>
-                    <label style="font-size:16px">輸入客戶代號：</label>
+                    <label style="font-size:16px">輸入ERP客戶代號：</label>
                     <input type="text" name="TG004"><br>
                     <label style="font-size:16px">銷貨單確認狀態：</label>
                     <select name="STATUS" style="font-size:16px">
@@ -34,7 +34,6 @@
                     </select>
                     <button type="submit" class="btn btn-info btn-sm" style="font-size:16px" onclick="return confirm('確認是否匯出Excel?');">匯出Excel</button>
             </div>        
-            </form>
             </form>
             <span style="color:blue;"><h6>#銷貨單暫出單查詢(ForVicky用)</h6></span>
             <form method="post" action={{ route('searchs.COPINV_Query') }}>
