@@ -1748,19 +1748,22 @@ class ExcelController extends Controller
         }
     }
 
-    //暫出單查詢客戶單號匯出_20200318
+    //暫出單查詢客戶單號匯出_20200318_客單不為空白_20200825修正改由客戶代號判定
     public function INVTG_1300_Export(Request $request) 
     {
+        $INV_TF005 = $request->input('TF005');
         $INV_TG001 = $request->input('TG001');
         $INV_TG002 = $request->input('TG002').'%';
-        $INVTG_lists = DB::connection('sqlsrv_tensall')->select('Select distinct TG200,TG001,TG002 
-        From INVTG 
-        WHERE TG001 = ? 
+        $INVTG_lists = DB::connection('sqlsrv_tensall')->select('Select distinct TG200,TG001,TG002,TF005,TF006 
+        From INVTF A,INVTG B
+        WHERE A.TF001=B.TG001 AND A.TF002=B.TG002
+        AND TF005 = ?
+        AND TG001 = ? 
         AND TG002 like ? 
-        AND TG200 like ?
+        AND TG200 <> ?
         AND TG022 = ?
         ORDER BY TG200,TG001,TG002',
-        [$INV_TG001,$INV_TG002,'T%','Y']);
+        [$INV_TF005,$INV_TG001,$INV_TG002,'','Y']);
  
         if (count($INVTG_lists)<1) {
             $result = '查無資料，請檢查條件是否輸入正確!!';
@@ -1776,6 +1779,8 @@ class ExcelController extends Controller
         $worksheet->setCellValueByColumnAndRow(1, 1, '客戶單號');
         $worksheet->setCellValueByColumnAndRow(2, 1, '暫出單別');
         $worksheet->setCellValueByColumnAndRow(3, 1, '暫出單號');
+        $worksheet->setCellValueByColumnAndRow(4, 1, '客戶代號');
+        $worksheet->setCellValueByColumnAndRow(5, 1, '客戶名稱');
 
         $j = 1;
         foreach ($INVTG_lists as $INVTG_list) {
@@ -1783,6 +1788,8 @@ class ExcelController extends Controller
             $worksheet->setCellValueByColumnAndRow(1, $j, $INVTG_list->TG200);
             $worksheet->setCellValueByColumnAndRow(2, $j, $INVTG_list->TG001);
             $worksheet->setCellValueByColumnAndRow(3, $j, $INVTG_list->TG002);
+            $worksheet->setCellValueByColumnAndRow(4, $j, $INVTG_list->TF005);
+            $worksheet->setCellValueByColumnAndRow(5, $j, $INVTG_list->TF006);
         }
 
         // 下载
