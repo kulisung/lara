@@ -22,12 +22,12 @@
             <form method="post" action={{ route('COPTG_Export') }}>
             @csrf
             <div class="form-group">
+                    <label style="font-size:16px">輸入ERP客戶代號：</label>
+                    <input type="text" name="TG004"><br>
                     <label style="font-size:16px">輸入銷貨單別(EX:2301)：</label>
                     <input type="text" name="TG001"><br>
                     <label style="font-size:16px">輸入銷貨月份(EX:202004)：</label>
                     <input type="text" name="TG003"><br>
-                    <label style="font-size:16px">輸入ERP客戶代號：</label>
-                    <input type="text" name="TG004"><br>
                     <label style="font-size:16px">銷貨單確認狀態：</label>
                     <select name="STATUS" style="font-size:16px">
                         <option value='Y' style="font-size:14px">已確認</option>
