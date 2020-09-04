@@ -8,10 +8,12 @@
                 <li class="nav-item">
                   <a class="nav-link font-weight-bold" style="font-size:16px" href={{ route('index') }}>Home</a>
                 </li>
+                @auth
+                @if (auth()->user()->user_level==9)
                 <li class="nav-item">
                   <a class="nav-link font-weight-bold" style="font-size:16px" href={{ route('posts.index') }}>公告系統</a>
                 </li>
-                @auth
+                @endif
                 <li class="nav-item dropdown">
                     <a class="nav-link font-weight-bold dropdown-toggle" style="font-size:16px" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">資料查詢</a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">

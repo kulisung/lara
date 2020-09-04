@@ -6,7 +6,7 @@
         <div class="col-12">
             <h3>Welcome to TENSALL Data Center!!!</h3>
             <h3>Still designing & testing!!</h3><br>
-        <h3><marquee behavior="scroll" direction="left" scrollamount="10"><a href="{{ route('posts.index')}}">登入帳號申請及操作方式請洽MIS，公告僅供參考!!</a></marquee></h3>
+        <h3><marquee behavior="scroll" direction="left" scrollamount="10"><a href="{{ route('posts.index')}}">登入帳號申請及操作方式請洽MIS!!</a></marquee></h3>
         </div>
     </div>
     <div class="col-12 table-cont" id="table-cont">
