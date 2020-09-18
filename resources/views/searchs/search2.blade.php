@@ -6,11 +6,11 @@
     <div class="row">
         <div class="col-12">
             <span style="color:blue;"><h6>#展場資料代號更新</h6></span>
-            <span style="color:red;">請務必先確認POS機資料已上傳並轉入ERP，再執行此更新作業!</span>
+            <span style="color:red;">請務必先確認POS機資料已上傳並轉入ERP，再執行此確認作業!</span>
             <form method="post" action={{ route('searchs.pos_chk') }}>
             @csrf
             <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-sm" style="font-size:16px">資料更新</button>
+                    <button type="submit" class="btn btn-primary btn-sm" style="font-size:16px">資料確認</button>
             </div>       
             </form>
             <span style="color:blue;"><h6>#展場庫存查詢</h6></span>

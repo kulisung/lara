@@ -110,12 +110,13 @@ class ExcelController extends Controller
     }
     
     //展場銷貨匯出
+    //20200918修正，拿掉篩選庫別代號B24，新增顯示【庫別】以便辨識
     public function pos_inv_export(Request $request) 
     {
         $date_str = $request->input('date1');
         $date_end = $request->input('date2');
         //Page_Invoice_SQL
-        $invs = DB::connection('sqlsrv_tensall')->select('SELECT TH001,TH002,TH003,TH004,TH005,TG003,TG004,CASE TG005 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END as TG005,TG007,TG012,TG014,TG098,CASE MB006 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END as MB006,CASE MB008 WHEN ? THEN ? WHEN ? THEN ? ELSE ? END as MB008,SUM(TH008+TH024) as QTY FROM COPTH LEFT JOIN COPTG ON (COPTH.TH001=COPTG.TG001 AND COPTH.TH002=COPTG.TG002 AND COPTH.TH007=? AND COPTG.TG004=? AND COPTG.TG023<>?) LEFT JOIN INVMB ON (COPTH.TH004=INVMB.MB001) WHERE COPTG.TG003>=? AND COPTG.TG003<=? GROUP BY TH001,TH002,TH003,TH004,TH005,TG003,TG004,TG005,TG007,TG012,TG014,TG098,MB006,MB008',['D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','21','食品','22','化妝品','23','私密保養品','26','商品成品','Other','01','TS6','02','ODM','Other','B24','ATP0002','V',$date_str,$date_end]);
+        $invs = DB::connection('sqlsrv_tensall')->select('SELECT TH001,TH002,TH003,TH004,TH005,TH007,TG003,TG004,CASE TG005 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END as TG005,TG007,TG012,TG014,TG098,CASE MB006 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END as MB006,CASE MB008 WHEN ? THEN ? WHEN ? THEN ? ELSE ? END as MB008,SUM(TH008+TH024) as QTY FROM COPTH LEFT JOIN COPTG ON (COPTH.TH001=COPTG.TG001 AND COPTH.TH002=COPTG.TG002 AND COPTG.TG004=? AND COPTG.TG023<>?) LEFT JOIN INVMB ON (COPTH.TH004=INVMB.MB001) WHERE COPTG.TG003>=? AND COPTG.TG003<=? GROUP BY TH001,TH002,TH003,TH004,TH005,TH007,TG003,TG004,TG005,TG007,TG012,TG014,TG098,MB006,MB008 ORDER BY TG098,TH001,TH002,TH003',['D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','21','食品','22','化妝品','23','私密保養品','26','商品成品','Other','01','TS6','02','ODM','Other','ATP0002','V',$date_str,$date_end]);
 
         //Page_Stocks_SQL
         $stocks = DB::connection('sqlsrv_tensall')->select('SELECT P.AA,P.BB,P.CC,SUM(P.DD) AS QTY FROM (SELECT TH004 AS AA,TH005 AS BB,TH006 AS CC , SUM(TH008+TH024) AS DD FROM COPTG,COPTH WHERE TG001=TH001 AND TG002=TH002 AND (TG004=?) AND TG003>=? AND TG003<=? AND TH007=? AND TG023<>? GROUP BY  TH004,TH005,TH006 
@@ -143,13 +144,14 @@ class ExcelController extends Controller
         $worksheet->setCellValueByColumnAndRow(6, 1, '四大類');
         $worksheet->setCellValueByColumnAndRow(7, 1, '品號');
         $worksheet->setCellValueByColumnAndRow(8, 1, '品名');
-        $worksheet->setCellValueByColumnAndRow(9, 1, '數量');
-        $worksheet->setCellValueByColumnAndRow(10, 1, '匯率/單位');
-        $worksheet->setCellValueByColumnAndRow(11, 1, '發票起號');
-        $worksheet->setCellValueByColumnAndRow(12, 1, '發票迄號');
-        $worksheet->setCellValueByColumnAndRow(13, 1, '單別');
-        $worksheet->setCellValueByColumnAndRow(14, 1, '單號');
-        $worksheet->setCellValueByColumnAndRow(15, 1, '序號');
+        $worksheet->setCellValueByColumnAndRow(9, 1, '庫別');
+        $worksheet->setCellValueByColumnAndRow(10, 1, '數量');
+        $worksheet->setCellValueByColumnAndRow(11, 1, '匯率/單位');
+        $worksheet->setCellValueByColumnAndRow(12, 1, '發票起號');
+        $worksheet->setCellValueByColumnAndRow(13, 1, '發票迄號');
+        $worksheet->setCellValueByColumnAndRow(14, 1, '單別');
+        $worksheet->setCellValueByColumnAndRow(15, 1, '單號');
+        $worksheet->setCellValueByColumnAndRow(16, 1, '序號');
 
         $j = 1;
         foreach ($invs as $inv) {
@@ -162,13 +164,14 @@ class ExcelController extends Controller
             $worksheet->setCellValueByColumnAndRow(6, $j, $inv->MB006);
             $worksheet->setCellValueByColumnAndRow(7, $j, $inv->TH004);
             $worksheet->setCellValueByColumnAndRow(8, $j, $inv->TH005);
-            $worksheet->setCellValueByColumnAndRow(9, $j, $inv->QTY);
-            $worksheet->setCellValueByColumnAndRow(10, $j, $inv->TG012);
-            $worksheet->setCellValueByColumnAndRow(11, $j, $inv->TG098);
-            $worksheet->setCellValueByColumnAndRow(12, $j, $inv->TG014);
-            $worksheet->setCellValueByColumnAndRow(13, $j, $inv->TH001);
-            $worksheet->setCellValueByColumnAndRow(14, $j, $inv->TH002);
-            $worksheet->setCellValueByColumnAndRow(15, $j, $inv->TH003);
+            $worksheet->setCellValueByColumnAndRow(9, $j, $inv->TH007);
+            $worksheet->setCellValueByColumnAndRow(10, $j, $inv->QTY);
+            $worksheet->setCellValueByColumnAndRow(11, $j, $inv->TG012);
+            $worksheet->setCellValueByColumnAndRow(12, $j, $inv->TG098);
+            $worksheet->setCellValueByColumnAndRow(13, $j, $inv->TG014);
+            $worksheet->setCellValueByColumnAndRow(14, $j, $inv->TH001);
+            $worksheet->setCellValueByColumnAndRow(15, $j, $inv->TH002);
+            $worksheet->setCellValueByColumnAndRow(16, $j, $inv->TH003);
         }
 
         $spreadsheet->createSheet(); //新增工作頁
@@ -1683,8 +1686,10 @@ class ExcelController extends Controller
         }
     }
 
+/*  
     //結帳單銷貨暫出對照明細
     //20200317_移除TB007&TH034拿掉憑證序號&暫出單序號，僅對照單別單號即可
+    //20200918註記舊語法，改直接由銷貨單單身撈取資料
     public function ACRTB_Ship_Export(Request $request) 
     {
         $ACR_TB001 = $request->input('TB001');
@@ -1694,7 +1699,7 @@ class ExcelController extends Controller
         LEFT JOIN COPTH B 
         ON A.TB005=B.TH001 AND A.TB006=B.TH002
         WHERE A.TB001 = ? AND A.TB002 = ?
-        ORDER BY A.TB003',
+        ORDER BY A.TB002',
         [$ACR_TB001,$ACR_TB002]);
  
         if (count($ACRTB_lists)<1) {
@@ -1734,6 +1739,84 @@ class ExcelController extends Controller
             $worksheet->setCellValueByColumnAndRow(8, $j, $ACRTB_list->TH032);
             $worksheet->setCellValueByColumnAndRow(9, $j, $ACRTB_list->TH033);
             //$worksheet->setCellValueByColumnAndRow(11, $j, $ACRTB_list->TH034);
+        }
+
+        // 下载
+        $filename = $ACR_TB001.'-'.$ACR_TB002.'_結帳銷貨暫出對照.xlsx';
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="'.$filename.'"');
+        header('Cache-Control: max-age=0');
+
+        $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
+        $writer->save('php://output'); 
+        
+        }
+    }
+*/
+
+    //結帳單銷貨暫出對照明細
+    //20200317_移除TB007&TH034拿掉憑證序號&暫出單序號，僅對照單別單號即可
+    //20200918修正語法，直接由銷貨單查詢結帳單與暫出單彙總
+    public function ACRTB_Ship_Export(Request $request) 
+    {
+        $ACR_TB001 = $request->input('TB001'); //TB001=COPTH欄位名稱TH027
+        $ACR_TB002 = $request->input('TB002'); //TB002=COPTH欄位名稱TH028
+        $ACRTB_lists = DB::connection('sqlsrv_tensall')->select('Select distinct TH027,TH028,TH001,TH002,TH032,TH033,SUM(TH037) AS TH037,SUM(TH038) AS TH038
+        From COPTH
+        WHERE TH027 = ? AND TH028 = ?
+        GROUP BY TH027,TH028,TH001,TH002,TH032,TH033
+        ORDER BY TH027,TH028',
+        [$ACR_TB001,$ACR_TB002]);
+ 
+        if (count($ACRTB_lists)<1) {
+            $result = '查無資料，請檢查條件是否輸入正確!!';
+            return View('nodata')->with('result', $result);
+        }else{
+            //$result = 'Good Job!';
+            //return View('nodata')->with('result', $result);
+        
+        $spreadsheet = new Spreadsheet();  // 開新excel檔案
+        $worksheet = $spreadsheet->getActiveSheet(); 
+        $worksheet->setTitle('銷貨暫出對照表');
+        //定義欄位
+        $worksheet->setCellValueByColumnAndRow(1, 1, '結帳單別');
+        $worksheet->setCellValueByColumnAndRow(2, 1, '結帳單號');
+        //$worksheet->setCellValueByColumnAndRow(3, 1, '結帳序號');
+        $worksheet->setCellValueByColumnAndRow(3, 1, '銷貨單別');
+        $worksheet->setCellValueByColumnAndRow(4, 1, '銷貨單號');
+        //$worksheet->setCellValueByColumnAndRow(6, 1, '銷貨序號');
+        $worksheet->setCellValueByColumnAndRow(5, 1, '暫出單別');
+        $worksheet->setCellValueByColumnAndRow(6, 1, '暫出單號');
+        $worksheet->setCellValueByColumnAndRow(7, 1, '本幣未稅金額');
+        $worksheet->setCellValueByColumnAndRow(8, 1, '本幣稅額');
+        //$worksheet->setCellValueByColumnAndRow(11, 1, '暫出序號');
+
+        $j = 1;
+        foreach ($ACRTB_lists as $ACRTB_list) {
+            $j = $j + 1;
+            /*
+            $worksheet->setCellValueByColumnAndRow(1, $j, $ACRTB_list->TB001);
+            $worksheet->setCellValueByColumnAndRow(2, $j, $ACRTB_list->TB002);
+            $worksheet->setCellValueByColumnAndRow(3, $j, $ACRTB_list->TB003);
+            $worksheet->setCellValueByColumnAndRow(4, $j, $ACRTB_list->TB005);
+            $worksheet->setCellValueByColumnAndRow(5, $j, $ACRTB_list->TB006);
+            //$worksheet->setCellValueByColumnAndRow(6, $j, $ACRTB_list->TB007);
+            $worksheet->setCellValueByColumnAndRow(6, $j, $ACRTB_list->TB019);
+            $worksheet->setCellValueByColumnAndRow(7, $j, $ACRTB_list->TB020);
+            $worksheet->setCellValueByColumnAndRow(8, $j, $ACRTB_list->TH032);
+            $worksheet->setCellValueByColumnAndRow(9, $j, $ACRTB_list->TH033);
+            //$worksheet->setCellValueByColumnAndRow(11, $j, $ACRTB_list->TH034);
+            */
+            $worksheet->setCellValueByColumnAndRow(1, $j, $ACRTB_list->TH027);
+            $worksheet->setCellValueByColumnAndRow(2, $j, $ACRTB_list->TH028);
+            $worksheet->setCellValueByColumnAndRow(3, $j, $ACRTB_list->TH001);
+            $worksheet->setCellValueByColumnAndRow(4, $j, $ACRTB_list->TH002);
+            $worksheet->setCellValueByColumnAndRow(5, $j, $ACRTB_list->TH032);
+            //$worksheet->setCellValueByColumnAndRow(6, $j, $ACRTB_list->TB007);
+            $worksheet->setCellValueByColumnAndRow(6, $j, $ACRTB_list->TH033);
+            $worksheet->setCellValueByColumnAndRow(7, $j, $ACRTB_list->TH037);
+            $worksheet->setCellValueByColumnAndRow(8, $j, $ACRTB_list->TH038);
+            //$worksheet->setCellValueByColumnAndRow(9, $j, $ACRTB_list->TH033);
         }
 
         // 下载
