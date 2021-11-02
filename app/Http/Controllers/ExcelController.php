@@ -1879,7 +1879,7 @@ class ExcelController extends Controller
         }
 
         // 下载
-        $filename = '暫出單客戶單號查詢.xlsx';
+        $filename = $INV_TG002.'_暫出單客戶單號查詢.xlsx';
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment;filename="'.$filename.'"');
         header('Cache-Control: max-age=0');
