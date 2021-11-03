@@ -1866,7 +1866,7 @@ class ExcelController extends Controller
         $worksheet->setCellValueByColumnAndRow(4, 1, '客戶代號');
         $worksheet->setCellValueByColumnAndRow(5, 1, '客戶名稱');
         $worksheet->setCellValueByColumnAndRow(6, 1, '未稅金額小計');
-        $worksheet->setCellValueByColumnAndRow(7, 1, '稅額小計1');
+        $worksheet->setCellValueByColumnAndRow(7, 1, '稅額小計');
 
         $j = 1;
         foreach ($INVTG_lists as $INVTG_list) {
