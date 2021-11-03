@@ -1837,7 +1837,7 @@ class ExcelController extends Controller
         $INV_TF005 = $request->input('TF005');
         $INV_TG001 = $request->input('TG001');
         $INV_TG002 = $request->input('TG002').'%';
-        $INVTG_lists = DB::connection('sqlsrv_tensall')->select('Select distinct TG200,TG001,TG002,TF005,TF006,SUM(TG013) AS TG013 
+        $INVTG_lists = DB::connection('sqlsrv_tensall')->select('Select distinct TG200,TG001,TG002,TF005,TF006,SUM(TG201) AS TG201,SUM(TG202) AS TG202 
         From INVTF A,INVTG B
         WHERE A.TF001=B.TG001 AND A.TF002=B.TG002
         AND TF005 = ?
@@ -1865,7 +1865,8 @@ class ExcelController extends Controller
         $worksheet->setCellValueByColumnAndRow(3, 1, '暫出單號');
         $worksheet->setCellValueByColumnAndRow(4, 1, '客戶代號');
         $worksheet->setCellValueByColumnAndRow(5, 1, '客戶名稱');
-        $worksheet->setCellValueByColumnAndRow(6, 1, '金額小計');
+        $worksheet->setCellValueByColumnAndRow(6, 1, '未稅金額小計');
+        $worksheet->setCellValueByColumnAndRow(7, 1, '稅額小計');
 
         $j = 1;
         foreach ($INVTG_lists as $INVTG_list) {
@@ -1875,7 +1876,8 @@ class ExcelController extends Controller
             $worksheet->setCellValueByColumnAndRow(3, $j, $INVTG_list->TG002);
             $worksheet->setCellValueByColumnAndRow(4, $j, $INVTG_list->TF005);
             $worksheet->setCellValueByColumnAndRow(5, $j, $INVTG_list->TF006);
-            $worksheet->setCellValueByColumnAndRow(6, $j, $INVTG_list->TG013);
+            $worksheet->setCellValueByColumnAndRow(6, $j, $INVTG_list->TG201);
+            $worksheet->setCellValueByColumnAndRow(7, $j, $INVTG_list->TG202);
         }
 
         // 下载
