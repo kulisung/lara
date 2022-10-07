@@ -141,7 +141,7 @@ class ExcelController extends Controller
         $worksheet->setCellValueByColumnAndRow(3, 1, '銷貨日期');
         $worksheet->setCellValueByColumnAndRow(4, 1, '部門');
         $worksheet->setCellValueByColumnAndRow(5, 1, '品牌');
-        $worksheet->setCellValueByColumnAndRow(6, 1, '四大類');
+        $worksheet->setCellValueByColumnAndRow(6, 1, '大分類');
         $worksheet->setCellValueByColumnAndRow(7, 1, '品號');
         $worksheet->setCellValueByColumnAndRow(8, 1, '品名');
         $worksheet->setCellValueByColumnAndRow(9, 1, '庫別');
@@ -336,7 +336,7 @@ class ExcelController extends Controller
         //$fin_chk = $request->input('fin_chk');
         $fin_date = substr($fin_chk,0,4).'01';  //累計由該年度一月開始計算
         //淨額
-        $b4_chks = DB::connection('sqlsrv_tensall')->select('SELECT * FROM (SELECT TG004,TG007,TG003,CASE TG005 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS TG005,CASE MB008 WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,CASE MB006 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB006,CASE MA038 WHEN ? THEN ? ELSE ? END AS MA038,MA019,TH005,QTY=TH008+TH024,TG012,TH037,TH038,TH001,TH002,TH003 
+        $b4_chks = DB::connection('sqlsrv_tensall')->select('SELECT * FROM (SELECT TG004,TG007,TG003,CASE TG005 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS TG005,CASE MB008 WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,CASE MB006 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB006,CASE MA038 WHEN ? THEN ? ELSE ? END AS MA038,MA019,TH005,QTY=TH008+TH024,TG012,TH037,TH038,TH001,TH002,TH003 
         FROM COPMA D,COPTG E,COPTH H,INVMB K
         WHERE E.TG001=H.TH001 
         AND E.TG002=H.TH002
@@ -347,7 +347,7 @@ class ExcelController extends Controller
         AND left(TG003,6) = ?
         AND MB001 <> ?
         UNION
-        SELECT TI004,TI021,TI003,CASE TI005 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS TG005,CASE MB008 WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,CASE MB006 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB006,CASE MA038 WHEN ? THEN ? ELSE ? END AS MA038,MA019,TJ005,TJ007=(TJ007+TJ042)*-1,TI009,TJ033*-1,TJ034*-1,TJ001,TJ002,TJ003 
+        SELECT TI004,TI021,TI003,CASE TI005 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS TG005,CASE MB008 WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,CASE MB006 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB006,CASE MA038 WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MA038,MA019,TJ005,TJ007=(TJ007+TJ042)*-1,TI009,TJ033*-1,TJ034*-1,TJ001,TJ002,TJ003 
         FROM COPMA D,COPTI E,COPTJ H,INVMB K
         WHERE E.TI001=H.TJ001 
         AND E.TI002=H.TJ002
@@ -358,10 +358,10 @@ class ExcelController extends Controller
         AND left(TI003,6) = ?
         AND MB001 <> ?) P  
         ORDER BY MB006,TG004,TG003',
-        ['D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','01','TS6','02','ODM','OTHER','21','食品','22','化妝品','23','私密保養品','26','商品成品','OTHER','3','外銷','內銷','Y',$fin_chk,'9090','D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','01','TS6','02','ODM','OTHER','21','食品','22','化妝品','23','私密保養品','26','商品成品','OTHER','3','外銷','內銷','Y',$fin_chk,'9090']);
+        ['D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','01','TS6','02','ODM','OTHER','21','食品','22','化妝品','23','私密保養品','26','商品成品','27','生活用品','OTHER','3','外銷','內銷','Y',$fin_chk,'9090','D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','01','TS6','02','ODM','OTHER','21','食品','22','化妝品','23','私密保養品','26','商品成品','27','生活用品','OTHER','3','外銷','內銷','Y',$fin_chk,'9090']);
 
         //銷貨總額不含成本毛利額
-        $b4_shipchks = DB::connection('sqlsrv_tensall')->select('SELECT TG004,TG007,TG003,CASE TG005 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS TG005,CASE MB008 WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,CASE MB006 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB006,CASE MA038 WHEN ? THEN ? ELSE ? END AS MA038,MA019,TH005,QTY=TH008+TH024,TG012,TH037,TH038,TH001,TH002,TH003 
+        $b4_shipchks = DB::connection('sqlsrv_tensall')->select('SELECT TG004,TG007,TG003,CASE TG005 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS TG005,CASE MB008 WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,CASE MB006 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB006,CASE MA038 WHEN ? THEN ? ELSE ? END AS MA038,MA019,TH005,QTY=TH008+TH024,TG012,TH037,TH038,TH001,TH002,TH003 
         FROM COPMA D,COPTG E,COPTH H,INVMB K
         WHERE E.TG001=H.TH001 
         AND E.TG002=H.TH002
@@ -372,10 +372,10 @@ class ExcelController extends Controller
         AND left(TG003,6) = ?
         AND MB001 <> ?
         ORDER BY MB006,TG004,TG003',
-        ['D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','01','TS6','02','ODM','OTHER','21','食品','22','化妝品','23','私密保養品','26','商品成品','OTHER','3','外銷','內銷','Y',$fin_chk,'9090']);
+        ['D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','01','TS6','02','ODM','OTHER','21','食品','22','化妝品','23','私密保養品','26','商品成品','27','生活用品','OTHER','3','外銷','內銷','Y',$fin_chk,'9090']);
 
         //單月銷退
-        $b4_shipbacks = DB::connection('sqlsrv_tensall')->select('SELECT TI004,TI021,TI003,CASE TI005 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS TG005,CASE MB008 WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,CASE MB006 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB006,CASE MA038 WHEN ? THEN ? ELSE ? END AS MA038,MA019,TJ005,QTY=TJ007+TJ042,TI009,TJ033,TJ034,TJ001,TJ002,TJ003
+        $b4_shipbacks = DB::connection('sqlsrv_tensall')->select('SELECT TI004,TI021,TI003,CASE TI005 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS TG005,CASE MB008 WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,CASE MB006 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB006,CASE MA038 WHEN ? THEN ? ELSE ? END AS MA038,MA019,TJ005,QTY=TJ007+TJ042,TI009,TJ033,TJ034,TJ001,TJ002,TJ003
         FROM COPMA D,COPTI E,COPTJ H,INVMB K
         WHERE E.TI001=H.TJ001   
         AND E.TI002=H.TJ002
@@ -387,10 +387,10 @@ class ExcelController extends Controller
         AND left(TI003,6) = ?  
         AND MB001 <> ?
         ORDER BY MB006 DESC,TI004,TI003',
-        ['D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','01','TS6','02','ODM','OTHER','21','食品','22','化妝品','23','私密保養品','26','商品成品','OTHER','3','外銷','內銷','Y','1',$fin_chk,'9090']);
+        ['D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','01','TS6','02','ODM','OTHER','21','食品','22','化妝品','23','私密保養品','26','商品成品','27','生活用品','OTHER','3','外銷','內銷','Y','1',$fin_chk,'9090']);
 
         //單月折讓
-        $b4_shipdiscs = DB::connection('sqlsrv_tensall')->select('SELECT TI004,TI021,TI003,CASE TI005 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS TG005,CASE MB008 WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,CASE MB006 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB006,CASE MA038 WHEN ? THEN ? ELSE ? END AS MA038,MA019,TJ005,QTY=TJ007+TJ042,TI009,TJ033, TJ034,TJ001,TJ002,TJ003
+        $b4_shipdiscs = DB::connection('sqlsrv_tensall')->select('SELECT TI004,TI021,TI003,CASE TI005 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS TG005,CASE MB008 WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,CASE MB006 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB006,CASE MA038 WHEN ? THEN ? ELSE ? END AS MA038,MA019,TJ005,QTY=TJ007+TJ042,TI009,TJ033, TJ034,TJ001,TJ002,TJ003
         FROM COPMA D,COPTI E,COPTJ H,INVMB K
         WHERE E.TI001=H.TJ001   
         AND E.TI002=H.TJ002
@@ -402,7 +402,7 @@ class ExcelController extends Controller
         AND left(TI003,6) = ?  
         AND MB001 <> ?
         ORDER BY MB006 DESC,TI004,TI003',
-        ['D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','01','TS6','02','ODM','OTHER','21','食品','22','化妝品','23','私密保養品','26','商品成品','OTHER','3','外銷','內銷','Y','2',$fin_chk,'9090']);
+        ['D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','01','TS6','02','ODM','OTHER','21','食品','22','化妝品','23','私密保養品','26','商品成品','27','生活用品','OTHER','3','外銷','內銷','Y','2',$fin_chk,'9090']);
 
         //客戶銷貨總額
         $b4_customers = DB::connection('sqlsrv_tensall')->select('SELECT TG004,TG007,SUM(TH037) AS SUMCUS,SUM(TH038) AS SUMTAX
@@ -466,8 +466,8 @@ class ExcelController extends Controller
         ['Y','2',$fin_chk,'9090']);
         
 
-        //單月四大類合計
-        $b4_items = DB::connection('sqlsrv_tensall')->select('SELECT CASE MB006 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB006,SUM(TH037) AS COST FROM (
+        //單月大分類合計
+        $b4_items = DB::connection('sqlsrv_tensall')->select('SELECT CASE MB006 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB006,SUM(TH037) AS COST FROM (
         SELECT MB006,TH037 
         FROM COPMA D,COPTG E,COPTH H,INVMB K
         WHERE E.TG001=H.TH001 
@@ -479,10 +479,10 @@ class ExcelController extends Controller
         AND left(TG003,6) = ?
         AND MB001 <> ?) P
         GROUP BY MB006 ORDER BY MB006 DESC',
-        ['21','食品','22','化妝品','23','私密保養品','26','商品成品','OTHER','Y',$fin_chk,'9090']);
+        ['21','食品','22','化妝品','23','私密保養品','26','商品成品','27','生活用品','OTHER','Y',$fin_chk,'9090']);
 
-        //累計四大類
-        $b4_sumitems = DB::connection('sqlsrv_tensall')->select('SELECT CASE MB006 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB006,SUM(TH037) AS COST FROM (
+        //累計大分類
+        $b4_sumitems = DB::connection('sqlsrv_tensall')->select('SELECT CASE MB006 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB006,SUM(TH037) AS COST FROM (
         SELECT MB006,TH037 
         FROM COPMA D,COPTG E,COPTH H,INVMB K
         WHERE E.TG001=H.TH001 
@@ -494,7 +494,7 @@ class ExcelController extends Controller
         AND left(TG003,6) BETWEEN ? AND ?
         AND MB001 <> ?) P
         GROUP BY MB006 ORDER BY MB006 DESC',
-        ['21','食品','22','化妝品','23','私密保養品','26','商品成品','OTHER','Y',$fin_date,$fin_chk,'9090']);
+        ['21','食品','22','化妝品','23','私密保養品','26','商品成品','27','生活用品','OTHER','Y',$fin_date,$fin_chk,'9090']);
 
         //單月品牌統計
         $b4_brands = DB::connection('sqlsrv_tensall')->select('SELECT CASE MB008 WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,SUM(TH037) AS COST FROM (
@@ -598,7 +598,7 @@ class ExcelController extends Controller
         $worksheet->setCellValueByColumnAndRow(3, 1, '銷貨日期');
         $worksheet->setCellValueByColumnAndRow(4, 1, '部門');
         $worksheet->setCellValueByColumnAndRow(5, 1, '品牌');
-        $worksheet->setCellValueByColumnAndRow(6, 1, '四大類');
+        $worksheet->setCellValueByColumnAndRow(6, 1, '大分類');
         $worksheet->setCellValueByColumnAndRow(7, 1, '內外銷');
         $worksheet->setCellValueByColumnAndRow(8, 1, '國家別');
         $worksheet->setCellValueByColumnAndRow(9, 1, '品名');
@@ -641,7 +641,7 @@ class ExcelController extends Controller
         $worksheet->setCellValueByColumnAndRow(3, 1, '銷貨日期');
         $worksheet->setCellValueByColumnAndRow(4, 1, '部門');
         $worksheet->setCellValueByColumnAndRow(5, 1, '品牌');
-        $worksheet->setCellValueByColumnAndRow(6, 1, '四大類');
+        $worksheet->setCellValueByColumnAndRow(6, 1, '大分類');
         $worksheet->setCellValueByColumnAndRow(7, 1, '內外銷');
         $worksheet->setCellValueByColumnAndRow(8, 1, '國家別');
         $worksheet->setCellValueByColumnAndRow(9, 1, '品名');
@@ -674,13 +674,13 @@ class ExcelController extends Controller
             $worksheet->setCellValueByColumnAndRow(16, $j, $b4_shipchk->TH003);
         }
 
-        //Sheet2補入四大類、品牌、銷退折讓等資訊
+        //Sheet2補入大分類、品牌、銷退折讓等資訊
         $L = $ship_records + 5;
         
-        $worksheet->setCellValueByColumnAndRow(1, $L, '四大類');
-        $worksheet->setCellValueByColumnAndRow(2, $L, '四大類單月未稅合計');
-        $worksheet->setCellValueByColumnAndRow(4, $L, '四大類');
-        $worksheet->setCellValueByColumnAndRow(5, $L, '四大類累計未稅合計');
+        $worksheet->setCellValueByColumnAndRow(1, $L, '大分類');
+        $worksheet->setCellValueByColumnAndRow(2, $L, '大分類單月未稅合計');
+        $worksheet->setCellValueByColumnAndRow(4, $L, '大分類');
+        $worksheet->setCellValueByColumnAndRow(5, $L, '大分類累計未稅合計');
         $worksheet->setCellValueByColumnAndRow(1, $L + 9, '品牌');
         $worksheet->setCellValueByColumnAndRow(2, $L + 9, '品牌單月未稅合計');
         $worksheet->setCellValueByColumnAndRow(4, $L + 9, '品牌');
@@ -767,7 +767,7 @@ class ExcelController extends Controller
         $worksheet->setCellValueByColumnAndRow(3, 1, '銷貨日期');
         $worksheet->setCellValueByColumnAndRow(4, 1, '部門');
         $worksheet->setCellValueByColumnAndRow(5, 1, '品牌');
-        $worksheet->setCellValueByColumnAndRow(6, 1, '四大類');
+        $worksheet->setCellValueByColumnAndRow(6, 1, '大分類');
         $worksheet->setCellValueByColumnAndRow(7, 1, '內外銷');
         $worksheet->setCellValueByColumnAndRow(8, 1, '國家別');
         $worksheet->setCellValueByColumnAndRow(9, 1, '品名');
@@ -810,7 +810,7 @@ class ExcelController extends Controller
         $worksheet->setCellValueByColumnAndRow(3, 1, '銷貨日期');
         $worksheet->setCellValueByColumnAndRow(4, 1, '部門');
         $worksheet->setCellValueByColumnAndRow(5, 1, '品牌');
-        $worksheet->setCellValueByColumnAndRow(6, 1, '四大類');
+        $worksheet->setCellValueByColumnAndRow(6, 1, '大分類');
         $worksheet->setCellValueByColumnAndRow(7, 1, '內外銷');
         $worksheet->setCellValueByColumnAndRow(8, 1, '國家別');
         $worksheet->setCellValueByColumnAndRow(9, 1, '品名');
@@ -937,7 +937,7 @@ class ExcelController extends Controller
         //$fin_chk = $request->input('fin_afdate');
         $fin_date = substr($fin_chk,0,4).'01';  //累計由該年度一月開始計算
         //結帳後銷貨淨額---含成本及毛利
-        $af_chks = DB::connection('sqlsrv_tensall')->select('SELECT * FROM (SELECT TG004,TG007,TG003,CASE TG005 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS TG005,CASE MB008 WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,CASE MB006 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB006,CASE MA038 WHEN ? THEN ? ELSE ? END AS MA038,TH005,QTY=TH008+TH024,TG012,TH037,LA013,CASE WHEN TH024=? AND (TH031 = ? or TH031 = ?) THEN LA013 WHEN TH024<>? AND TH031 = ? THEN ROUND(TH061*LA012,0) END AS SCOST,CASE WHEN TH024<>? AND (TH031 = ? or TH031 = ?) THEN LA013-ROUND(TH061*LA012,0) WHEN TH024=? AND (TH031 = ? or TH031 = ?) THEN ? END AS TCOST,PROFIT=TH037-LA013,CASE WHEN TH024=? AND (TH031 = ? or TH031 = ?) THEN TH037-LA013 WHEN TH024<>? AND TH031=? THEN TH037-ROUND(TH061*LA012,0) END AS SPROFIT,TH038,TH001,TH002,TH003 
+        $af_chks = DB::connection('sqlsrv_tensall')->select('SELECT * FROM (SELECT TG004,TG007,TG003,CASE TG005 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS TG005,CASE MB008 WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,CASE MB006 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB006,CASE MA038 WHEN ? THEN ? ELSE ? END AS MA038,TH005,QTY=TH008+TH024,TG012,TH037,LA013,CASE WHEN TH024=? AND (TH031 = ? or TH031 = ?) THEN LA013 WHEN TH024<>? AND TH031 = ? THEN ROUND(TH061*LA012,0) END AS SCOST,CASE WHEN TH024<>? AND (TH031 = ? or TH031 = ?) THEN LA013-ROUND(TH061*LA012,0) WHEN TH024=? AND (TH031 = ? or TH031 = ?) THEN ? END AS TCOST,PROFIT=TH037-LA013,CASE WHEN TH024=? AND (TH031 = ? or TH031 = ?) THEN TH037-LA013 WHEN TH024<>? AND TH031=? THEN TH037-ROUND(TH061*LA012,0) END AS SPROFIT,TH038,TH001,TH002,TH003 
         FROM COPMA D,COPTG E,COPTH H,INVMB K,INVLA L
         WHERE E.TG001=H.TH001 
         AND E.TG002=H.TH002
@@ -952,7 +952,7 @@ class ExcelController extends Controller
         AND left(TG003,6) = ?
         AND MB001 <> ?
         UNION
-        SELECT TG004,TG007,TG003,CASE TG005 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS TG005,CASE MB008 WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,CASE MB006 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB006,CASE MA038 WHEN ? THEN ? ELSE ? END AS MA038,TH005,QTY=TH008+TH024,TG012,TH037,LA013 = ?,SCOST = ?,TCOST = ?,PROFIT=TH037,SPROFIT=TH037,TH038,TH001,TH002,TH003
+        SELECT TG004,TG007,TG003,CASE TG005 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS TG005,CASE MB008 WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,CASE MB006 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB006,CASE MA038 WHEN ? THEN ? ELSE ? END AS MA038,TH005,QTY=TH008+TH024,TG012,TH037,LA013 = ?,SCOST = ?,TCOST = ?,PROFIT=TH037,SPROFIT=TH037,TH038,TH001,TH002,TH003
         FROM COPMA D,COPTG E,COPTH H,INVMB K
         WHERE E.TG001=H.TH001 
         AND E.TG002=H.TH002
@@ -964,7 +964,7 @@ class ExcelController extends Controller
         AND left(TG003,6) = ?
         AND MB001 <> ?
         UNION
-        SELECT TI004,TI021,TI003,CASE TI005 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS TG005,CASE MB008 WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,CASE MB006 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB006,CASE MA038 WHEN ? THEN ? ELSE ? END AS MA038,TJ005,TJ007=(TJ007+TJ042)*-1,TI009,TJ033*-1,LA013*-1,CASE WHEN TJ042=? AND (TJ041 = ? OR TJ041 = ?) THEN LA013*-1 WHEN TJ042<>? AND TJ041 = ? THEN ROUND(TJ050*LA012,0)*-1 END AS SCOST,CASE WHEN TJ042 <> ? AND (TJ041 = ? OR TJ041 = ?) THEN (LA013-ROUND(TJ050*LA012,0))*-1 WHEN TJ042=? AND (TJ041 = ? OR TJ041 = ?) THEN ? END AS TCOST,PROFIT=(TJ033-LA013)*-1,CASE WHEN TJ042=? AND (TJ041 = ? OR TJ041 = ?) THEN (TJ033-LA013)*-1 WHEN TJ042 <> ? AND TJ041 = ? THEN (TJ033-ROUND(TJ050*LA012,0))*-1 END AS SPROFIT,TJ034*-1,TJ001,TJ002,TJ003 
+        SELECT TI004,TI021,TI003,CASE TI005 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS TG005,CASE MB008 WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,CASE MB006 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB006,CASE MA038 WHEN ? THEN ? ELSE ? END AS MA038,TJ005,TJ007=(TJ007+TJ042)*-1,TI009,TJ033*-1,LA013*-1,CASE WHEN TJ042=? AND (TJ041 = ? OR TJ041 = ?) THEN LA013*-1 WHEN TJ042<>? AND TJ041 = ? THEN ROUND(TJ050*LA012,0)*-1 END AS SCOST,CASE WHEN TJ042 <> ? AND (TJ041 = ? OR TJ041 = ?) THEN (LA013-ROUND(TJ050*LA012,0))*-1 WHEN TJ042=? AND (TJ041 = ? OR TJ041 = ?) THEN ? END AS TCOST,PROFIT=(TJ033-LA013)*-1,CASE WHEN TJ042=? AND (TJ041 = ? OR TJ041 = ?) THEN (TJ033-LA013)*-1 WHEN TJ042 <> ? AND TJ041 = ? THEN (TJ033-ROUND(TJ050*LA012,0))*-1 END AS SPROFIT,TJ034*-1,TJ001,TJ002,TJ003 
         FROM COPMA D,COPTI E,COPTJ H,INVMB K,INVLA L
         WHERE E.TI001=H.TJ001 
         AND E.TI002=H.TJ002
@@ -979,10 +979,10 @@ class ExcelController extends Controller
         AND left(TI003,6) = ?
         AND MB001 <> ?) P  
         ORDER BY P.MB006 DESC,P.TG004,P.TG003',
-        ['D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','01','TS6','02','ODM','OTHER','21','食品','22','化妝品','23','私密保養品','26','商品成品','OTHER','3','外銷','內銷','0','1','2','0','1','0','1','2','0','1','2','0','0','1','2','0','1','Y',$fin_chk,'9090','D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','01','TS6','02','ODM','OTHER','21','食品','22','化妝品','23','私密保養品','26','商品成品','OTHER','3','外銷','內銷','0','0','0','Y','9999','8888','Z-PD0066','9090',$fin_chk,'9090','D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','01','TS6','02','ODM','OTHER','21','食品','22','化妝品','23','私密保養品','26','商品成品','OTHER','3','外銷','內銷','0','1','2','0','1','0','1','2','0','1','2','0','0','1','2','0','1','Y',$fin_chk,'9090']);
+        ['D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','01','TS6','02','ODM','OTHER','21','食品','22','化妝品','23','私密保養品','26','商品成品','27','生活用品','OTHER','3','外銷','內銷','0','1','2','0','1','0','1','2','0','1','2','0','0','1','2','0','1','Y',$fin_chk,'9090','D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','01','TS6','02','ODM','OTHER','21','食品','22','化妝品','23','私密保養品','26','商品成品','27','生活用品','OTHER','3','外銷','內銷','0','0','0','Y','9999','8888','Z-PD0066','9090',$fin_chk,'9090','D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','01','TS6','02','ODM','OTHER','21','食品','22','化妝品','23','私密保養品','26','商品成品','27','生活用品','OTHER','3','外銷','內銷','0','1','2','0','1','0','1','2','0','1','2','0','0','1','2','0','1','Y',$fin_chk,'9090']);
 
         //結帳後銷售額總毛利查詢(不含運輸費用)
-        $af_shipchks = DB::connection('sqlsrv_tensall')->select('SELECT * FROM (SELECT TG004,TG007,TG003,CASE TG005 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS TG005,CASE MB008 WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,CASE MB006 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB006,CASE MA038 WHEN ? THEN ? ELSE ? END AS MA038,TH005,QTY=TH008+TH024,TG012,TH037,LA013,CASE WHEN TH024=? AND (TH031 = ? or TH031 = ?) THEN LA013 WHEN TH024<>? AND TH031 = ? THEN ROUND(TH061*LA012,0) END AS SCOST,CASE WHEN TH024<>? AND TH031 = ? THEN LA013-ROUND(TH061*LA012,0) WHEN TH024=? AND (TH031 = ? or TH031 = ?) THEN ? END AS TCOST,PROFIT=TH037-LA013,CASE WHEN TH024=? AND (TH031 = ? or TH031 = ?) THEN TH037-LA013 WHEN TH024<>? AND TH031=? THEN TH037-ROUND(TH061*LA012,0) END AS SPROFIT,TH038,TH001,TH002,TH003 
+        $af_shipchks = DB::connection('sqlsrv_tensall')->select('SELECT * FROM (SELECT TG004,TG007,TG003,CASE TG005 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS TG005,CASE MB008 WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,CASE MB006 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB006,CASE MA038 WHEN ? THEN ? ELSE ? END AS MA038,TH005,QTY=TH008+TH024,TG012,TH037,LA013,CASE WHEN TH024=? AND (TH031 = ? or TH031 = ?) THEN LA013 WHEN TH024<>? AND TH031 = ? THEN ROUND(TH061*LA012,0) END AS SCOST,CASE WHEN TH024<>? AND TH031 = ? THEN LA013-ROUND(TH061*LA012,0) WHEN TH024=? AND (TH031 = ? or TH031 = ?) THEN ? END AS TCOST,PROFIT=TH037-LA013,CASE WHEN TH024=? AND (TH031 = ? or TH031 = ?) THEN TH037-LA013 WHEN TH024<>? AND TH031=? THEN TH037-ROUND(TH061*LA012,0) END AS SPROFIT,TH038,TH001,TH002,TH003 
         FROM COPMA D,COPTG E,COPTH H,INVMB K,INVLA L
         WHERE E.TG001=H.TH001 
         AND E.TG002=H.TH002
@@ -997,7 +997,7 @@ class ExcelController extends Controller
         AND left(TG003,6) = ?
         AND MB001 <> ?
         UNION
-        SELECT TG004,TG007,TG003,CASE TG005 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS TG005,CASE MB008 WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,CASE MB006 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB006,CASE MA038 WHEN ? THEN ? ELSE ? END AS MA038,TH005,QTY=TH008+TH024,TG012,TH037,LA013 = ?,SCOST = ?,TCOST = ?,PROFIT=TH037,SPROFIT=TH037,TH038,TH001,TH002,TH003
+        SELECT TG004,TG007,TG003,CASE TG005 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS TG005,CASE MB008 WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,CASE MB006 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB006,CASE MA038 WHEN ? THEN ? ELSE ? END AS MA038,TH005,QTY=TH008+TH024,TG012,TH037,LA013 = ?,SCOST = ?,TCOST = ?,PROFIT=TH037,SPROFIT=TH037,TH038,TH001,TH002,TH003
         FROM COPMA D,COPTG E,COPTH H,INVMB K
         WHERE E.TG001=H.TH001 
         AND E.TG002=H.TH002
@@ -1009,10 +1009,10 @@ class ExcelController extends Controller
         AND left(TG003,6) = ?
         AND MB001 <> ?) P
         ORDER BY P.MB006 DESC,P.TG004,P.TG003',
-        ['D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','01','TS6','02','ODM','OTHER','21','食品','22','化妝品','23','私密保養品','26','商品成品','OTHER','3','外銷','內銷','0','1','2','0','1','0','1','0','1','2','0','0','1','2','0','1','Y',$fin_chk,'9090','D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','01','TS6','02','ODM','OTHER','21','食品','22','化妝品','23','私密保養品','26','商品成品','OTHER','3','外銷','內銷','0','0','0','Y','9999','8888','Z-PD0066','9090',$fin_chk,'9090']);
+        ['D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','01','TS6','02','ODM','OTHER','21','食品','22','化妝品','23','私密保養品','26','商品成品','27','生活用品','OTHER','3','外銷','內銷','0','1','2','0','1','0','1','0','1','2','0','0','1','2','0','1','Y',$fin_chk,'9090','D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','01','TS6','02','ODM','OTHER','21','食品','22','化妝品','23','私密保養品','26','商品成品','27','生活用品','OTHER','3','外銷','內銷','0','0','0','Y','9999','8888','Z-PD0066','9090',$fin_chk,'9090']);
 
         //結帳後單月銷退及折讓
-        $af_allshipbacks = DB::connection('sqlsrv_tensall')->select('SELECT TI004,TI021,TI003,CASE TI005 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS TG005,CASE MB008 WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,CASE MB006 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB006,CASE MA038 WHEN ? THEN ? ELSE ? END AS MA038,MA019,TJ005,QTY=(TJ007+TJ042)*-1,TI009,TJ033=TJ033*-1,LA013=LA013*-1,CASE WHEN TJ042=? AND (TJ041=? or TJ041=?) THEN LA013*-1 WHEN TJ042<>? AND TJ041=? THEN ROUND(TJ050*LA012,0)*-1 END AS SCOST,CASE WHEN TJ042<>? AND TJ041=? THEN (LA013-ROUND(TJ050*LA012,0))*-1 WHEN TJ042=? AND (TJ041=? or TJ041=?) THEN ? END AS TCOST,PROFIT=(TJ033-LA013)*-1,CASE WHEN TJ042=? AND (TJ041=? or TJ041=?) THEN (TJ033-LA013)*-1 WHEN TJ042<>? AND TJ041=? THEN (TJ033-ROUND(TJ050*LA012,0))*-1 END AS SPROFIT,TJ034,TJ001,TJ002,TJ003
+        $af_allshipbacks = DB::connection('sqlsrv_tensall')->select('SELECT TI004,TI021,TI003,CASE TI005 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS TG005,CASE MB008 WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,CASE MB006 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB006,CASE MA038 WHEN ? THEN ? ELSE ? END AS MA038,MA019,TJ005,QTY=(TJ007+TJ042)*-1,TI009,TJ033=TJ033*-1,LA013=LA013*-1,CASE WHEN TJ042=? AND (TJ041=? or TJ041=?) THEN LA013*-1 WHEN TJ042<>? AND TJ041=? THEN ROUND(TJ050*LA012,0)*-1 END AS SCOST,CASE WHEN TJ042<>? AND TJ041=? THEN (LA013-ROUND(TJ050*LA012,0))*-1 WHEN TJ042=? AND (TJ041=? or TJ041=?) THEN ? END AS TCOST,PROFIT=(TJ033-LA013)*-1,CASE WHEN TJ042=? AND (TJ041=? or TJ041=?) THEN (TJ033-LA013)*-1 WHEN TJ042<>? AND TJ041=? THEN (TJ033-ROUND(TJ050*LA012,0))*-1 END AS SPROFIT,TJ034,TJ001,TJ002,TJ003
         FROM COPMA D,COPTI E,COPTJ H,INVMB K,INVLA L
         WHERE E.TI001=H.TJ001   
         AND E.TI002=H.TJ002
@@ -1026,10 +1026,10 @@ class ExcelController extends Controller
         AND left(TI003,6) = ?  
         AND MB001 <> ?
         ORDER BY MB006 DESC,TI004,TI003',
-        ['D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','01','TS6','02','ODM','OTHER','21','食品','22','化妝品','23','私密保養品','26','商品成品','OTHER','3','外銷','內銷','0','1','2','0','1','0','1','0','1','2','0','0','1','2','0','1','Y',$fin_chk,'9090']);
+        ['D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','01','TS6','02','ODM','OTHER','21','食品','22','化妝品','23','私密保養品','26','商品成品','27','生活用品','OTHER','3','外銷','內銷','0','1','2','0','1','0','1','0','1','2','0','0','1','2','0','1','Y',$fin_chk,'9090']);
 
         //結帳後單月銷退
-        $af_shipbacks = DB::connection('sqlsrv_tensall')->select('SELECT TI004,TI021,TI003,CASE TI005 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS TG005,CASE MB008 WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,CASE MB006 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB006,CASE MA038 WHEN ? THEN ? ELSE ? END AS MA038,MA019,TJ005,QTY=(TJ007+TJ042)*-1,TI009,TJ033=TJ033*-1,LA013=LA013*-1,CASE WHEN TJ042=? AND (TJ041=? or TJ041=?) THEN LA013*-1 WHEN TJ042<>? AND TJ041=? THEN ROUND(TJ050*LA012,0)*-1 END AS SCOST,CASE WHEN TJ042<>? AND TJ041=? THEN (LA013-ROUND(TJ050*LA012,0))*-1 WHEN TJ042=? AND (TJ041=? or TJ041=?) THEN ? END AS TCOST,PROFIT=(TJ033-LA013)*-1,CASE WHEN TJ042=? AND (TJ041=? or TJ041=?) THEN (TJ033-LA013)*-1 WHEN TJ042<>? AND TJ041=? THEN (TJ033-ROUND(TJ050*LA012,0))*-1 END AS SPROFIT,TJ034,TJ001,TJ002,TJ003
+        $af_shipbacks = DB::connection('sqlsrv_tensall')->select('SELECT TI004,TI021,TI003,CASE TI005 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS TG005,CASE MB008 WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,CASE MB006 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB006,CASE MA038 WHEN ? THEN ? ELSE ? END AS MA038,MA019,TJ005,QTY=(TJ007+TJ042)*-1,TI009,TJ033=TJ033*-1,LA013=LA013*-1,CASE WHEN TJ042=? AND (TJ041=? or TJ041=?) THEN LA013*-1 WHEN TJ042<>? AND TJ041=? THEN ROUND(TJ050*LA012,0)*-1 END AS SCOST,CASE WHEN TJ042<>? AND TJ041=? THEN (LA013-ROUND(TJ050*LA012,0))*-1 WHEN TJ042=? AND (TJ041=? or TJ041=?) THEN ? END AS TCOST,PROFIT=(TJ033-LA013)*-1,CASE WHEN TJ042=? AND (TJ041=? or TJ041=?) THEN (TJ033-LA013)*-1 WHEN TJ042<>? AND TJ041=? THEN (TJ033-ROUND(TJ050*LA012,0))*-1 END AS SPROFIT,TJ034,TJ001,TJ002,TJ003
         FROM COPMA D,COPTI E,COPTJ H,INVMB K,INVLA L
         WHERE E.TI001=H.TJ001   
         AND E.TI002=H.TJ002
@@ -1044,10 +1044,10 @@ class ExcelController extends Controller
         AND left(TI003,6) = ?  
         AND MB001 <> ?
         ORDER BY MB006 DESC,TI004,TI003',
-        ['D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','01','TS6','02','ODM','OTHER','21','食品','22','化妝品','23','私密保養品','26','商品成品','OTHER','3','外銷','內銷','0','1','2','0','1','0','1','0','1','2','0','0','1','2','0','1','Y','1',$fin_chk,'9090']);
+        ['D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','01','TS6','02','ODM','OTHER','21','食品','22','化妝品','23','私密保養品','26','商品成品','27','生活用品','OTHER','3','外銷','內銷','0','1','2','0','1','0','1','0','1','2','0','0','1','2','0','1','Y','1',$fin_chk,'9090']);
 
         //結帳後折讓
-        $af_shipdiscs = DB::connection('sqlsrv_tensall')->select('SELECT TI004,TI021,TI003,CASE TI005 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS TG005,CASE MB008 WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,CASE MB006 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB006,CASE MA038 WHEN ? THEN ? ELSE ? END AS MA038,MA019,TJ005,QTY=(TJ007+TJ042)*-1,TI009,TJ033=TJ033*-1,LA013=LA013*-1,CASE WHEN TJ042=? AND (TJ041=? or TJ041=?) THEN LA013*-1 WHEN TJ042<>? AND TJ041=? THEN ROUND(TJ050*LA012,0)*-1 END AS SCOST,CASE WHEN TJ042<>? AND TJ041=? THEN (LA013-ROUND(TJ050*LA012,0))*-1 WHEN TJ042=? AND (TJ041=? or TJ041=?) THEN ? END AS TCOST,PROFIT=(TJ033-LA013)*-1,CASE WHEN TJ042=? AND (TJ041=? or TJ041=?) THEN (TJ033-LA013)*-1 WHEN TJ042<>? AND TJ041=? THEN (TJ033-ROUND(TJ050*LA012,0))*-1 END AS SPROFIT,TJ034,TJ001,TJ002,TJ003
+        $af_shipdiscs = DB::connection('sqlsrv_tensall')->select('SELECT TI004,TI021,TI003,CASE TI005 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS TG005,CASE MB008 WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,CASE MB006 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB006,CASE MA038 WHEN ? THEN ? ELSE ? END AS MA038,MA019,TJ005,QTY=(TJ007+TJ042)*-1,TI009,TJ033=TJ033*-1,LA013=LA013*-1,CASE WHEN TJ042=? AND (TJ041=? or TJ041=?) THEN LA013*-1 WHEN TJ042<>? AND TJ041=? THEN ROUND(TJ050*LA012,0)*-1 END AS SCOST,CASE WHEN TJ042<>? AND TJ041=? THEN (LA013-ROUND(TJ050*LA012,0))*-1 WHEN TJ042=? AND (TJ041=? or TJ041=?) THEN ? END AS TCOST,PROFIT=(TJ033-LA013)*-1,CASE WHEN TJ042=? AND (TJ041=? or TJ041=?) THEN (TJ033-LA013)*-1 WHEN TJ042<>? AND TJ041=? THEN (TJ033-ROUND(TJ050*LA012,0))*-1 END AS SPROFIT,TJ034,TJ001,TJ002,TJ003
         FROM COPMA D,COPTI E,COPTJ H,INVMB K,INVLA L
         WHERE E.TI001=H.TJ001   
         AND E.TI002=H.TJ002
@@ -1062,7 +1062,7 @@ class ExcelController extends Controller
         AND left(TI003,6) = ?  
         AND MB001 <> ?
         ORDER BY MB006 DESC,TI004,TI003',
-        ['D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','01','TS6','02','ODM','OTHER','21','食品','22','化妝品','23','私密保養品','26','商品成品','OTHER','3','外銷','內銷','0','1','2','0','1','0','1','0','1','2','0','0','1','2','0','1','Y','2',$fin_chk,'9090']);
+        ['D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','01','TS6','02','ODM','OTHER','21','食品','22','化妝品','23','私密保養品','26','商品成品','27','生活用品','OTHER','3','外銷','內銷','0','1','2','0','1','0','1','0','1','2','0','0','1','2','0','1','Y','2',$fin_chk,'9090']);
 
         //結帳後客戶銷貨總額
         $af_customers = DB::connection('sqlsrv_tensall')->select('SELECT TG004,TG007,SUM(TH037) AS SUMCUS,SUM(TH038) AS SUMTAX
@@ -1124,8 +1124,8 @@ class ExcelController extends Controller
         GROUP BY TI004,TI021 ORDER BY TI004,TI021',
         ['Y','2',$fin_chk,'9090']);
 
-        //單月四大類合計
-        $af_items = DB::connection('sqlsrv_tensall')->select('SELECT CASE MB006 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB006,SUM(TH037) AS COST FROM (
+        //單月大分類合計
+        $af_items = DB::connection('sqlsrv_tensall')->select('SELECT CASE MB006 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB006,SUM(TH037) AS COST FROM (
         SELECT MB006,TH037 
         FROM COPMA D,COPTG E,COPTH H,INVMB K
         WHERE E.TG001=H.TH001 
@@ -1137,10 +1137,10 @@ class ExcelController extends Controller
         AND left(TG003,6) = ?
         AND MB001 <> ?) P
         GROUP BY MB006 ORDER BY COST DESC',
-        ['21','食品','22','化妝品','23','私密保養品','26','商品成品','OTHER','Y',$fin_chk,'9090']);
+        ['21','食品','22','化妝品','23','私密保養品','26','商品成品','27','生活用品','OTHER','Y',$fin_chk,'9090']);
 
-        //累計四大類
-        $af_sumitems = DB::connection('sqlsrv_tensall')->select('SELECT CASE MB006 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB006,SUM(TH037) AS COST FROM (
+        //累計大分類
+        $af_sumitems = DB::connection('sqlsrv_tensall')->select('SELECT CASE MB006 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB006,SUM(TH037) AS COST FROM (
         SELECT MB006,TH037 
         FROM COPMA D,COPTG E,COPTH H,INVMB K
         WHERE E.TG001=H.TH001 
@@ -1152,7 +1152,7 @@ class ExcelController extends Controller
         AND left(TG003,6) BETWEEN ? AND ?
         AND MB001 <> ?) P
         GROUP BY MB006 ORDER BY MB006',
-        ['21','食品','22','化妝品','23','私密保養品','26','商品成品','OTHER','Y',$fin_date,$fin_chk,'9090']);
+        ['21','食品','22','化妝品','23','私密保養品','26','商品成品','27','生活用品','OTHER','Y',$fin_date,$fin_chk,'9090']);
 
         //單月品牌統計
         $af_brands = DB::connection('sqlsrv_tensall')->select('SELECT CASE MB008 WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,SUM(TH037) AS COST FROM (
@@ -1213,7 +1213,7 @@ class ExcelController extends Controller
         ['4191','4172',$fin_date,$fin_chk]);
 
         //品號9090檢查
-        $af_9090chks = DB::connection('sqlsrv_tensall')->select('SELECT TG004,TG007,TG003,CASE TG005 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS TG005,CASE MB008 WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,CASE MB006 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB006,CASE MA038 WHEN ? THEN ? ELSE ? END AS MA038,TH005,QTY=TH008+TH024,TG012,TH037,LA013 = ?,SCOST = ?,TCOST = ?,PROFIT=TH037,SPROFIT=TH037,TH038,TH001,TH002,TH003
+        $af_9090chks = DB::connection('sqlsrv_tensall')->select('SELECT TG004,TG007,TG003,CASE TG005 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS TG005,CASE MB008 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,CASE MB006 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB006,CASE MA038 WHEN ? THEN ? ELSE ? END AS MA038,TH005,QTY=TH008+TH024,TG012,TH037,LA013 = ?,SCOST = ?,TCOST = ?,PROFIT=TH037,SPROFIT=TH037,TH038,TH001,TH002,TH003
         FROM COPMA D,COPTG E,COPTH H,INVMB K
         WHERE E.TG001=H.TH001 
         AND E.TG002=H.TH002
@@ -1223,7 +1223,7 @@ class ExcelController extends Controller
         AND TH026 = ?
         AND TH004 = ?
         AND left(TG003,6) = ?',
-        ['D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','01','TS6','02','ODM','OTHER','21','食品','22','化妝品','23','私密保養品','26','商品成品','OTHER','3','外銷','內銷','0','0','0','Y','9090',$fin_chk]);
+        ['D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','01','TS6','02','ODM','OTHER','21','食品','22','化妝品','23','私密保養品','26','商品成品','27','生活用品','OTHER','3','外銷','內銷','0','0','0','Y','9090',$fin_chk]);
 
         $ship_records = count($af_shipchks);
         //判斷是否有資料
@@ -1243,7 +1243,7 @@ class ExcelController extends Controller
         $worksheet->setCellValueByColumnAndRow(3, 1, '銷貨日期');
         $worksheet->setCellValueByColumnAndRow(4, 1, '部門');
         $worksheet->setCellValueByColumnAndRow(5, 1, '品牌');
-        $worksheet->setCellValueByColumnAndRow(6, 1, '四大類');
+        $worksheet->setCellValueByColumnAndRow(6, 1, '大分類');
         $worksheet->setCellValueByColumnAndRow(7, 1, '內外銷');
         $worksheet->setCellValueByColumnAndRow(8, 1, '品名');
         $worksheet->setCellValueByColumnAndRow(9, 1, '數量');
@@ -1294,7 +1294,7 @@ class ExcelController extends Controller
         $worksheet->setCellValueByColumnAndRow(3, 1, '銷貨日期');
         $worksheet->setCellValueByColumnAndRow(4, 1, '部門');
         $worksheet->setCellValueByColumnAndRow(5, 1, '品牌');
-        $worksheet->setCellValueByColumnAndRow(6, 1, '四大類');
+        $worksheet->setCellValueByColumnAndRow(6, 1, '大分類');
         $worksheet->setCellValueByColumnAndRow(7, 1, '內外銷');
         $worksheet->setCellValueByColumnAndRow(8, 1, '品名');
         $worksheet->setCellValueByColumnAndRow(9, 1, '數量');
@@ -1335,13 +1335,13 @@ class ExcelController extends Controller
             $worksheet->setCellValueByColumnAndRow(20, $j, $af_shipchk->TH003);
         }
 
-        //Sheet2補入四大類、品牌、銷退折讓等資訊
+        //Sheet2補入大分類、品牌、銷退折讓等資訊
         $L = $ship_records + 5;
 
-        $worksheet->setCellValueByColumnAndRow(1, $L, '四大類');
-        $worksheet->setCellValueByColumnAndRow(2, $L, '四大類單月未稅合計');
-        $worksheet->setCellValueByColumnAndRow(4, $L, '四大類');
-        $worksheet->setCellValueByColumnAndRow(5, $L, '四大類累計未稅合計');
+        $worksheet->setCellValueByColumnAndRow(1, $L, '大分類');
+        $worksheet->setCellValueByColumnAndRow(2, $L, '大分類單月未稅合計');
+        $worksheet->setCellValueByColumnAndRow(4, $L, '大分類');
+        $worksheet->setCellValueByColumnAndRow(5, $L, '大分類累計未稅合計');
         $worksheet->setCellValueByColumnAndRow(1, $L + 9, '品牌');
         $worksheet->setCellValueByColumnAndRow(2, $L + 9, '品牌單月未稅合計');
         $worksheet->setCellValueByColumnAndRow(4, $L + 9, '品牌');
@@ -1413,7 +1413,7 @@ class ExcelController extends Controller
         $worksheet->setCellValueByColumnAndRow(3, 1, '銷貨日期');
         $worksheet->setCellValueByColumnAndRow(4, 1, '部門');
         $worksheet->setCellValueByColumnAndRow(5, 1, '品牌');
-        $worksheet->setCellValueByColumnAndRow(6, 1, '四大類');
+        $worksheet->setCellValueByColumnAndRow(6, 1, '大分類');
         $worksheet->setCellValueByColumnAndRow(7, 1, '內外銷');
         $worksheet->setCellValueByColumnAndRow(8, 1, '品名');
         $worksheet->setCellValueByColumnAndRow(9, 1, '數量');
@@ -1464,7 +1464,7 @@ class ExcelController extends Controller
         $worksheet->setCellValueByColumnAndRow(3, 1, '銷貨日期');
         $worksheet->setCellValueByColumnAndRow(4, 1, '部門');
         $worksheet->setCellValueByColumnAndRow(5, 1, '品牌');
-        $worksheet->setCellValueByColumnAndRow(6, 1, '四大類');
+        $worksheet->setCellValueByColumnAndRow(6, 1, '大分類');
         $worksheet->setCellValueByColumnAndRow(7, 1, '內外銷');
         $worksheet->setCellValueByColumnAndRow(8, 1, '品名');
         $worksheet->setCellValueByColumnAndRow(9, 1, '數量');
@@ -1515,7 +1515,7 @@ class ExcelController extends Controller
         $worksheet->setCellValueByColumnAndRow(3, 1, '銷貨日期');
         $worksheet->setCellValueByColumnAndRow(4, 1, '部門');
         $worksheet->setCellValueByColumnAndRow(5, 1, '品牌');
-        $worksheet->setCellValueByColumnAndRow(6, 1, '四大類');
+        $worksheet->setCellValueByColumnAndRow(6, 1, '大分類');
         $worksheet->setCellValueByColumnAndRow(7, 1, '內外銷');
         $worksheet->setCellValueByColumnAndRow(8, 1, '品名');
         $worksheet->setCellValueByColumnAndRow(9, 1, '數量');
@@ -1627,7 +1627,7 @@ class ExcelController extends Controller
         $worksheet->setCellValueByColumnAndRow(3, 1, '銷貨日期');
         $worksheet->setCellValueByColumnAndRow(4, 1, '部門');
         $worksheet->setCellValueByColumnAndRow(5, 1, '品牌');
-        $worksheet->setCellValueByColumnAndRow(6, 1, '四大類');
+        $worksheet->setCellValueByColumnAndRow(6, 1, '大分類');
         $worksheet->setCellValueByColumnAndRow(7, 1, '內外銷');
         $worksheet->setCellValueByColumnAndRow(8, 1, '品名');
         $worksheet->setCellValueByColumnAndRow(9, 1, '數量');

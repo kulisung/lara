@@ -60,8 +60,8 @@
                 <table class="table table-hover table-striped">
                     <thead>
                         <tr>
-                            <th><span style="color:blue;">四大類</span></th>
-                            <th><span style="color:blue;">四大類單月未稅合計</span></th>
+                            <th><span style="color:blue;">大分類</span></th>
+                            <th><span style="color:blue;">大分類單月未稅合計</span></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -79,8 +79,8 @@
                 <table class="table table-hover table-striped">
                     <thead>
                         <tr>
-                            <th><span style="color:blue;">四大類</span></th>
-                            <th><span style="color:blue;">四大類累計未稅合計</span></th>
+                            <th><span style="color:blue;">大分類</span></th>
+                            <th><span style="color:blue;">大分類累計未稅合計</span></th>
                         </tr>
                     </thead>
                     <tbody>

@@ -61,8 +61,8 @@ a.tabs-menu.tabs-menu-active {
         <div id="tabs-nav">
         <a href="#tab0" onclick="jsTabs(event,'tab0');return false" class="tabs-menu tabs-menu-active">淨額明細</a>
         <a href="#tab1" onclick="jsTabs(event,'tab1');return false" class="tabs-menu">銷貨明細</a>
-        <a href="#tab2" onclick="jsTabs(event,'tab2');return false" class="tabs-menu">四大類\品牌單月未稅合計</a>
-        <a href="#tab3" onclick="jsTabs(event,'tab3');return false" class="tabs-menu">四大類\品牌累計未稅合計</a>
+        <a href="#tab2" onclick="jsTabs(event,'tab2');return false" class="tabs-menu">大分類\品牌單月未稅合計</a>
+        <a href="#tab3" onclick="jsTabs(event,'tab3');return false" class="tabs-menu">大分類\品牌累計未稅合計</a>
         <a href="#tab4" onclick="jsTabs(event,'tab4');return false" class="tabs-menu">銷退\折讓\尾折未稅合計</a>
         <a href="#tab5" onclick="jsTabs(event,'tab5');return false" class="tabs-menu">銷退明細</a>
         <a href="#tab6" onclick="jsTabs(event,'tab6');return false" class="tabs-menu">折讓明細</a>
@@ -81,7 +81,7 @@ a.tabs-menu.tabs-menu-active {
                             <th>銷貨日期</th>
                             <th>部門</th>
                             <th>品牌</th>
-                            <th>四大類</th>
+                            <th>大分類</th>
                             <th>內外銷</th>
                             <th>品名</th>
                             <th>數量</th>
@@ -128,7 +128,7 @@ a.tabs-menu.tabs-menu-active {
                             <th>銷貨日期</th>
                             <th>部門</th>
                             <th>品牌</th>
-                            <th>四大類</th>
+                            <th>大分類</th>
                             <th>內外銷</th>
                             <th>國家別</th>
                             <th>品名</th>
@@ -172,8 +172,8 @@ a.tabs-menu.tabs-menu-active {
                     <table class="table table-hover table-striped">
                     <thead>
                         <tr>
-                            <th>四大類</th>
-                            <th>四大類單月未稅合計</th>
+                            <th>大分類</th>
+                            <th>大分類單月未稅合計</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -191,8 +191,8 @@ a.tabs-menu.tabs-menu-active {
                     <table class="table table-hover table-striped">
                     <thead>
                         <tr>
-                            <th>四大類</th>
-                            <th>四大類累計未稅合計</th>
+                            <th>大分類</th>
+                            <th>大分類累計未稅合計</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -310,7 +310,7 @@ a.tabs-menu.tabs-menu-active {
                             <th>銷貨日期</th>
                             <th>部門</th>
                             <th>品牌</th>
-                            <th>四大類</th>
+                            <th>大分類</th>
                             <th>內外銷</th>
                             <th>國家別</th>
                             <th>品名</th>
@@ -360,7 +360,7 @@ a.tabs-menu.tabs-menu-active {
                             <th>銷貨日期</th>
                             <th>部門</th>
                             <th>品牌</th>
-                            <th>四大類</th>
+                            <th>大分類</th>
                             <th>內外銷</th>
                             <th>國家別</th>
                             <th>品名</th>
