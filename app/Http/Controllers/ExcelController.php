@@ -1831,7 +1831,7 @@ class ExcelController extends Controller
         }
     }
 
-    //暫出單查詢客戶單號匯出_20200318_客單不為空白_20200825修正改由客戶代號判定
+    //For Vicky 暫出單查詢客戶單號匯出_20200318_客單不為空白_20200825修正改由客戶代號判定
     public function INVTG_1300_Export(Request $request) 
     {
         $INV_TF005 = $request->input('TF005');
@@ -1871,7 +1871,8 @@ class ExcelController extends Controller
         $j = 1;
         foreach ($INVTG_lists as $INVTG_list) {
             $j = $j + 1;
-            $worksheet->setCellValueByColumnAndRow(1, $j, $INVTG_list->TG200);
+            $worksheet->setCellValueByColumnAndRow(1, $j, ' '.$INVTG_list->TG200); 
+            //加空格解決excel超長數字轉換問題
             $worksheet->setCellValueByColumnAndRow(2, $j, $INVTG_list->TG001);
             $worksheet->setCellValueByColumnAndRow(3, $j, $INVTG_list->TG002);
             $worksheet->setCellValueByColumnAndRow(4, $j, $INVTG_list->TF005);
