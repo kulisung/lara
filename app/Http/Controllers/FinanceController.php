@@ -248,7 +248,7 @@ class FinanceController extends Controller
         AND left(TG003,6) = ?
         AND MB001 <> ?) P
         GROUP BY MB008 ORDER BY COST DESC',
-        ['01','TS6','02','ODM','04','FUchoice','OTHER','Y',$fin_chk,'9090']);
+        ['01','TS6','02','ODM','04','Fu-choice','OTHER','Y',$fin_chk,'9090']);
 
         //品牌年度累計
         $b4_sumbrands = DB::connection('sqlsrv_tensall')->select('SELECT CASE MB008 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,SUM(TH037) AS COST FROM (
@@ -263,7 +263,7 @@ class FinanceController extends Controller
         AND left(TG003,6) BETWEEN ? AND ?
         AND MB001 <> ?) P
         GROUP BY MB008 ORDER BY COST DESC',
-        ['01','TS6','02','ODM','04','FUchoice','OTHER','Y',$fin_date,$fin_chk,'9090']);
+        ['01','TS6','02','ODM','04','Fu-choice','OTHER','Y',$fin_date,$fin_chk,'9090']);
 
         //單月銷退單彙總合計
         $b4_returns = DB::connection('sqlsrv_tensall')->select('SELECT CASE WHEN SUM(TJ033) < ? THEN SUM(TJ033) ELSE SUM(TJ033) END AS COST 
@@ -357,7 +357,7 @@ class FinanceController extends Controller
         AND left(TI003,6) = ?
         AND MB001 <> ?) P  
         ORDER BY MB006,TG004,TG003',
-        ['D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','01','TS6','02','ODM','04','FUchoice','OTHER','21','食品','22','化妝品','23','私密保養品','26','商品成品','27','生活用品','OTHER','3','外銷','內銷','Y',$fin_chk,'9090','D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','01','TS6','02','ODM','04','FUchoice','OTHER','21','食品','22','化妝品','23','私密保養品','26','商品成品','27','生活用品','OTHER','3','外銷','內銷','Y',$fin_chk,'9090']);
+        ['D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','01','TS6','02','ODM','04','Fu-choice','OTHER','21','食品','22','化妝品','23','私密保養品','26','商品成品','27','生活用品','OTHER','3','外銷','內銷','Y',$fin_chk,'9090','D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','01','TS6','02','ODM','04','Fu-choice','OTHER','21','食品','22','化妝品','23','私密保養品','26','商品成品','27','生活用品','OTHER','3','外銷','內銷','Y',$fin_chk,'9090']);
 
         //銷貨總額不含成本毛利額
         $b4_shipchks = DB::connection('sqlsrv_tensall')->select('SELECT TG004,TG007,TG003,CASE TG005 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS TG005,CASE MB008 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,CASE MB006 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB006,CASE MA038 WHEN ? THEN ? ELSE ? END AS MA038,MA019,TH005,QTY=TH008+TH024,TG012,TH037,TH038,TH001,TH002,TH003 
@@ -371,7 +371,7 @@ class FinanceController extends Controller
         AND left(TG003,6) = ?
         AND MB001 <> ?
         ORDER BY MB006,TG004,TG003',
-        ['D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','01','TS6','02','ODM','04','FUchoice','OTHER','21','食品','22','化妝品','23','私密保養品','26','商品成品','27','生活用品','OTHER','3','外銷','內銷','Y',$fin_chk,'9090']);
+        ['D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','01','TS6','02','ODM','04','Fu-choice','OTHER','21','食品','22','化妝品','23','私密保養品','26','商品成品','27','生活用品','OTHER','3','外銷','內銷','Y',$fin_chk,'9090']);
 
         //單月大類合計
         $b4_items = DB::connection('sqlsrv_tensall')->select('SELECT CASE MB006 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB006,SUM(TH037) AS COST FROM (
@@ -416,7 +416,7 @@ class FinanceController extends Controller
         AND left(TG003,6) = ?
         AND MB001 <> ?) P
         GROUP BY MB008 ORDER BY COST DESC',
-        ['01','TS6','02','ODM','04','FUchoice','OTHER','Y',$fin_chk,'9090']);
+        ['01','TS6','02','ODM','04','Fu-choice','OTHER','Y',$fin_chk,'9090']);
 
         //品牌年度累計
         $b4_sumbrands = DB::connection('sqlsrv_tensall')->select('SELECT CASE MB008 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,SUM(TH037) AS COST FROM (
@@ -431,7 +431,7 @@ class FinanceController extends Controller
         AND left(TG003,6) BETWEEN ? AND ?
         AND MB001 <> ?) P
         GROUP BY MB008 ORDER BY COST DESC',
-        ['01','TS6','02','ODM','04','FUchoice','OTHER','Y',$fin_date,$fin_chk,'9090']);
+        ['01','TS6','02','ODM','04','Fu-choice','OTHER','Y',$fin_date,$fin_chk,'9090']);
 
         //單月銷退單彙總合計
         $b4_returns = DB::connection('sqlsrv_tensall')->select('SELECT CASE WHEN SUM(TJ033) < ? THEN SUM(TJ033) ELSE SUM(TJ033) END AS COST 
@@ -500,7 +500,7 @@ class FinanceController extends Controller
         AND left(TI003,6) BETWEEN ? AND ?  
         AND MB001 <> ?
         ORDER BY MB006 DESC,TI004,TI003',
-        ['D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','01','TS6','02','ODM','04','FUchoice','OTHER','21','食品','22','化妝品','23','私密保養品','26','商品成品','27','生活用品','OTHER','3','外銷','內銷','Y','1',$fin_date,$fin_chk,'9090']);
+        ['D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','01','TS6','02','ODM','04','Fu-choice','OTHER','21','食品','22','化妝品','23','私密保養品','26','商品成品','27','生活用品','OTHER','3','外銷','內銷','Y','1',$fin_date,$fin_chk,'9090']);
 
         //單月折讓
         $b4_shipdiscs = DB::connection('sqlsrv_tensall')->select('SELECT TI004,TI021,TI003,CASE TI005 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS TG005,CASE MB008 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,CASE MB006 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB006,CASE MA038 WHEN ? THEN ? ELSE ? END AS MA038,MA019,TJ005,QTY=TJ007+TJ042,TI009,TJ033, TJ034,TJ001,TJ002,TJ003
@@ -515,7 +515,7 @@ class FinanceController extends Controller
         AND left(TI003,6) BETWEEN ? AND ?  
         AND MB001 <> ?
         ORDER BY MB006 DESC,TI004,TI003',
-        ['D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','01','TS6','02','ODM','04','FUchoice','OTHER','21','食品','22','化妝品','23','私密保養品','26','商品成品','27','生活用品','OTHER','3','外銷','內銷','Y','2',$fin_date,$fin_chk,'9090']);
+        ['D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','01','TS6','02','ODM','04','Fu-choice','OTHER','21','食品','22','化妝品','23','私密保養品','26','商品成品','27','生活用品','OTHER','3','外銷','內銷','Y','2',$fin_date,$fin_chk,'9090']);
 
         //客戶總額統計
         $b4_customers = DB::connection('sqlsrv_tensall')->select('SELECT TG004,TG007,SUM(TH037) AS SUMCUS,SUM(TH038) AS SUMTAX
@@ -879,7 +879,7 @@ class FinanceController extends Controller
         AND TH026 = ?
         AND (TH004 = ?)
         AND left(TG003,6) = ?',
-        ['D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','01','TS6','02','ODM','04','FUchoice','OTHER','21','食品','22','化妝品','23','私密保養品','26','商品成品','27','生活用品','OTHER','3','外銷','內銷','Y','9090',$fin_chk]);
+        ['D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','01','TS6','02','ODM','04','Fu-choice','OTHER','21','食品','22','化妝品','23','私密保養品','26','商品成品','27','生活用品','OTHER','3','外銷','內銷','Y','9090',$fin_chk]);
         
 
         //淨額合計
@@ -1003,7 +1003,7 @@ class FinanceController extends Controller
         AND left(TG003,6) = ?
         AND MB001 <> ?) P
         GROUP BY MB008 ORDER BY COST DESC',
-        ['01','TS6','02','ODM','04','FUchoice','OTHER','Y',$fin_chk,'9090']);
+        ['01','TS6','02','ODM','04','Fu-choice','OTHER','Y',$fin_chk,'9090']);
 
         //品牌年度累計
         $af_sumbrands = DB::connection('sqlsrv_tensall')->select('SELECT CASE MB008 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,SUM(TH037) AS COST FROM (
@@ -1018,7 +1018,7 @@ class FinanceController extends Controller
         AND left(TG003,6) BETWEEN ? AND ?
         AND MB001 <> ?) P
         GROUP BY MB008 ORDER BY COST DESC',
-        ['01','TS6','02','ODM','04','FUchoice','OTHER','Y',$fin_date,$fin_chk,'9090']);
+        ['01','TS6','02','ODM','04','Fu-choice','OTHER','Y',$fin_date,$fin_chk,'9090']);
 
         //單月銷退單彙總合計
         $af_returns = DB::connection('sqlsrv_tensall')->select('SELECT CASE WHEN SUM(TJ033) < ? THEN SUM(TJ033) ELSE SUM(TJ033) END AS COST 
