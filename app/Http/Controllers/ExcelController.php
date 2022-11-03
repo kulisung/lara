@@ -7,10 +7,11 @@ use App\Imports\UsersImport;
 use Maatwebsite\Excel\Facades\Excel;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\Cell\AdvancedValueBinder;
+use PhpOffice\PhpSpreadsheet\Cell\DataType;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use PHPExcel_Cell_DataType;
 use App\User;
 
 class ExcelController extends Controller
@@ -1872,9 +1873,9 @@ class ExcelController extends Controller
         $j = 1;
         foreach ($INVTG_lists as $INVTG_list) {
             $j = $j + 1;
-            $worksheet->setCellValueByColumnAndRow(1, $j, ' '.$INVTG_list->TG200);
-            //加空格【' '.$INVTG_list】解決excel超長數字轉換問題
-            //$worksheet->setCellValueExplicitByColumnAndRow(1, $j, $INVTG_list->TG200,PHPExcel_Cell_DataType::TYPE_STRING); 
+            $worksheet->setCellValueExplicitByColumnAndRow(1, $j, $INVTG_list->TG200,DataType::TYPE_STRING); 
+            //解決儲存常數字便科學字元儲存問題，利用PhpOffice\PhpSpreadsheet\Cell\DataType類別
+            //另一種解法前置加空格【' '.$INVTG_list】解決excel超長數字轉換問題
             $worksheet->setCellValueByColumnAndRow(2, $j, $INVTG_list->TG001);
             $worksheet->setCellValueByColumnAndRow(3, $j, $INVTG_list->TG002);
             $worksheet->setCellValueByColumnAndRow(4, $j, $INVTG_list->TF005);
