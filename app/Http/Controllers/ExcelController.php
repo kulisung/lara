@@ -1834,6 +1834,7 @@ class ExcelController extends Controller
     }
 
     //For Vicky 暫出單查詢客戶單號匯出_20200318_客單不為空白_20200825修正改由客戶代號判定
+    //#暫出單查詢客戶單號(ForVicky用)
     public function INVTG_1300_Export(Request $request) 
     {
         $INV_TF005 = $request->input('TF005');
@@ -1874,7 +1875,7 @@ class ExcelController extends Controller
         foreach ($INVTG_lists as $INVTG_list) {
             $j = $j + 1;
             $worksheet->setCellValueExplicitByColumnAndRow(1, $j, $INVTG_list->TG200,DataType::TYPE_STRING); 
-            //解決儲存常數字便科學字元儲存問題，利用PhpOffice\PhpSpreadsheet\Cell\DataType類別
+            //解決儲存常數字便科學字元儲存問題，利用PhpOffice\PhpSpreadsheet\Cell\DataType類別.20221103
             //另一種解法前置加空格【' '.$INVTG_list】解決excel超長數字轉換問題
             $worksheet->setCellValueByColumnAndRow(2, $j, $INVTG_list->TG001);
             $worksheet->setCellValueByColumnAndRow(3, $j, $INVTG_list->TG002);
@@ -1896,7 +1897,8 @@ class ExcelController extends Controller
         }
     }
 
-    //銷貨單&訂單&暫出單&客戶單號查詢匯出_20200401
+    //For Vicky銷貨單&訂單&暫出單&客戶單號查詢匯出_20200401
+    //#銷貨單暫出單查詢(ForVicky用)
     public function COPTH_Export(Request $request) 
     {
         $COP_TH001 = $request->input('TH001'); //銷貨單別
@@ -1945,7 +1947,8 @@ class ExcelController extends Controller
             $worksheet->setCellValueByColumnAndRow(6, $j, $COPTH_list->TH033);
             $worksheet->setCellValueByColumnAndRow(7, $j, $COPTH_list->COST);
             $worksheet->setCellValueByColumnAndRow(8, $j, $COPTH_list->TAX);
-            $worksheet->setCellValueByColumnAndRow(9, $j, $COPTH_list->TC012);
+            $worksheet->setCellValueExplicitByColumnAndRow(9, $j, $COPTH_list->TC012,DataType::TYPE_STRING);
+            //解決儲存常數字便科學字元儲存問題，利用PhpOffice\PhpSpreadsheet\Cell\DataType類別 20221103
         }
 
         // 下载
@@ -1960,7 +1963,8 @@ class ExcelController extends Controller
         }
     }
 
-    //銷貨單查詢客戶單號匯出_2020413
+    //For Vicky銷貨單查詢客戶單號匯出_2020413
+    //#銷貨單暫出單查詢(ForVicky用)
     public function COPTG_Export(Request $request) 
     {
         $COP_TG001 = $request->input('TG001'); //銷貨單別
@@ -1998,7 +2002,8 @@ class ExcelController extends Controller
         $j = 1;
         foreach ($COPTG_lists as $COPTG_list) {
             $j = $j + 1;
-            $worksheet->setCellValueByColumnAndRow(1, $j, $COPTG_list->TC012);
+            $worksheet->setCellValueExplicitByColumnAndRow(1, $j, $COPTG_list->TC012,DataType::TYPE_STRING);
+            //解決儲存常數字便科學字元儲存問題，利用PhpOffice\PhpSpreadsheet\Cell\DataType類別 20221103
             $worksheet->setCellValueByColumnAndRow(2, $j, $COPTG_list->TG001);
             $worksheet->setCellValueByColumnAndRow(3, $j, $COPTG_list->TG002);
             $worksheet->setCellValueByColumnAndRow(4, $j, $COPTG_list->TG003);
