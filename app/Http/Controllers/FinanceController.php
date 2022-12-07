@@ -133,7 +133,6 @@ class FinanceController extends Controller
         WHERE E.TG001=H.TH001 
         AND E.TG002=H.TH002
         AND H.TH004=K.MB001
-        AND D.MA001=TG004
         AND D.MA001=E.TG004
         AND TH026 = ?
         AND left(TG003,6) = ?
@@ -144,7 +143,6 @@ class FinanceController extends Controller
         WHERE E.TI001=H.TJ001 
         AND E.TI002=H.TJ002
         AND H.TJ004=K.MB001
-        AND D.MA001=TI004
         AND D.MA001=E.TI004
         AND TJ024 = ?
         AND left(TI003,6) = ?
@@ -157,7 +155,6 @@ class FinanceController extends Controller
         WHERE E.TG001=H.TH001 
         AND E.TG002=H.TH002
         AND H.TH004=K.MB001
-        AND D.MA001=TG004
         AND D.MA001=E.TG004
         AND TH026 = ?
         AND left(TG003,6) = ?
@@ -170,7 +167,6 @@ class FinanceController extends Controller
         WHERE E.TG001=H.TH001   
         AND E.TG002=H.TH002 
         AND H.TH004=K.MB001
-        AND D.MA001=TG004
         AND D.MA001=E.TG004
         AND TH026 = ?
         AND left(TG003,6) = ?
@@ -183,7 +179,6 @@ class FinanceController extends Controller
         WHERE E.TI001=H.TJ001   
         AND E.TI002=H.TJ002
         AND H.TJ004=K.MB001
-        AND D.MA001=TI004
         AND D.MA001=E.TI004
         AND TJ024 = ?
         AND TJ030 = ?
@@ -197,7 +192,6 @@ class FinanceController extends Controller
         WHERE E.TI001=H.TJ001   
         AND E.TI002=H.TJ002
         AND H.TJ004=K.MB001
-        AND D.MA001=TI004
         AND D.MA001=E.TI004
         AND TJ024 = ?
         AND TJ030 = ?
@@ -212,7 +206,6 @@ class FinanceController extends Controller
         WHERE E.TG001=H.TH001 
         AND E.TG002=H.TH002
         AND H.TH004=K.MB001
-        AND D.MA001=TG004
         AND D.MA001=E.TG004
         AND TH026 = ?
         AND left(TG003,6) = ?
@@ -227,7 +220,6 @@ class FinanceController extends Controller
         WHERE E.TG001=H.TH001 
         AND E.TG002=H.TH002
         AND H.TH004=K.MB001
-        AND D.MA001=TG004
         AND D.MA001=E.TG004
         AND TH026 = ?
         AND left(TG003,6) BETWEEN ? AND ?
@@ -236,32 +228,32 @@ class FinanceController extends Controller
         ['21','食品','22','化妝品','23','私密保養品','26','商品成品','27','生活用品','OTHER','Y',$fin_date,$fin_chk,'9090']);
 
         //單月品牌統計
-        $b4_brands = DB::connection('sqlsrv_tensall')->select('SELECT CASE MB008 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,SUM(TH037) AS COST FROM (
+        $b4_brands = DB::connection('sqlsrv_tensall')->select('SELECT MB008,SUM(COST) as COST FROM ( SELECT CASE MB008 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,SUM(TH037) AS COST FROM (
         SELECT MB008,TH037 
         FROM COPMA D,COPTG E,COPTH H,INVMB K
         WHERE E.TG001=H.TH001 
         AND E.TG002=H.TH002
         AND H.TH004=K.MB001
-        AND D.MA001=TG004
         AND D.MA001=E.TG004
         AND TH026 = ?
         AND left(TG003,6) = ?
         AND MB001 <> ?) P
+        GROUP BY MB008) Q
         GROUP BY MB008 ORDER BY COST DESC',
         ['01','TS6','02','ODM','04','Fu-choice','OTHER','Y',$fin_chk,'9090']);
 
         //品牌年度累計
-        $b4_sumbrands = DB::connection('sqlsrv_tensall')->select('SELECT CASE MB008 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,SUM(TH037) AS COST FROM (
+        $b4_sumbrands = DB::connection('sqlsrv_tensall')->select('SELECT MB008,SUM(COST) as COST FROM ( SELECT CASE MB008 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,SUM(TH037) AS COST FROM (
         SELECT MB008,TH037 
         FROM COPMA D,COPTG E,COPTH H,INVMB K
         WHERE E.TG001=H.TH001 
         AND E.TG002=H.TH002
         AND H.TH004=K.MB001
-        AND D.MA001=TG004
         AND D.MA001=E.TG004
         AND TH026 = ?
         AND left(TG003,6) BETWEEN ? AND ?
         AND MB001 <> ?) P
+        GROUP BY MB008) Q
         GROUP BY MB008 ORDER BY COST DESC',
         ['01','TS6','02','ODM','04','Fu-choice','OTHER','Y',$fin_date,$fin_chk,'9090']);
 
@@ -271,7 +263,6 @@ class FinanceController extends Controller
         WHERE E.TI001=H.TJ001   
         AND E.TI002=H.TJ002 
         AND H.TJ004=K.MB001
-        AND D.MA001=TI004
         AND D.MA001=E.TI004
         AND TJ024 = ?
         AND left(TI003,6) = ?
@@ -284,7 +275,6 @@ class FinanceController extends Controller
         WHERE E.TI001=H.TJ001   
         AND E.TI002=H.TJ002 
         AND H.TJ004=K.MB001
-        AND D.MA001=TI004
         AND D.MA001=E.TI004
         AND TJ024 = ?
         AND left(TI003,6) BETWEEN ? AND ?
@@ -328,8 +318,8 @@ class FinanceController extends Controller
         }
     }
     
-
-    /* #########結帳前檢查明細######### */
+/* 註解 2022.12.07 Mark
+    // #########結帳前檢查明細######### 
     //結帳前檢查Finance結帳前檢查 明細
     public function fin_b4chk(Request $request)
     {
@@ -340,7 +330,6 @@ class FinanceController extends Controller
         WHERE E.TG001=H.TH001 
         AND E.TG002=H.TH002
         AND H.TH004=K.MB001
-        AND D.MA001=TG004
         AND D.MA001=E.TG004
         AND TH026 = ?
         AND left(TG003,6) = ?
@@ -351,7 +340,6 @@ class FinanceController extends Controller
         WHERE E.TI001=H.TJ001 
         AND E.TI002=H.TJ002
         AND H.TJ004=K.MB001
-        AND D.MA001=TI004
         AND D.MA001=E.TI004
         AND TJ024 = ?
         AND left(TI003,6) = ?
@@ -365,7 +353,6 @@ class FinanceController extends Controller
         WHERE E.TG001=H.TH001 
         AND E.TG002=H.TH002
         AND H.TH004=K.MB001
-        AND D.MA001=TG004
         AND D.MA001=E.TG004
         AND TH026 = ?
         AND left(TG003,6) = ?
@@ -380,7 +367,6 @@ class FinanceController extends Controller
         WHERE E.TG001=H.TH001 
         AND E.TG002=H.TH002
         AND H.TH004=K.MB001
-        AND D.MA001=TG004
         AND D.MA001=E.TG004
         AND TH026 = ?
         AND left(TG003,6) = ?
@@ -395,7 +381,6 @@ class FinanceController extends Controller
         WHERE E.TG001=H.TH001 
         AND E.TG002=H.TH002
         AND H.TH004=K.MB001
-        AND D.MA001=TG004
         AND D.MA001=E.TG004
         AND TH026 = ?
         AND left(TG003,6) BETWEEN ? AND ?
@@ -404,32 +389,32 @@ class FinanceController extends Controller
         ['21','食品','22','化妝品','23','私密保養品','26','商品成品','27','生活用品','OTHER','Y',$fin_date,$fin_chk,'9090']);
 
         //單月品牌統計
-        $b4_brands = DB::connection('sqlsrv_tensall')->select('SELECT CASE MB008 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,SUM(TH037) AS COST FROM (
+        $b4_brands = DB::connection('sqlsrv_tensall')->select('SELECT MB008,SUM(COST) as COST FROM ( SELECT CASE MB008 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,SUM(TH037) AS COST FROM (
         SELECT MB008,TH037 
         FROM COPMA D,COPTG E,COPTH H,INVMB K
         WHERE E.TG001=H.TH001 
         AND E.TG002=H.TH002
         AND H.TH004=K.MB001
-        AND D.MA001=TG004
         AND D.MA001=E.TG004
         AND TH026 = ?
         AND left(TG003,6) = ?
         AND MB001 <> ?) P
+        GROUP BY MB008) Q
         GROUP BY MB008 ORDER BY COST DESC',
         ['01','TS6','02','ODM','04','Fu-choice','OTHER','Y',$fin_chk,'9090']);
 
         //品牌年度累計
-        $b4_sumbrands = DB::connection('sqlsrv_tensall')->select('SELECT CASE MB008 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,SUM(TH037) AS COST FROM (
+        $b4_sumbrands = DB::connection('sqlsrv_tensall')->select('SELECT MB008,SUM(COST) as COST FROM ( SELECT CASE MB008 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,SUM(TH037) AS COST FROM (
         SELECT MB008,TH037 
         FROM COPMA D,COPTG E,COPTH H,INVMB K
         WHERE E.TG001=H.TH001 
         AND E.TG002=H.TH002
         AND H.TH004=K.MB001
-        AND D.MA001=TG004
         AND D.MA001=E.TG004
         AND TH026 = ?
         AND left(TG003,6) BETWEEN ? AND ?
         AND MB001 <> ?) P
+        GROUP BY MB008) Q
         GROUP BY MB008 ORDER BY COST DESC',
         ['01','TS6','02','ODM','04','Fu-choice','OTHER','Y',$fin_date,$fin_chk,'9090']);
 
@@ -439,7 +424,6 @@ class FinanceController extends Controller
         WHERE E.TI001=H.TJ001   
         AND E.TI002=H.TJ002 
         AND H.TJ004=K.MB001
-        AND D.MA001=TI004
         AND D.MA001=E.TI004
         AND TJ024 = ?
         AND left(TI003,6) = ?
@@ -452,7 +436,6 @@ class FinanceController extends Controller
         WHERE E.TI001=H.TJ001   
         AND E.TI002=H.TJ002 
         AND H.TJ004=K.MB001
-        AND D.MA001=TI004
         AND D.MA001=E.TI004
         AND TJ024 = ?
         AND left(TI003,6) BETWEEN ? AND ?
@@ -493,7 +476,6 @@ class FinanceController extends Controller
         WHERE E.TI001=H.TJ001   
         AND E.TI002=H.TJ002
         AND H.TJ004=K.MB001
-        AND D.MA001=TI004
         AND D.MA001=E.TI004
         AND TJ024 = ?
         AND TJ030 = ?
@@ -508,7 +490,6 @@ class FinanceController extends Controller
         WHERE E.TI001=H.TJ001   
         AND E.TI002=H.TJ002
         AND H.TJ004=K.MB001
-        AND D.MA001=TI004
         AND D.MA001=E.TI004
         AND TJ024 = ?
         AND TJ030 = ?
@@ -523,7 +504,6 @@ class FinanceController extends Controller
         WHERE E.TG001=H.TH001   
         AND E.TG002=H.TH002 
         AND H.TH004=K.MB001
-        AND D.MA001=TG004
         AND D.MA001=E.TG004
         AND TH026 = ?
         AND left(TG003,6) = ?
@@ -537,7 +517,6 @@ class FinanceController extends Controller
         WHERE E.TI001=H.TJ001
         AND E.TI002=H.TJ002 
         AND H.TJ004=K.MB001
-        AND D.MA001=TI004
         AND D.MA001=E.TI004
         AND TJ024 = ?
         AND left(TI003,6) = ?
@@ -551,7 +530,6 @@ class FinanceController extends Controller
         WHERE E.TI001=H.TJ001
         AND E.TI002=H.TJ002 
         AND H.TJ004=K.MB001
-        AND D.MA001=TI004
         AND D.MA001=E.TI004
         AND TJ024 = ?
         AND TJ030 = ?
@@ -566,7 +544,6 @@ class FinanceController extends Controller
         WHERE E.TI001=H.TJ001
         AND E.TI002=H.TJ002 
         AND H.TJ004=K.MB001
-        AND D.MA001=TI004
         AND D.MA001=E.TI004
         AND TJ024 = ?
         AND TJ030 = ?
@@ -585,7 +562,9 @@ class FinanceController extends Controller
         }else{
             return view('finance.fin_b4chk', compact('fin_chk','b4_chks','b4_shipchks','b4_items','b4_sumitems','b4_brands','b4_sumbrands','b4_returns','b4_sumreturns','b4_allowances','b4_sumallowances','b4_discounts','b4_sumdiscounts','b4_shipbacks','b4_shipdiscs','b4_customers','b4_cusshipbacks','b4_cusbacks','b4_cusdiscs','data_records','ship_records'));
         }
-    }
+    } 
+
+*/
 
     /* #########結帳後檢查明細######### 註記不使用此版 2019.12.23
     //結帳後檢查Finance結帳後檢查 明細
@@ -874,7 +853,6 @@ class FinanceController extends Controller
         WHERE E.TG001=H.TH001 
         AND E.TG002=H.TH002
         AND H.TH004=K.MB001
-        AND D.MA001=TG004
         AND D.MA001=E.TG004
         AND TH026 = ?
         AND (TH004 = ?)
@@ -888,7 +866,6 @@ class FinanceController extends Controller
         WHERE E.TG001=H.TH001 
         AND E.TG002=H.TH002
         AND H.TH004=K.MB001
-        AND D.MA001=TG004
         AND D.MA001=E.TG004
         AND TH026 = ?
         AND left(TG003,6) = ?
@@ -899,7 +876,6 @@ class FinanceController extends Controller
         WHERE E.TI001=H.TJ001 
         AND E.TI002=H.TJ002
         AND H.TJ004=K.MB001
-        AND D.MA001=TI004
         AND D.MA001=E.TI004
         AND TJ024 = ?
         AND left(TI003,6) = ?
@@ -912,7 +888,6 @@ class FinanceController extends Controller
         WHERE E.TG001=H.TH001 
         AND E.TG002=H.TH002
         AND H.TH004=K.MB001
-        AND D.MA001=TG004
         AND D.MA001=E.TG004
         AND TH026 = ?
         AND left(TG003,6) = ?
@@ -925,7 +900,6 @@ class FinanceController extends Controller
         WHERE E.TG001=H.TH001   
         AND E.TG002=H.TH002 
         AND H.TH004=K.MB001
-        AND D.MA001=TG004
         AND D.MA001=E.TG004
         AND TH026 = ?
         AND left(TG003,6) = ?
@@ -938,7 +912,6 @@ class FinanceController extends Controller
         WHERE E.TI001=H.TJ001   
         AND E.TI002=H.TJ002
         AND H.TJ004=K.MB001
-        AND D.MA001=TI004
         AND D.MA001=E.TI004
         AND TJ024 = ?
         AND TJ030 = ?
@@ -952,7 +925,6 @@ class FinanceController extends Controller
         WHERE E.TI001=H.TJ001   
         AND E.TI002=H.TJ002
         AND H.TJ004=K.MB001
-        AND D.MA001=TI004
         AND D.MA001=E.TI004
         AND TJ024 = ?
         AND TJ030 = ?
@@ -967,7 +939,6 @@ class FinanceController extends Controller
         WHERE E.TG001=H.TH001 
         AND E.TG002=H.TH002
         AND H.TH004=K.MB001
-        AND D.MA001=TG004
         AND D.MA001=E.TG004
         AND TH026 = ?
         AND left(TG003,6) = ?
@@ -982,7 +953,6 @@ class FinanceController extends Controller
         WHERE E.TG001=H.TH001 
         AND E.TG002=H.TH002
         AND H.TH004=K.MB001
-        AND D.MA001=TG004
         AND D.MA001=E.TG004
         AND TH026 = ?
         AND left(TG003,6) BETWEEN ? AND ?
@@ -991,32 +961,32 @@ class FinanceController extends Controller
         ['21','食品','22','化妝品','23','私密保養品','26','商品成品','27','生活用品','OTHER','Y',$fin_date,$fin_chk,'9090']);
 
         //單月品牌統計
-        $af_brands = DB::connection('sqlsrv_tensall')->select('SELECT CASE MB008 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,SUM(TH037) AS COST FROM (
+        $af_brands = DB::connection('sqlsrv_tensall')->select('SELECT MB008,SUM(COST) as COST FROM ( SELECT CASE MB008 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,SUM(TH037) AS COST FROM (
         SELECT MB008,TH037 
         FROM COPMA D,COPTG E,COPTH H,INVMB K
         WHERE E.TG001=H.TH001 
         AND E.TG002=H.TH002
         AND H.TH004=K.MB001
-        AND D.MA001=TG004
         AND D.MA001=E.TG004
         AND TH026 = ?
         AND left(TG003,6) = ?
         AND MB001 <> ?) P
+        GROUP BY MB008) Q
         GROUP BY MB008 ORDER BY COST DESC',
         ['01','TS6','02','ODM','04','Fu-choice','OTHER','Y',$fin_chk,'9090']);
 
         //品牌年度累計
-        $af_sumbrands = DB::connection('sqlsrv_tensall')->select('SELECT CASE MB008 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,SUM(TH037) AS COST FROM (
+        $af_sumbrands = DB::connection('sqlsrv_tensall')->select('SELECT MB008,SUM(COST) as COST FROM ( SELECT CASE MB008 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,SUM(TH037) AS COST FROM (
         SELECT MB008,TH037 
         FROM COPMA D,COPTG E,COPTH H,INVMB K
         WHERE E.TG001=H.TH001 
         AND E.TG002=H.TH002
         AND H.TH004=K.MB001
-        AND D.MA001=TG004
         AND D.MA001=E.TG004
         AND TH026 = ?
         AND left(TG003,6) BETWEEN ? AND ?
         AND MB001 <> ?) P
+        GROUP BY MB008) Q
         GROUP BY MB008 ORDER BY COST DESC',
         ['01','TS6','02','ODM','04','Fu-choice','OTHER','Y',$fin_date,$fin_chk,'9090']);
 
@@ -1026,7 +996,6 @@ class FinanceController extends Controller
         WHERE E.TI001=H.TJ001   
         AND E.TI002=H.TJ002 
         AND H.TJ004=K.MB001
-        AND D.MA001=TI004
         AND D.MA001=E.TI004
         AND TJ024 = ?
         AND left(TI003,6) = ?
@@ -1039,7 +1008,6 @@ class FinanceController extends Controller
         WHERE E.TI001=H.TJ001   
         AND E.TI002=H.TJ002 
         AND H.TJ004=K.MB001
-        AND D.MA001=TI004
         AND D.MA001=E.TI004
         AND TJ024 = ?
         AND left(TI003,6) BETWEEN ? AND ?

@@ -499,33 +499,33 @@ class ExcelController extends Controller
         ['21','食品','22','化妝品','23','私密保養品','26','商品成品','27','生活用品','OTHER','Y',$fin_date,$fin_chk,'9090']);
 
         //單月品牌統計
-        $b4_brands = DB::connection('sqlsrv_tensall')->select('SELECT CASE MB008 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,SUM(TH037) AS COST FROM (
+        $b4_brands = DB::connection('sqlsrv_tensall')->select('SELECT MB008,SUM(COST) as COST FROM ( SELECT CASE MB008 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,SUM(TH037) AS COST FROM (
         SELECT MB008,TH037 
         FROM COPMA D,COPTG E,COPTH H,INVMB K
         WHERE E.TG001=H.TH001 
         AND E.TG002=H.TH002
         AND H.TH004=K.MB001
-        AND D.MA001=TG004
         AND D.MA001=E.TG004
         AND TH026 = ?
         AND left(TG003,6) = ?
         AND MB001 <> ?) P
-        GROUP BY MB008 ORDER BY MB008 DESC',
+        GROUP BY MB008) Q
+        GROUP BY MB008 ORDER BY MB008',
         ['01','TS6','02','ODM','04','Fu-choice','OTHER','Y',$fin_chk,'9090']);
 
         //品牌年度累計
-        $b4_sumbrands = DB::connection('sqlsrv_tensall')->select('SELECT CASE MB008 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,SUM(TH037) AS COST FROM (
+        $b4_sumbrands = DB::connection('sqlsrv_tensall')->select('SELECT MB008,SUM(COST) as COST FROM ( SELECT CASE MB008 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,SUM(TH037) AS COST FROM (
         SELECT MB008,TH037 
         FROM COPMA D,COPTG E,COPTH H,INVMB K
         WHERE E.TG001=H.TH001 
         AND E.TG002=H.TH002
         AND H.TH004=K.MB001
-        AND D.MA001=TG004
         AND D.MA001=E.TG004
         AND TH026 = ?
         AND left(TG003,6) BETWEEN ? AND ?
         AND MB001 <> ?) P
-        GROUP BY MB008 ORDER BY MB008 DESC',
+        GROUP BY MB008) Q
+        GROUP BY MB008 ORDER BY MB008',
         ['01','TS6','02','ODM','04','Fu-choice','OTHER','Y',$fin_date,$fin_chk,'9090']);
 
         //單月銷退單彙總合計
@@ -534,7 +534,6 @@ class ExcelController extends Controller
         WHERE E.TI001=H.TJ001   
         AND E.TI002=H.TJ002 
         AND H.TJ004=K.MB001
-        AND D.MA001=TI004
         AND D.MA001=E.TI004
         AND TJ024 = ?
         AND left(TI003,6) = ?
@@ -1157,7 +1156,7 @@ class ExcelController extends Controller
         ['21','食品','22','化妝品','23','私密保養品','26','商品成品','27','生活用品','OTHER','Y',$fin_date,$fin_chk,'9090']);
 
         //單月品牌統計
-        $af_brands = DB::connection('sqlsrv_tensall')->select('SELECT CASE MB008 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,SUM(TH037) AS COST FROM (
+        $af_brands = DB::connection('sqlsrv_tensall')->select('SELECT MB008,SUM(COST) as COST FROM ( SELECT CASE MB008 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,SUM(TH037) AS COST FROM (
         SELECT MB008,TH037 
         FROM COPMA D,COPTG E,COPTH H,INVMB K
         WHERE E.TG001=H.TH001 
@@ -1168,11 +1167,12 @@ class ExcelController extends Controller
         AND TH026 = ?
         AND left(TG003,6) = ?
         AND MB001 <> ?) P
+        GROUP BY MB008) Q
         GROUP BY MB008 ORDER BY MB008',
         ['01','TS6','02','ODM','04','Fu-choice','OTHER','Y',$fin_chk,'9090']);
 
         //品牌累計
-        $af_sumbrands = DB::connection('sqlsrv_tensall')->select('SELECT CASE MB008 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,SUM(TH037) AS COST FROM (
+        $af_sumbrands = DB::connection('sqlsrv_tensall')->select('SELECT MB008,SUM(COST) as COST FROM ( SELECT CASE MB008 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,SUM(TH037) AS COST FROM (
         SELECT MB008,TH037 
         FROM COPMA D,COPTG E,COPTH H,INVMB K
         WHERE E.TG001=H.TH001 
@@ -1183,6 +1183,7 @@ class ExcelController extends Controller
         AND TH026 = ?
         AND left(TG003,6) BETWEEN ? AND ?
         AND MB001 <> ?) P
+        GROUP BY MB008) Q
         GROUP BY MB008 ORDER BY MB008',
         ['01','TS6','02','ODM','04','Fu-choice','OTHER','Y',$fin_date,$fin_chk,'9090']);
 
