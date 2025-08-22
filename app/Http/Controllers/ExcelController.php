@@ -363,7 +363,7 @@ class ExcelController extends Controller
         ['D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','01','TS6','02','ODM','04','Fu-choice','OTHER','21','食品','22','化妝品','23','私密保養品','26','商品成品','27','生活用品','OTHER','3','外銷','內銷','Y',$fin_chk,'9090','D200','管理部','D700','國際市場部','D620','大中華市場部','D610','ODM/OEM','其他','01','TS6','02','ODM','04','Fu-choice','OTHER','21','食品','22','化妝品','23','私密保養品','26','商品成品','27','生活用品','OTHER','3','外銷','內銷','Y',$fin_chk,'9090']);
 
         //銷貨總額不含成本毛利額
-        $b4_shipchks = DB::connection('sqlsrv_tensall')->select('SELECT TG004,TG007,TG003,CASE TG005 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS TG005,CASE MB008 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,CASE MB006 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB006,CASE MA038 WHEN ? THEN ? ELSE ? END AS MA038,MA019,TH005,QTY=TH008+TH024,TG012,TH037,TH038,TH001,TH002,TH003 
+        $b4_shipchks = DB::connection('sqlsrv_tensall')->select('SELECT TG004,TG007,TG003,CASE TG005 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS TG005,CASE MB008 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB008,CASE MB006 WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? WHEN ? THEN ? ELSE ? END AS MB006,CASE MA038 WHEN ? THEN ? ELSE ? END AS MA038,MA019,TH005,QTY=TH008+TH024,TG012,TH037,TH038,TH001,TH002,TH003,TH017 
         FROM COPMA D,COPTG E,COPTH H,INVMB K
         WHERE E.TG001=H.TH001 
         AND E.TG002=H.TH002
@@ -653,6 +653,7 @@ class ExcelController extends Controller
         $worksheet->setCellValueByColumnAndRow(14, 1, '單別');
         $worksheet->setCellValueByColumnAndRow(15, 1, '單號');
         $worksheet->setCellValueByColumnAndRow(16, 1, '序號');
+        $worksheet->setCellValueByColumnAndRow(17, 1, '批號');
 
         $j = 1;
         foreach ($b4_shipchks as $b4_shipchk) {
@@ -673,6 +674,7 @@ class ExcelController extends Controller
             $worksheet->setCellValueByColumnAndRow(14, $j, $b4_shipchk->TH001);
             $worksheet->setCellValueByColumnAndRow(15, $j, $b4_shipchk->TH002);
             $worksheet->setCellValueByColumnAndRow(16, $j, $b4_shipchk->TH003);
+            $worksheet->setCellValueByColumnAndRow(17, $j, $b4_shipchk->TH017);
         }
 
         //Sheet2補入大分類、品牌、銷退折讓等資訊
